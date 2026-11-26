@@ -17,7 +17,8 @@
  * Everything is written to OUT.json. Exit 0 only if every check passes.
  * Evidence class: LIVE (COCO's ROS 2 stack running now: a Gazebo simulation, never hardware).
  */
-import { execFileSync } from 'node:child_process';
+import { execFile, execFileSync } from 'node:child_process';
+import { promisify } from 'node:util';
 import { writeFileSync } from 'node:fs';
 import http from 'node:http';
 
@@ -33,10 +34,13 @@ const rec = {
 let last = null;           // the latest telemetry
 const acks = new Map();    // id -> ack/error frame
 
-function inContainer() {
+// Asynchronous on purpose: a blocking exec froze this probe's event loop for seconds, so it sent no
+// drive frames and answered no keep-alive, and the gateway ended the session (CI run 45874896939).
+const execFileP = promisify(execFile);
+async function inContainer() {
   if (!container) return null;
   try {
-    const t = execFileSync('docker', ['exec', container, 'coco-ros2', 'check', '--json', '--window', '3'],
+    const { stdout: t } = await execFileP('docker', ['exec', container, 'coco-ros2', 'check', '--json', '--window', '3'],
       { encoding: 'utf-8', timeout: 90_000 });
     const r = JSON.parse(t);
     return { wheel_topic_publishers: r.required_also?.wheel_topic_publishers ?? null,
@@ -67,6 +71,7 @@ try {
   const ws = new WebSocket(url);
   const send = (frame) => { const id = nextId++; ws.send(JSON.stringify({ ...frame, id })); return id; };
   await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = () => reject(new Error(`could not open ${url}`)); });
+  ws.onclose = (e) => { rec.closed = { at_ms: Date.now(), code: e.code, reason: e.reason }; };
   ws.onmessage = (ev) => {
     if (typeof ev.data !== 'string') return;              // binary frames (camera, map) are not needed here
     let m; try { m = JSON.parse(ev.data); } catch { return; }
@@ -104,9 +109,8 @@ try {
     if (!during && Date.now() - t0 > 1500) during = 'pending';
     await sleep(100);
     if (during === 'pending') {                            // keep driving while ROS is asked
-      const probe = (async () => inContainer())();
       const keep = setInterval(() => ws.send(JSON.stringify({ type: 'drive', linear: 0.15, angular: 0 })), 100);
-      during = await probe; clearInterval(keep);
+      during = await inContainer(); clearInterval(keep);
     }
   }
   const p1 = truthXY();
