@@ -97,6 +97,12 @@ fail() {
 }
 
 scan_up() { timeout 8 ros2 topic echo /scan --once --field header.stamp.sec > /dev/null 2>&1; }
+gateway_up() {
+  python3 -c "import sys, urllib.request
+try: urllib.request.urlopen('http://127.0.0.1:${GW_PORT}/healthz', timeout=2)
+except urllib.error.HTTPError: sys.exit(0)
+except Exception: sys.exit(1)" 2>/dev/null
+}
 amcl_up() { timeout 8 ros2 topic echo /amcl_pose --once --field header.stamp.sec > /dev/null 2>&1; }
 NAV_NODES=(/bt_navigator /controller_server /planner_server /amcl /map_server
            /local_costmap/local_costmap /global_costmap/global_costmap
@@ -183,8 +189,12 @@ run_stack() {
   start arbiter ros2 launch custom_teleop arbiter.launch.py initial_mode:=nav use_sim_time:=true
   # 6b. the control gateway: COCO's own coco.v1 server. It publishes only its allowlist (the arbiter's
   # teleop input and mode, /goal_pose, the arm and gripper trajectories): never the wheels.
+  # Remote mode needs code access (platform_server refuses an open remote session): `docker -p`
+  # publishes the port on every interface, so without a code anyone on the same network could drive.
+  # The code (a CSPRNG, coco_web/control.py) is printed below; STOP needs no code, from any client.
   start gateway ros2 run coco_web platform_server --ros-args -p use_sim_time:=true \
-    -p "http_port:=${GW_PORT}" -p remote:=true -p access:=open -p "origins:=${GW_ORIGINS}"
+    -p "http_port:=${GW_PORT}" -p remote:=true -p access:=code -p "origins:=${GW_ORIGINS}" \
+    -p session_cap_s:=86400.0
   if [ -n "$LEVEL_MAP" ]; then
     start nav ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
       map:="$LEVEL_MAP" params_file:="$LEVEL_PARAMS"
@@ -199,6 +209,14 @@ run_stack() {
     "$LEVEL_ALIAS" "$LEVEL_ID" "$PORT" "$(date -u +%FT%TZ)" > "$LOGS/ready.json.tmp"
   python3 -c "import json,sys; r=json.load(open(sys.argv[1])); r['gateway_port']=int(sys.argv[2]); print(json.dumps(r))" \
     "$LOGS/ready.json.tmp" "$GW_PORT" > "$LOGS/ready.json" && rm -f "$LOGS/ready.json.tmp"
+  local code_msg
+  wait_for "the control gateway" 60 gateway_up || fail "the control gateway did not start" gateway.log
+  code_msg=$(timeout 15 ros2 service call /coco_web_platform/session_code std_srvs/srv/Trigger 2>/dev/null \
+             | grep -oE "control code [0-9A-Z]{8}" | head -1)
+  [ -n "$code_msg" ] || fail "the control gateway gave no control code" gateway.log
+  echo "${code_msg#control code }" > "$LOGS/control_code"
+  chmod 0600 "$LOGS/control_code"
+  say "CONTROL CODE: ${code_msg#control code } -- type it on the website to drive (STOP needs no code)"
   say "READY: Nav2 active on ${LEVEL_ID}; connect to ws://localhost:${PORT} (topics) and ws://localhost:${GW_PORT}/ws (control)"
 
   # Hold the container on the stack: if any part exits, say which and stop the rest.

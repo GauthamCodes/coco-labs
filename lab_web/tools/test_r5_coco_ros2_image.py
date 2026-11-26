@@ -262,12 +262,14 @@ def test_the_gateway_is_cocos_own_coco_v1_server_in_remote_mode():
     # coco_web's platform_server, whose publishers are its allowlist (never the wheels)
     text = open(os.path.join(D, 'entrypoint.sh')).read()
     assert 'ros2 run coco_web platform_server' in text and '-p remote:=true' in text
+    # remote mode requires code access (platform_server refuses an open remote session): a CSPRNG code
+    assert '-p access:=code' in text and '-p access:=open' not in text and 'session_code' in text
     assert 'origins:=${GW_ORIGINS}' in text and 'https://gauthamcodes.github.io' in text
     srv = open(os.path.join(REPO, 'coco_web', 'coco_web', 'platform_server.py')).read()
     pubs = re.findall(r"create_publisher\(\s*\w+,\s*([^,]+),", srv)
     assert pubs and not any('diff_drive_controller' in t or t.strip() in ("'/cmd_vel'",) for t in pubs), pubs
     probe = open(os.path.join(D, 'gw_probe.mjs')).read()
-    for k in ('wheels_only_arbiter', 'teleop_input_is_the_gateway', 'stop_latches_and_holds',
+    for k in ('drive_without_code_refused', 'claim_with_code', 'wheels_only_arbiter', 'teleop_input_is_the_gateway', 'stop_latches_and_holds',
               'goal_reaches_nav2', 'foreign_origin_refused'):
         assert k in probe, k
     wf = open(os.path.join(REPO, '.github', 'workflows', 'coco-ros2-image.yml')).read()

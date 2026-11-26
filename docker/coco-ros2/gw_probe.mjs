@@ -81,6 +81,13 @@ try {
 
   send({ type: 'hello', client: 'coco-ros2 gw_probe', binary: false });
   for (let i = 0; i < 100 && !(rec.welcome && last?.robot?.truth); i++) await sleep(100);
+  // code access (remote mode): driving without the code is refused; the code is read from the container
+  const refused = await answered(send({ type: 'drive', linear: 0.1, angular: 0 }));
+  const controlCode = container ? execFileSync('docker', ['exec', container, 'cat', '/tmp/coco/control_code'],
+    { encoding: 'utf-8' }).trim() : null;
+  const claim = controlCode ? await answered(send({ type: 'claim', code: controlCode })) : null;
+  rec.steps.code = { drive_without_code: refused?.type === 'error' ? refused.code : refused?.type ?? null,
+    claim: claim?.type ?? null, code_length: controlCode?.length ?? null };
   rec.steps.welcome = { protocol: rec.welcome?.protocol ?? null,
     has_commands: ['drive', 'stop', 'set_mode', 'nav_goal'].every((c) => rec.welcome?.commands?.includes(c)),
     telemetry: rec.telemetry_frames > 0, truth: truthXY() };
@@ -137,6 +144,8 @@ try {
   const isArbiter = (n) => String(n).replace(/^\/+/, '') === 'cmd_vel_arbiter';
   const w = rec.steps.drive.in_container;
   rec.acceptance = {
+    drive_without_code_refused: rec.steps.code.drive_without_code !== null && rec.steps.code.drive_without_code !== 'ack',
+    claim_with_code: rec.steps.code.claim === 'ack',
     welcome_coco_v1: rec.steps.welcome.protocol === 'coco.v1' && rec.steps.welcome.has_commands && rec.steps.welcome.telemetry,
     drive_moves_coco: rec.steps.drive.set_mode_teleop === 'ack' && (rec.steps.drive.moved_m ?? 0) > 0.1,
     wheels_only_arbiter: Array.isArray(w?.wheel_topic_publishers) && w.wheel_topic_publishers.length === 1 && isArbiter(w.wheel_topic_publishers[0]),
