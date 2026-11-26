@@ -200,7 +200,7 @@ function main() {
   // R1: a pack may also carry the benchmark suites (benchmarks/*.json, in the experiments pack)
   // R2: templates/ holds algorithm files (user code the Studio loads as text), never modules
   // R4: course/ holds the course's exercises (JSON) and its starter/solution files (user code, data)
-  const all = walk(src).filter((f) => !f.includes('/templates/') && (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks|course)\/[^/]+\.json$/.test(f) || /\/ros2_package\/[^/]+\.tmpl$/.test(f)))
+  const all = walk(src).filter((f) => !f.includes('/templates/') && (f.endsWith('.py') || f.endsWith('link_limits.json') || /\/(levels|benchmarks|course)\/[^/]+\.json$/.test(f) || /\/(ros2_package|level_package)\/[^/]+\.tmpl$/.test(f)))
     .map((f) => [`coco_lab/${relative(src, f)}`, readFileSync(f)]);
   // M2.2: split into packs (tools/arena_packs.json); core = everything not in a lens pack
   const { packs: packDefs } = JSON.parse(readFileSync(join(here, 'arena_packs.json'), 'utf-8'));

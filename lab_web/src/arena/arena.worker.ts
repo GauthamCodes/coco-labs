@@ -32,7 +32,7 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
+    compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; level_package_op: (arg: string | null) => string; game_prefetch: (ms: number) => boolean;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string;
     experiment: (op: string, spec: string, arg: string | null) => string; experiment_world: (id: string, spec: string) => void;
@@ -233,6 +233,14 @@ async function play(req: Extract<ToWorker, { type: 'play' }>) {
 function gameQuery(req: Extract<ToWorker, { type: 'game' }>) {
   try {
     if (!glue) throw new Error('game query before boot');
+    // R5.4: a level as a ROS 2 package needs no running game (Play and the world editor), and its own
+    // pack (worldgen's SDF), loaded only now so that Play never imports it at boot
+    if (req.op === 'level_package') {
+      const g = glue;
+      void loadPack('level').then(() => post({ type: 'game_done', id: req.id, result: g.level_package_op(req.arg) }))
+        .catch((e) => post({ type: 'game_done', id: req.id, error: e instanceof Error ? e.message : String(e) }));
+      return;
+    }
     post({ type: 'game_done', id: req.id, result: glue.game_op(req.op, req.arg) });
   } catch (e) {
     post({ type: 'game_done', id: req.id, error: e instanceof Error ? e.message : String(e) });

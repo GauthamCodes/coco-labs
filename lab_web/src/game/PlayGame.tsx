@@ -49,6 +49,7 @@ import { LiveSource } from '../live/live_source';
 import { failureWords, type LiveGraph } from '../ros/foxglove';
 import { LiveConnect } from './hud/LiveConnect';
 import { LiveLeg, MODEL_WORLD, modelSide, modelSpec, sideWords, type Side } from '../live/model_vs_live';
+import { saveBytes, zipFiles } from '../workbench/exports';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -60,6 +61,8 @@ export interface PlayProps {
   onPause: () => void; paused: boolean; onResult: (r: GameResult) => void; restartKey: number;
   /** R5.2: bumped by the pause menu's CONNECT TO ROS 2 (Free drive only) */
   liveAsk?: number;
+  /** R5.4: bumped by the pause menu's DOWNLOAD AS ROS 2 PACKAGE (Free drive only) */
+  packageAsk?: number;
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
   /** draw the planner ghost: the A* route for the current order (Settings) */
   ghost: boolean;
@@ -79,6 +82,8 @@ export function PlayGame(p: PlayProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const r = useRef<GameRenderer | null>(null);
   const s = useRef<GameSession | null>(null);
+  /** R5.4: this level's World Spec, as loaded (a level package is generated from it) */
+  const specRef = useRef<unknown>(null);
   // R5.2: LIVE -- COCO's ROS 2 stack in the coco-ros2 container; while connected, the model is paused
   const liveSrc = useRef<LiveSource | null>(null);
   const [liveOn, setLiveOn] = useState(false);
@@ -86,6 +91,24 @@ export function PlayGame(p: PlayProps) {
   const [liveWords, setLiveWords] = useState('');
   const [liveGraph, setLiveGraph] = useState<LiveGraph | null>(null);
   useEffect(() => { if (p.liveAsk) setLiveSheet(true); }, [p.liveAsk]);
+  /** R5.4: this level and the goal set on the map, as a ROS 2 package (coco_lab.level_package in the worker), zipped */
+  const downloadPackage = async () => {
+    const ss = s.current, spec = specRef.current;
+    if (!ss || !spec) return;
+    if (!goal) { say('Set a goal on the map first: it becomes the package\'s scenario'); return; }
+    say('Building the ROS 2 package…');
+    try {
+      // as text: JSON.parse + stringify would turn 0.0 into 0, and ROS 2 refuses an integer for a double parameter
+      const templatesJson = await (await fetch(`${BASE}generated/levels/templates.json`, { credentials: 'omit' })).text();
+      const res = await ss.client.game<Record<string, string> | { error: string }>('level_package', { spec, goals: [goal], scenario: 'play_goal', templates_json: templatesJson });
+      if ('error' in res && typeof res.error === 'string') { say(`Could not build the package: ${res.error.slice(0, 120)}`); return; }
+      const files = Object.fromEntries(Object.entries(res as Record<string, string>).map(([k, v]) => [k, Uint8Array.from(atob(v), (c) => c.charCodeAt(0))]));
+      const name = Object.keys(files)[0]?.split('/')[0] ?? 'coco_level';
+      saveBytes(`${name}.zip`, zipFiles(files));
+      say(`Downloaded ${name}.zip: see its README for the commands`);
+    } catch (e) { say(`Could not build the package: ${String(e).slice(0, 120)}`); }
+  };
+  useEffect(() => { if (p.packageAsk) void downloadPackage(); }, [p.packageAsk]); // eslint-disable-line react-hooks/exhaustive-deps
   // R5.3: Model vs LIVE for the last LIVE goal
   const leg = useRef<LiveLeg | null>(null);
   const modelPath = useRef<[number, number][] | null>(null);
@@ -155,6 +178,7 @@ export function PlayGame(p: PlayProps) {
     void (async () => {
       try {
         const spec = await (await fetch(specUrl, { credentials: 'omit' })).json() as Spec & { start: { x: number; y: number; theta: number } };
+        specRef.current = spec;
         const lk = describe(spec);
         look.current = lk;
         const lightName = p.world === 'depot' || p.world === 'depot_colours' ? p.world : 'proving_v1';

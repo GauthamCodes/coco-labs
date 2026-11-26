@@ -1,0 +1,33 @@
+import os
+from glob import glob
+
+from setuptools import setup
+
+PKG = '@@PKG@@'
+
+
+def tree(sub):
+    """Every file under `sub`, installed under share/PKG/sub (directories kept)."""
+    out = {}
+    for path in glob(os.path.join(sub, '**', '*'), recursive=True):
+        if os.path.isfile(path):
+            out.setdefault(os.path.join('share', PKG, os.path.dirname(path)), []).append(path)
+    return list(out.items())
+
+
+setup(
+    name=PKG,
+    version='0.1.0',
+    packages=[PKG],
+    data_files=[('share/ament_index/resource_index/packages', ['resource/' + PKG]),
+                ('share/' + PKG, ['package.xml', 'scenario.json', 'README.md'])]
+    + tree('launch') + tree('level'),
+    install_requires=['setuptools'],
+    zip_safe=True,
+    description='COCO Lab level @@LEVEL_ID@@: Gazebo world, Nav2 map and parameters, goals',
+    license='Apache-2.0',
+    entry_points={'console_scripts': [
+        'bringup = @@PKG@@.bringup:main',
+        'run_goals = @@PKG@@.run_goals:main',
+    ]},
+)

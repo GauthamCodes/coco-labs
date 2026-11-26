@@ -712,6 +712,23 @@ def game_ghost():
     return json.dumps({'order': r.k, 'points': pts[::2] + [pts[-1]]})
 
 
+def level_package_op(arg_json):
+    """
+    R5.4 "Download as ROS 2 package": a World Spec and goals as a ROS 2 package (coco_lab.level_package,
+    the function the CLI runs), with COCO's templates the page fetched (generated/levels/templates.json).
+    Needs no running game (the world editor calls it too). Returns {path: base64}.
+    """
+    import base64
+    from coco_lab import level_package
+    a = json.loads(arg_json)
+    # the templates as the page fetched them, as TEXT: a JavaScript round trip writes 0.0 as 0, and a ROS 2
+    # double parameter given an integer is refused (a level package's Nav2 would not start)
+    t = json.loads(a['templates_json'])
+    files = level_package.package(a['spec'], a['goals'], t['world_template'], t['nav2_params'], t['controllers'],
+                                  scenario=a.get('scenario', 'goals'))
+    return json.dumps({k: base64.b64encode(v).decode('ascii') for k, v in files.items()})
+
+
 @_in_run
 def game_op(op, arg_json=None):
     """The worker's one entry point for game queries (none of them changes the model)."""
