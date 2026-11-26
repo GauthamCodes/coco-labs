@@ -169,6 +169,7 @@
     "game"
    ],
    "modules": [
+    "level_check.py",
     "level_files.py",
     "level_package.py",
     "level_package/README.md.tmpl",

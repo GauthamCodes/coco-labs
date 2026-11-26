@@ -1,0 +1,41 @@
+{
+ "browser": "chromium",
+ "steps": {
+  "build": {
+   "check_ok": true,
+   "check": "✓ the level is valid; COCO fits at its start; every goal is reachable",
+   "goals": "(10, 7) reachable, 10.07 m✕(3, 3.5) reachable, 1.91 m✕"
+  },
+  "experiment_status": "experiment: 4 runs (MODEL)",
+  "experiment": {
+   "rows": [
+    "astar1found10.07 m",
+    "astar2found1.91 m",
+    "dijkstra1found10.07 m",
+    "dijkstra2found1.91 m"
+   ]
+  },
+  "play": {
+   "url_has_level": true,
+   "url": "http://127.0.0.1:4184/coco-labs/?view=play&game=free#level=v1.3ZVNj6M4EIb_SlR7mdV6LPPV3fja15FaWu0tipADtQHF4Ixtmv4Q_31VEAK96Uwn1-ECLqinbPO-5XdwB8xBvg_37Bmtq0wDEnKTG94Zq4uM3vDnCBhUBUjAovLGZr4zmTWmdsDAV14jSPinM6sp9q9VNcUGBrDxnnmT1eoAci2Y2DDYmrYpHJV_yeqqASkYPakXkEHI4PUUfB2Dac_Amq3xlLKzlJ3lGpVVTY4gBRdBlDDQVaEsfaKancYxNeQijWM2hYj7fYrVpm08yPV3wUXKBA-Y4OGGgVXNDufpHIfDlHiQMHCqPmh0IOMH0VPZuvLuWLfVymYqz1GDpLKtN9kxDDI4BnTVII0FjyidBlNOyMCjRnNYZPE5OGcmtCeqqFpHozBk0JWIOptjInlIpqjDg7LKDz9Z8PA-7hk4r-ywoy9D2dexeIlegaR1KYuNoveFH1bOoFZ2N25DwsCiM7qdkAGDttk3piMVbbXJ91hAz2Bf0Q6_jxoyrUebkUz2VUOBTmk9iMbUJ3F4A3IdhONzWeX7Bp2btr7Eald6kGHPPjCby8x0wUxvYXZXzFPchsRLyGm9t82TGFlwiXk3I--uJRbG2CyciTQmFxN4UU95kDGJoKsKXw4SPSG22ORlFs2MIQAMcmw8WpDrlJHLXPWGtFp-xwR_2MyzETw9wazK91k8s2i8REXsjiczLGIBDxaokKzjStTPZNc1-S1gAb_fMFCVo-Y1mGt4pg_gr1fY9MQzrc1xMPXY-EDC49Pj0-qH2q6GnrYa46tvfyc8-ZOkvjUvA-QLsZ_mPv6faRtCakC0lLehT1wv9AUvvZ13LvITT7B4ubeDZNIvgecSPwGD8EbiqLc_xK_WHPD0_8iIXwE9t80Ces_FJ1Dx4Yp_UePMA2brvMo1XmGDN3JAnFznh8-4FzxBc-XBB2-Q0lHj8_FgWG96BjujNKl4HQh2v2HriEU82dCHRx-8f3rud-NZWYJMvz5ZDhXmS6vc1Md-61513oku_g-HP0Emff8f",
+   "title": "FREE DRIVE·TWO ROOMS",
+   "primary_at_start": "GO (G)",
+   "auto": true,
+   "speed": "0.30m/sAUTO",
+   "rosout": "INFO cmd_vel_arbiter: passing navigation (/cmd_vel_nav)",
+   "primary_after": "GRAB: Nothing in range (G)"
+  },
+  "package": {
+   "file": "coco_level_editor_two_rooms.zip"
+  },
+  "box_pieces": "wall_1✕door_2✕bench_3✕rack_4✕box_5✕",
+  "broken": {
+   "check": "goal 1 (10, 7) is not reachable from the start: no path wide enough for COCO's 0.22 m radius"
+  },
+  "undo": {
+   "check": "✓ the level is valid; COCO fits at its start; every goal is reachable"
+  }
+ },
+ "page_errors": [],
+ "pass": true
+}

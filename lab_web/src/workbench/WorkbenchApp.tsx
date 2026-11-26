@@ -25,6 +25,7 @@ import { WorkbenchTabs, type Tab } from './tabs';
 import './workbench.css';
 import '../game/fonts.css';
 // R2.3: the Algorithm Studio (and CodeMirror with it) loads only when its tab opens
+const WorldEditor = lazy(() => import('../editor/WorldEditor').then((m) => ({ default: m.WorldEditor })));
 const StudioTab = lazy(() => import('../studio/StudioTab'));
 const BASE = import.meta.env.BASE_URL;
 const SITE = () => new URL(BASE, window.location.href).href;
@@ -152,6 +153,7 @@ export function WorkbenchApp() {
       <p>Every experiment runs the model in your browser and gives the same counts on every run and every browser (hash-verified), so any result can be shared as a link and checked by anyone. MODEL results; real Gazebo + Nav2 recordings are under Recordings.</p>
       <WorkbenchTabs current={tab} /></header>
     {tab === 'studio' ? <Suspense fallback={<p className="wb-muted" role="status">Loading the Algorithm Studio…</p>}><StudioTab /></Suspense>
+      : tab === 'editor' ? <Suspense fallback={<p className="wb-muted" role="status">Loading the world editor…</p>}><WorldEditor /></Suspense>
       : tab === 'benchmarks' ? <BenchmarksTab /> : tab === 'leaderboard' ? <LeaderboardTab /> : tab === 'gap' ? <ModelVsRos2Tab /> : tab === 'datasets' ? <DatasetsTab /> : <Experiments />}
   </main>;
 }

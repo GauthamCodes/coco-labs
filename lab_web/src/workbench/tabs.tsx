@@ -4,9 +4,10 @@
 import './workbench.css';
 const BASE = import.meta.env.BASE_URL;
 
-export type Tab = 'studio' | 'experiments' | 'benchmarks' | 'leaderboard' | 'gap' | 'recordings' | 'datasets';
+export type Tab = 'studio' | 'experiments' | 'benchmarks' | 'leaderboard' | 'gap' | 'recordings' | 'datasets' | 'editor';
 export const TABS: { id: Tab; label: string; href: string }[] = [
   { id: 'studio', label: 'Algorithm Studio', href: '?view=workbench&tab=studio' },
+  { id: 'editor', label: 'World editor', href: '?view=workbench&tab=editor' },
   { id: 'experiments', label: 'Experiments', href: '?view=workbench' },
   { id: 'benchmarks', label: 'Benchmarks', href: '?view=workbench&tab=benchmarks' },
   { id: 'leaderboard', label: 'Leaderboard', href: '?view=workbench&tab=leaderboard' },

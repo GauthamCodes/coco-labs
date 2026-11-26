@@ -14,6 +14,7 @@ functools.
 from array import array
 import functools
 import json
+import math
 
 from coco_lab import numerics
 from coco_lab.arena import Arena, InputEvent, LOOP_KINDS, PLANNERS
@@ -540,7 +541,11 @@ def _game_block(t):
         # its schedule), so the drawing is the model's own
         out['actors'] = [[e['id'], x, y, yaw]
                          for e, (x, y, yaw) in zip(act.actors, act.poses())]
-        out['clearance'] = act.clearance(a.pose[0], a.pose[1], a.radius)
+        # a level with no actors (a world-editor level, R5.5) has no clearance to report: infinity, which
+        # JSON.parse refuses (every tick of such a level failed in the browser) -- so only a finite one is sent
+        c = act.clearance(a.pose[0], a.pose[1], a.radius)
+        if math.isfinite(c):
+            out['clearance'] = c
         if act.yielding():
             out['actors_held'] = [e['id'] for e, h in zip(act.actors, act.holding()) if h]
     av = a.subsystems.get('avoid')
@@ -710,6 +715,13 @@ def game_ghost():
             return json.dumps(None)
         pts += [list(a.plan_map.cell_centre(c[0], c[1])) for c in res.path]
     return json.dumps({'order': r.k, 'points': pts[::2] + [pts[-1]]})
+
+
+def level_check_op(arg_json):
+    """R5.5: the world editor's live check of a level and its goals (coco_lab.level_check). JSON."""
+    from coco_lab import level_check
+    a = json.loads(arg_json)
+    return json.dumps(level_check.check(a['spec'], a.get('goals') or []))
 
 
 def level_package_op(arg_json):

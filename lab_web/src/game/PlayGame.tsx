@@ -63,6 +63,8 @@ export interface PlayProps {
   liveAsk?: number;
   /** R5.4: bumped by the pause menu's DOWNLOAD AS ROS 2 PACKAGE (Free drive only) */
   packageAsk?: number;
+  /** R5.5: a world-editor level (Free drive on it; its first goal set on the map) */
+  custom?: import('../editor/level_link').EditorLevel;
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
   /** draw the planner ghost: the A* route for the current order (Settings) */
   ghost: boolean;
@@ -177,7 +179,7 @@ export function PlayGame(p: PlayProps) {
     const specUrl = `${BASE}generated/arena/${SPEC_FOR[p.world]}`;
     void (async () => {
       try {
-        const spec = await (await fetch(specUrl, { credentials: 'omit' })).json() as Spec & { start: { x: number; y: number; theta: number } };
+        const spec = (p.custom ? p.custom.spec : await (await fetch(specUrl, { credentials: 'omit' })).json()) as Spec & { start: { x: number; y: number; theta: number } };
         specRef.current = spec;
         const lk = describe(spec);
         look.current = lk;
@@ -202,6 +204,9 @@ export function PlayGame(p: PlayProps) {
     const session = new GameSession(p.world, p.game, p.seed, {
       onWorld: (w, o) => {
         occ.current = o; setWorld(w); setModelReady(true); setStage('ready');
+        // R5.5: an editor level's first goal, set on the map (GO drives to it)
+        const g0 = p.custom?.goals?.[0];
+        if (g0) { setGoal([g0[0], g0[1]]); r.current?.setGoal([g0[0], g0[1]]); }
         // G2.2: SIM view's map, frames and scan constants; their materials compile now, behind the loading screen
         if (w.game.ros) { renderer.setRos(w.game.ros, { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, o); void renderer.precompile(); }
       },
@@ -220,7 +225,7 @@ export function PlayGame(p: PlayProps) {
           if (n) { const row = Object.fromEntries(['joint1', 'joint2', 'finger_left', 'finger_right'].map((k) => [k, Number(cols[k]?.[n - 1])])); r.current?.setArm(row); recorder.current.setArm(row); }
         }
       },
-    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar', p.colour ?? 'red');
+    }, p.mode ?? 'phone', p.race ? 'astar' : p.planner ?? 'astar', p.colour ?? 'red', p.custom ? JSON.stringify(p.custom.spec) : undefined);
     s.current = session;
     session.client.worker.addEventListener('message', (m: MessageEvent) => {
       const d = m.data as { type: string; name?: string };
@@ -751,7 +756,7 @@ export function PlayGame(p: PlayProps) {
         ? fr ? <><span className="g2-colour-dot" data-colour={p.colour ?? 'red'} aria-hidden /><span data-testid="colour-objective">{fr.deliveries ? `DELIVERED THE ${(p.colour ?? 'red').toUpperCase()} ROD` : colourObjective(p.colour ?? 'red', !!tick?.game?.assist?.carried, world?.game.colour?.drop_label)}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH BY COLOUR · {colourChip(p.colour ?? 'red')}</span>
         : p.game === 'fetch_rush'
         ? fr ? <><span>DELIVER {fr.deliveries}/{fr.orders}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH RUSH</span>
-        : <><span>FREE DRIVE</span><span className="sep">·</span><span>{p.world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}</span></>}</div>
+        : <><span>FREE DRIVE</span><span className="sep">·</span><span>{p.custom ? String(p.custom.spec.title ?? 'EDITOR LEVEL').toUpperCase() : p.world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}</span></>}</div>
       <div className="g1-top-right">
         <button className="g1-icon g1-glass" data-testid="g1-pause" aria-label="Pause (Esc)" onClick={p.onPause}><Pause size={20} />{desktop && <kbd>ESC</kbd>}</button>
         {p.game === 'free' && <button className={`g1-icon g1-glass ${liveOn ? 'is-on' : ''}`} data-testid="r5-live-button" aria-pressed={liveOn} aria-label={liveOn ? 'ROS 2: LIVE (connected)' : 'Connect to ROS 2 (LIVE)'} onClick={() => setLiveSheet((x) => !x)}><Plug size={20} /></button>}

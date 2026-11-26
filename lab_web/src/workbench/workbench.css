@@ -87,3 +87,20 @@
 /* R4 Part A: say a wide table scrolls (phones), rather than hide it */
 .wb-scroll-hint{display:none;color:var(--muted);font-size:12px;margin:4px 0}
 @media (max-width:900px){.wb-scroll-hint{display:block}}
+
+/* ---- R5.5: the world editor ---- */
+.r5-editor { display: grid; gap: 10px; }
+.r5-ed-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.r5-ed-tools button { padding: 5px 10px; border-radius: 8px; border: 1px solid var(--wb-line, #334155); background: transparent; color: inherit; cursor: pointer; }
+.r5-ed-tools button[aria-pressed="true"] { background: #0e7490; color: #fff; border-color: #22d3ee; }
+.r5-ed-main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 12px; align-items: start; }
+@media (max-width: 900px) { .r5-ed-main { grid-template-columns: 1fr; } }
+.r5-ed-canvas { overflow: auto; }
+.r5-ed-canvas canvas { max-width: 100%; touch-action: none; border-radius: 8px; cursor: crosshair; }
+.r5-ed-canvas canvas:focus-visible { outline: 2px solid #22d3ee; }
+.r5-ed-side { display: grid; gap: 6px; font-size: 13px; }
+.r5-ed-side input { max-width: 120px; }
+.r5-ed-side h4 { margin: 8px 0 2px; }
+.r5-ed-list { max-height: 160px; overflow: auto; padding-left: 0; list-style: none; }
+.r5-ed-actions { display: grid; gap: 6px; margin-top: 8px; }
+.r5-ed-actions button { padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer; }

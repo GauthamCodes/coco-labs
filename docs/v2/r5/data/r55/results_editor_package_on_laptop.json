@@ -1,0 +1,33 @@
+{
+ "schema": "coco_lab.level_package.results",
+ "version": 1,
+ "package": "coco_level_editor_two_rooms",
+ "level": "editor_two_rooms",
+ "scenario": "editor_goals",
+ "evidence_class": "STACK (COCO's ROS 2 stack in Gazebo: a simulation, never hardware)",
+ "utc": "2026-11-26T21:57:51Z",
+ "results": [
+  {
+   "id": "g001",
+   "goal": [
+    10.0,
+    7.0
+   ],
+   "status": "SUCCEEDED",
+   "sim_s": 32.89,
+   "amcl_to_goal_m": 0.256
+  },
+  {
+   "id": "g002",
+   "goal": [
+    3.0,
+    3.5
+   ],
+   "status": "SUCCEEDED",
+   "sim_s": 77.91,
+   "amcl_to_goal_m": 0.239
+  }
+ ],
+ "succeeded": 2,
+ "goals": 2
+}

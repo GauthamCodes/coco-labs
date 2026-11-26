@@ -22,6 +22,8 @@ export interface BootRequest {
   hashVersion?: 1 | 2 | 3;
   /** M4.3: the World Spec to build (a file in generated/arena/); absent = coco_arena_v1.json. */
   spec?: SpecFile;
+  /** R5.5: a World Spec given inline (the world editor's level; validated by the Python reader like any) instead of `spec` */
+  specJson?: string;
   /** G1: boot a game session (coco_lab.games via the glue's game_init): 'fetch_rush' (arg = its seed), 'fetch_colour' (arg = the colour) or 'free'. */
   game?: { game: 'fetch_rush' | 'fetch_colour' | 'free'; arg: number | string; mode?: 'phone' | 'full' };
 }
@@ -57,7 +59,9 @@ export interface LoopFrame { pose: [number, number, number]; truth: [number, num
  * R1: an experiment request (coco_lab.experiments through arena_glue.experiment), queued
  * like a game query; `world` names a shipped World Spec the worker fetches once.
  */
-export interface ExperimentRequest { type: 'experiment'; id: number; op: 'plan' | 'run' | 'summary' | 'export' | 'digest' | 'replay' | 'trace'; spec: string; world: string; arg?: string }
+export interface ExperimentRequest { type: 'experiment'; id: number; op: 'plan' | 'run' | 'summary' | 'export' | 'digest' | 'replay' | 'trace'; spec: string; world: string; arg?: string;
+  /** R5.5: the World Spec of `world` given inline (a world-editor level), registered instead of a shipped file */
+  worldSpec?: string }
 /** R1.7: one tick of a replayed experiment run (Compare), the frame a Compare loop pane draws. */
 export interface ReplayFrame { pose: [number, number, number]; truth: [number, number, number]; hash: string; tick: number }
 export type ToWorker = { type: 'costmap_view'; delta?: boolean } | LoopCompareRequest | BootRequest | WarmRequest | StepRequest | AmendRequest | CompareRequest | LoadPackRequest | PlayRequest | GameRequest | ExperimentRequest;

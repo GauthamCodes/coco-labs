@@ -13,6 +13,7 @@
  * pause menu, settings and results live here; Play itself is PlayGame.
  */
 
+import { levelFromHash, type EditorLevel } from '../editor/level_link';
 import { chosenPlanner, PLANNER_LABEL, PLANNER_WHAT, PLAY_PLANNERS, type PlayPlanner } from './planners';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Lock } from 'lucide-react';
@@ -82,6 +83,8 @@ export function GameApp() {
     if (!colour) return <ColourChoice planner={planner} race={race} />;
     return <GameRun game={game} world="depot_colours" seed={1} mode="phone" race={race} planner={race ? 'astar' : planner} colour={colour} />;
   }
+  // R5.5: a world-editor level (#level=v1.…): Free drive on it
+  if (game === 'free' && /(?:^#|&)level=/.test(window.location.hash)) return <EditorLevelRun />;
   if (game !== 'fetch_rush' && game !== 'free') return <ModeSelect />;
   const world: WorldId = game === 'fetch_rush' ? 'depot' : q.get('world') === 'proving' ? 'proving' : 'depot';
   // Fetch Rush plays the shifts on file (rules_view); another seed opens shift 1. G1.12: &mode=full is the Full shift
@@ -91,7 +94,17 @@ export function GameApp() {
   return <GameRun game={game} world={world} seed={seed} mode={fetchRushMode(q.get('mode'))} race={race} planner={race ? 'astar' : chosenPlanner(q.get('planner'))} />;
 }
 
-function GameRun({ game, world, seed, mode, race, planner, colour }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean; planner: PlayPlanner; colour?: FetchColourId }) {
+/** R5.5: decode the #level= link, then Free drive on that level */
+function EditorLevelRun() {
+  const [level, setLevel] = useState<EditorLevel | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => { levelFromHash(window.location.hash).then((l) => (l ? setLevel(l) : setError('no level in this link')), (e) => setError(String(e))); }, []);
+  if (error) return <section className="g1 g1-screen" role="alert" data-testid="r5-level-error"><p>This level link could not be opened: {error}</p><a href={`${BASE}?view=workbench&tab=editor`}>Open the world editor</a></section>;
+  if (!level) return <section className="g1 g1-screen"><p>Opening the level…</p></section>;
+  return <GameRun game="free" world="depot" seed={1} mode="phone" race={false} planner="astar" custom={level} />;
+}
+
+function GameRun({ game, world, seed, mode, race, planner, colour, custom }: { game: GameKind; world: WorldId; seed: number; mode: FetchRushMode; race: boolean; planner: PlayPlanner; colour?: FetchColourId; custom?: EditorLevel }) {
   const [paused, setPaused] = useState(false);
   const [settings, setSettings] = useState(false);
   const [result, setResult] = useState<GameResult | null>(null);
@@ -113,7 +126,7 @@ function GameRun({ game, world, seed, mode, race, planner, colour }: { game: Gam
   // R5.4: the pause menu's DOWNLOAD AS ROS 2 PACKAGE (this level + the goal set on the map)
   const [packageAsk, setPackageAsk] = useState(0);
   return <>
-    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)} liveAsk={liveAsk} packageAsk={packageAsk}
+    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)} liveAsk={liveAsk} packageAsk={packageAsk} custom={custom}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
       onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race} planner={planner} colour={colour}
       onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />

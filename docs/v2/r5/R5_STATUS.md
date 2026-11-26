@@ -188,6 +188,32 @@ README invariant 2 stays as written (control speaks `coco.v1`-style intents); no
 - Limits: the Depot's actors stand still in a package (their scenario script is not part of it); a package needs
   COCO's robot packages (`gazebo_models`, `custom_teleop`), which stock Jazzy does not have (the README says so).
 
+## R5.5 · World editor (first version) — DONE 2026-11-27
+
+- **What:** Workbench › World editor (`?view=workbench&tab=editor`): COCO Lab's kit pieces (wall, door, rack,
+  bench, pallet, box) on a 0.5 m grid, the start and goals; place, move, rotate (R), delete, undo/redo
+  (`src/editor/model.ts`, tested). Live check in a worker: `coco_lab.level_check` = the World Spec reader's own
+  refusals, COCO fitting at its start, every goal reachable (A* on the Arena's own robot-inflated grid). Actions:
+  **Play this level** (Free drive on it, its first goal set), **Use in an experiment** (R1's experiments API, A*
+  and Dijkstra from the start to each goal, the level registered inline), **Download as ROS 2 package** (R5.4),
+  **Copy share link** (`#level=v1.<deflate-raw base64url>`: the spec, the goals and the editor's state; nothing
+  else). Plumbing: the worker boots an inline spec and registers an inline experiment world (both validated by the
+  Python reader like any spec); shipped worlds unchanged.
+- **Found and fixed on the way:** (1) Play's world look needs the lowered spec (boxes, elevation): the check
+  returns it and links carry it (the reader accepts it only if it equals what the kit lowers to); (2) **a latent
+  glue bug**: a level with no actors sent `clearance: Infinity` in every tick, which `JSON.parse` refuses, so
+  Play never ticked on such a level; only a finite clearance is sent now (shipped levels always had one;
+  `test_r5_editor_level_glue.py` parses every tick strictly).
+- **Verified (`tools/r5/editor_e2e.mjs`, Chromium and Firefox, PASS each):** a small level built from scratch by
+  mouse (two rooms, a door, a bench, a rack, the start, two goals): the check passes (goals 10.07 m and 1.91 m);
+  the experiment: 4/4 runs found (A* and Dijkstra, the same lengths); Play opens "FREE DRIVE · TWO ROOMS" and GO
+  drives in AUTO (0.30 m/s); the package downloads; a box in the doorway is refused in words ("goal 1 (10, 7) is
+  not reachable from the start: no path wide enough for COCO's 0.22 m radius"); Undo restores; 0 page errors.
+  **The downloaded package in Gazebo (the laptop's Jazzy): 2/2 SUCCEEDED** (32.9 s, 77.9 s sim). [data/r55/](data/r55/)
+- Limits (first version): axis-aligned pieces only; no ramps, platforms, objects or actors in the editor; the
+  canvas needs scrolling on small screens; keyboard: tools, lists and actions are buttons, the canvas itself is
+  pointer-driven (R, Delete, Ctrl+Z work there).
+
 ## Questions for Gautham (R5)
 
 1. **Control path for R5.2.** README invariant 2 says browser code that controls COCO's Stack never names a ROS topic and speaks `coco.v1`; R5.2 asks the joystick to publish `/cmd_vel` through the arbiter over a ROS bridge. Options: (a) the browser publishes `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` through foxglove_bridge (the image's whitelist keeps everything behind the arbiter) and invariant 2 is amended for a visitor's local LIVE container; (b) control stays `coco.v1` (platform_server in the image, a second port; coco_web is frozen and arena-shaped, so it may need changes) and the bridge is read-only. Default until you decide: no browser control code is written.
