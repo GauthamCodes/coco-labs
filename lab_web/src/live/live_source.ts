@@ -49,6 +49,8 @@ export class LiveSource {
   private k = 0;
   lastTick: GameTick | null = null;
   latched = false;
+  /** the stick as last set: coco_web zeroes a driver whose drive frames stop (its dead-man), so it is re-sent at 10 Hz */
+  private held: [number, number] = [0, 0];
 
   constructor(readonly url: string, private code: string, private ev: LiveSourceEvents) {
     this.bridge = new FoxgloveClient(normaliseUrl(url), {
@@ -79,6 +81,7 @@ export class LiveSource {
   }
 
   private emit() {
+    if (this.held[0] || this.held[1]) this.control.send({ type: 'drive', linear: this.held[0], angular: this.held[1] });
     const t = buildTick(this.state, this.k);
     if (!t) return;
     this.k += 1;
@@ -89,9 +92,20 @@ export class LiveSource {
 
   private stopTimer() { if (this.timer) clearInterval(this.timer); this.timer = null; }
 
-  /** Driving: a coco.v1 intent to the gateway (it publishes the arbiter's teleop input). */
-  drive(linear: number, angular: number) { this.control.send({ type: 'drive', linear, angular }); }
-  stop() { this.control.send({ type: 'stop' }); }
+  /**
+   * Driving: coco.v1 `drive` intents to the gateway (it publishes the arbiter's teleop input). A held
+   * stick is re-sent every 100 ms by the tick timer, as coco_web's own page sends 10 Hz: its dead-man
+   * zeroes the stick when frames stop (measured: one frame moved COCO 0.013 m). Starting to drive
+   * picks teleop first, the explicit manual choice the gateway expects.
+   */
+  drive(linear: number, angular: number) {
+    const was = this.held;
+    this.held = [linear, angular];
+    const moving = linear !== 0 || angular !== 0;
+    if (moving && !was[0] && !was[1] && this.state.telemetry?.platform.arbiter.mode !== 'teleop') this.control.send({ type: 'set_mode', mode: 'teleop' });
+    if (moving || was[0] || was[1]) this.control.send({ type: 'drive', linear, angular });
+  }
+  stop() { this.held = [0, 0]; this.control.send({ type: 'stop' }); }
   /** Picking a mode is what releases a latched STOP (coco_web stop_latch). */
   manual() { this.control.send({ type: 'set_mode', mode: 'teleop' }); }
   goal(x: number, y: number) { this.control.send({ type: 'set_mode', mode: 'auto' }); this.control.send({ type: 'nav_goal', x, y }); }

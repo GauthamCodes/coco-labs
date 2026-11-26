@@ -448,7 +448,8 @@ export function PlayGame(p: PlayProps) {
     try {
       L = new LiveSource(url, code, {
         onTick: (t, ranges) => onTickRef.current(t, ranges),
-        onPhase: (ph, words) => { setLiveWords(words); if (ph === 'live') { setLiveOn(true); say('LIVE: COCO\'s ROS 2 stack, running now'); } },
+        // a failure's words come from onFailure (with the docker command), a disconnect's from disconnectLive: phases must not overwrite them
+        onPhase: (ph, words) => { if (ph === 'failed' || ph === 'closed') return; setLiveWords(words); if (ph === 'live') { setLiveOn(true); say('LIVE: COCO\'s ROS 2 stack, running now'); } },
         onGraph: (g) => setLiveGraph({ publishers: new Map(g.publishers), subscribers: new Map(g.subscribers) }),
         onFailure: (f) => {
           if (f.kind === 'control') { setLiveWords(`Control: ${f.detail}`); return; }
@@ -716,13 +717,13 @@ export function PlayGame(p: PlayProps) {
       <section className="g1-gauge" data-testid="speed"><svg viewBox="0 0 150 66" aria-hidden><path d="M20 62 A55 55 0 0 1 130 62" stroke="#2A3344" strokeWidth="7" fill="none" strokeLinecap="round" />
         {Math.abs(v) > 0.002 && <path d={`M20 62 A55 55 0 0 1 ${(75 - 55 * Math.cos(angle)).toFixed(2)} ${(62 - 55 * Math.sin(angle)).toFixed(2)}`} stroke={v < 0 ? '#22D3EE' : '#FF7A1A'} strokeWidth="7" fill="none" strokeLinecap="round" />}</svg>
         <div className="v num">{Math.abs(v).toFixed(2)}<small>m/s{v < -0.002 ? ' ◂' : ''}</small></div><span className={`g1-mode ${mode}`} data-testid="mode-chip">{mode.toUpperCase()}</span></section>
-      <TelemetryStrip s={tick ? strip(tick) : null} />
+      <TelemetryStrip s={tick ? strip(tick) : null} live={liveOn} />
       {panels && <Panels tab={panelTab} onTab={setPanelTab} onClose={() => setPanels(false)} displays={displays} onDisplays={changeDisplays}
         info={world?.game.ros ?? null} stats={stats.current} recorder={recorder.current} frame={recorder.current.frames[recorder.current.frames.length - 1] ?? null}
         map={world ? { width: world.width, height: world.height, resolution: world.resolution, origin: world.origin } : null} occupancy={occ.current} goal={planGoal.current}
         echo={echo} onEcho={(topic) => { setEcho(topic); setPanelTab('echo'); }} live={liveOn ? { graph: liveGraph } : null} />}
       {desktop && view === 'sim' && <GazeboBar clock={clock.current} now={performance.now()} />}
-      <RosoutConsole lines={log} />
+      <RosoutConsole lines={log} live={liveOn} />
       <button className={`g1-btn g1-primary ${primary.enabled ? (primary.kind === 'drop' ? 'is-drop' : '') : 'is-grey'}`} data-testid="hud-primary" aria-disabled={!primary.enabled} onClick={doPrimary}
         aria-label={`${primary.label}${primary.why ? `: ${primary.why}` : ''} (G)`}>
         {primary.progress !== undefined && <span className="ring" style={{ background: `conic-gradient(var(--g1-safe) 0 ${Math.round(primary.progress * 100)}%, transparent ${Math.round(primary.progress * 100)}%)` }} />}

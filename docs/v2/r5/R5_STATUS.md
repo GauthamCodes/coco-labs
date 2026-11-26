@@ -107,6 +107,32 @@ README invariant 2 stays as written (control speaks `coco.v1`-style intents); no
   the latch; a goal 1 m ahead: NavigateToPose `executing`, plan 21 points; origin `https://evil.example` 403, the
   Pages site 101. [data/r52/ci/](data/r52/ci/)
 
+## R5.2 · Connect to ROS 2 — DONE on the laptop 2026-11-27 (live-site https check after deploy)
+
+- **What was built.** `src/ros/cdr_read.ts` (CDR reader; rclpy goldens 13/13), `src/ros/foxglove.ts` (read-only
+  foxglove_bridge client: `foxglove.sdk.v1`, never advertises/publishes; 5/5), `src/ros/live_read.ts` (the topics
+  and the tick built from them; topic names stay out of `src/live`, so the invariant-2 guard is unchanged),
+  `src/live/live_source.ts` (the two sockets: read = bridge, control = the coco.v1 gateway), Play (Free drive):
+  a HUD button, the SIM caption link and the pause menu open "Connect to ROS 2" (bridge URL + control code); while
+  LIVE the model pauses, every view and label says LIVE (SIM caption, chip, info sheet, panels, telemetry,
+  /rosout-style console: "events from LIVE ticks (not /rosout)"), the ROS 2 graph panel lists the real nodes.
+- **Found and fixed on the way (measured):** coco_web's dead-man zeroes a driver whose drive frames stop
+  (`DRIVE_TIMEOUT_S` 0.5 s): a held stick is now re-sent at 10 Hz (one frame moved COCO 0.013 m). Headless
+  Chromium's default SwiftShader drew Play at one frame per ~1.1 s and starved that timer (timer gaps 2.3 s,
+  `tools/r5/frame_gaps.mjs`); on the laptop's GPU 16.7 ms frames, 100 ms timers. A device that slow fails SAFE
+  (the gateway zeroes the stick). Words: a failure's text is no longer overwritten by the phase that follows it.
+- **Laptop end to end (LIVE; `tools/r5/live_e2e.mjs`; image `sha-744a9f4ca2a7`, AC, balanced; served dist at
+  http://127.0.0.1:4184):** Chromium (RTX 4050, ANGLE GL) and Firefox (headless, hardware renderer) **10/10 each**:
+  a wrong port is said in words with the docker command, and Play stays MODEL; connect -> chip LIVE; the graph
+  panel: 36 nodes, 184 topics, `/diff_drive_controller/cmd_vel` published by `/cmd_vel_arbiter` only; W for 2 s
+  moved COCO 0.535 m / 0.600 m (Gazebo truth) with the arbiter in teleop; a goal: Nav2 `succeeded` (6-point plan);
+  STOP: latched, arbiter idle, 0.000 m after; R released; SIM caption LIVE; Disconnect -> MODEL; 0 page errors.
+  Lost connection (container stopped mid-session, Chromium): "Lost the connection to ROS 2 ... Back to the browser
+  model (MODEL)", chip MODEL. Screen recording `chromium_live_session.webm`. [data/r52/laptop/](data/r52/laptop/)
+- **Not verified yet:** an https page (the live site) reaching ws://localhost (browsers' local-network rules):
+  after deploy, in Chromium and Firefox. Displays/Topic echo/Plot show LIVE values rebuilt in ROS 2 shapes from
+  the LIVE ticks (not raw messages): labelled so. Version mismatch is unit-tested (fake server), not run live.
+
 ## Questions for Gautham (R5)
 
 1. **Control path for R5.2.** README invariant 2 says browser code that controls COCO's Stack never names a ROS topic and speaks `coco.v1`; R5.2 asks the joystick to publish `/cmd_vel` through the arbiter over a ROS bridge. Options: (a) the browser publishes `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` through foxglove_bridge (the image's whitelist keeps everything behind the arbiter) and invariant 2 is amended for a visitor's local LIVE container; (b) control stays `coco.v1` (platform_server in the image, a second port; coco_web is frozen and arena-shaped, so it may need changes) and the bridge is read-only. Default until you decide: no browser control code is written.
