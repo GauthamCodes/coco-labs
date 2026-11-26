@@ -252,7 +252,10 @@ describe('the Live tab is wired through the gate', () => {
     const src = join(__dirname, '..', 'src');
     walk(src);
     const openers = files.filter((p) => /new WebSocket\(/.test(readFileSync(p, 'utf-8')));
-    expect(openers.map((p) => p.slice(src.length + 1))).toEqual([join('live', 'client.ts')]);
+    // R5.2: plus the READ-ONLY foxglove_bridge client of a visitor's own coco-ros2 container (it never
+    // publishes: test/r5_foxglove.test.ts); every command still goes through live/client.ts (coco.v1)
+    expect(openers.map((p) => p.slice(src.length + 1)).sort()).toEqual([join('live', 'client.ts'), join('ros', 'foxglove.ts')]);
+    expect(readFileSync(join(src, 'ros', 'foxglove.ts'), 'utf-8')).not.toMatch(/op: '(advertise|publish|callService|setParameters)'/);
     const tsx = readFileSync(join(src, 'ui', 'LiveView.tsx'), 'utf-8');
     expect(tsx.match(/\.connect\(\)/g)).toHaveLength(1);
     expect(tsx).toMatch(/if \(!explicit\) return undefined;[\s\S]*openWhenReachable\(url, \(u, init\) => fetch\(u, init\), \(\) => \{ void open\(\); \}/);

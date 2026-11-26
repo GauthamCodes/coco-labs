@@ -16,7 +16,7 @@ import type { PlayPlanner } from './planners';
 import { registerRunSaver } from '../offline/updates';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Camera, Hand, Pause, PackageCheck, Route, Navigation2, Info, Network } from 'lucide-react';
+import { Camera, Hand, Pause, PackageCheck, Route, Navigation2, Info, Network, Plug } from 'lucide-react';
 import type { InputRow, World } from '../arena/protocol';
 import { readPref, isBool } from '../prefs';
 import { GameRenderer, type Led, type View } from './render/GameRenderer';
@@ -45,6 +45,9 @@ import { LOAD_STAGES, TIPS, colourChip, colourObjective, isFetch, primaryAction,
 import type { GameResult } from './GameApp';
 import { enterPhonePlay, FrameGate, isPhone, leavePhonePlay, phoneFrameCap } from '../play/phone';
 import { FpsWatch, heavier, recommendedSettings, type PlaySettings } from './fps_watch';
+import { LiveSource } from '../live/live_source';
+import { failureWords, type LiveGraph } from '../ros/foxglove';
+import { LiveConnect } from './hud/LiveConnect';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -54,6 +57,8 @@ export interface PlayProps {
   /** G1.12: Fetch Rush's mode: the phone round (2 orders) or the Full shift (3) */
   mode?: FetchRushMode;
   onPause: () => void; paused: boolean; onResult: (r: GameResult) => void; restartKey: number;
+  /** R5.2: bumped by the pause menu's CONNECT TO ROS 2 (Free drive only) */
+  liveAsk?: number;
   showPerf: boolean; tutorialSeen: boolean; onTutorialDone: () => void;
   /** draw the planner ghost: the A* route for the current order (Settings) */
   ghost: boolean;
@@ -73,6 +78,13 @@ export function PlayGame(p: PlayProps) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const r = useRef<GameRenderer | null>(null);
   const s = useRef<GameSession | null>(null);
+  // R5.2: LIVE -- COCO's ROS 2 stack in the coco-ros2 container; while connected, the model is paused
+  const liveSrc = useRef<LiveSource | null>(null);
+  const [liveOn, setLiveOn] = useState(false);
+  const [liveSheet, setLiveSheet] = useState(false);
+  const [liveWords, setLiveWords] = useState('');
+  const [liveGraph, setLiveGraph] = useState<LiveGraph | null>(null);
+  useEffect(() => { if (p.liveAsk) setLiveSheet(true); }, [p.liveAsk]);
   const sound = useRef(new GameSound(readPref('sound', false, isBool)));
   const hapticsOn = readPref('haptics', true, isBool);
   const [stage, setStage] = useState<string>('worker');
@@ -237,7 +249,7 @@ export function PlayGame(p: PlayProps) {
     if (!g || !g.client.world) return null;
     return { name: `coco-${p.game}-${p.world}-${p.game === 'fetch_colour' ? p.colour ?? 'red' : `seed-${p.seed}`}-run.json`, data: await g.query('record') };
   }), [p.game, p.world, p.seed, p.colour]);
-  useEffect(() => { if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started]);
+  useEffect(() => { if (liveOn) return; if (p.paused) s.current?.pause(); else if (started) s.current?.resume(); }, [p.paused, started, liveOn]);
   // G2.5: "Save as rosbag2 (MCAP)" (pause menu, results): this run's model messages, written in the browser
   useEffect(() => registerBagSource(async () => {
     const w = s.current?.world;
@@ -258,8 +270,10 @@ export function PlayGame(p: PlayProps) {
   const changeDisplays = useCallback((d: Displays) => { setDisplays(d); writePref('displays', d); }, []);
   useEffect(() => { r.current?.setCandidates(view === 'sim' ? cands : []); }, [view, cands]);
   const toggleView = useCallback(() => setView((v) => (v === 'game' ? 'sim' : 'game')), []);
+  // R5.2: LIVE's socket callbacks outlive a render; they call the current onTick through this ref
+  const onTickRef = useRef<(t: GameTick, ranges: Float32Array) => void>(() => {});
 
-  /** Every tick from the model: draw it, and turn its changes into toasts, flashes and sounds. */
+  /** Every tick from the model (or, R5.2, LIVE): draw it, and turn its changes into toasts, flashes and sounds. */
   const onTick = (t: GameTick, ranges: Float32Array) => {
     const rr = r.current;
     if (!rr) return;
@@ -273,7 +287,7 @@ export function PlayGame(p: PlayProps) {
     rr.speed = t.v;
     rr.wheelSpeed = t.wheels ?? [0, 0];
     const led: Led = t.source === 'stop' ? 'stop' : t.source === 'teleop' ? 'manual' : t.source === 'planner' || t.source === 'mission' ? 'auto' : 'idle';
-    rr.setLed(s.current?.latched ? 'stop' : led);
+    rr.setLed((liveSrc.current ? liveSrc.current.latched : s.current?.latched) ? 'stop' : led);
     const w = s.current?.world;
     const g = t.game;
     if (g?.objects && w?.game.objects) rr.setObjects(new Map(w.game.objects.map((o) => [o.id, o])), g.objects);
@@ -326,6 +340,7 @@ export function PlayGame(p: PlayProps) {
     for (const topic of topicsOf(frame, first)) stats.current.mark(topic, wall, t.t_world);
     setTick(t);
   };
+  onTickRef.current = onTick;
 
   // SIM's costmap displays ask the model for its costmap: at once, then every 4 s while shown
   // (view-only, no tick; only the cells that changed after the first: G1.13's delta view)
@@ -418,12 +433,40 @@ export function PlayGame(p: PlayProps) {
 
   const stop = useCallback(() => {
     if (!s.current) return;
-    s.current.stop();
+    if (liveSrc.current) liveSrc.current.stop(); else s.current.stop();
     setLatched(true); setAuto(false);
     r.current?.setLed('stop');
     sound.current.stop(); haptic('stop', hapticsOn);
   }, [hapticsOn]);
-  const release = useCallback(() => { s.current?.release(); setLatched(false); setHoldStart(null); }, []);
+  const release = useCallback(() => { if (liveSrc.current) liveSrc.current.manual(); else s.current?.release(); setLatched(false); setHoldStart(null); }, []);
+
+  /** R5.2: connect to COCO's ROS 2 stack (coco-ros2): the model pauses and LIVE ticks drive the views */
+  const connectLive = (url: string, code: string) => {
+    liveSrc.current?.close();
+    s.current?.pause();
+    let L: LiveSource;
+    try {
+      L = new LiveSource(url, code, {
+        onTick: (t, ranges) => onTickRef.current(t, ranges),
+        onPhase: (ph, words) => { setLiveWords(words); if (ph === 'live') { setLiveOn(true); say('LIVE: COCO\'s ROS 2 stack, running now'); } },
+        onGraph: (g) => setLiveGraph({ publishers: new Map(g.publishers), subscribers: new Map(g.subscribers) }),
+        onFailure: (f) => {
+          if (f.kind === 'control') { setLiveWords(`Control: ${f.detail}`); return; }
+          setLiveWords(failureWords(f)); disconnectLive(false);
+        },
+        onControl: (words) => setLiveWords(words),
+      });
+    } catch (e) { setLiveWords(String(e)); if (started && !p.paused) s.current?.resume(); return; }
+    liveSrc.current = L; L.connect(); setLiveWords('Connecting…');
+  };
+  const disconnectLive = (byUser = true) => {
+    const was = !!liveSrc.current;
+    liveSrc.current?.close(); liveSrc.current = null;
+    setLiveOn(false); setLiveGraph(null);
+    if (was && started && !p.paused) s.current?.resume();
+    if (byUser) setLiveWords('Disconnected: back to the browser model (MODEL)');
+  };
+  useEffect(() => () => { liveSrc.current?.close(); liveSrc.current = null; }, []);
 
   const doPrimary = () => {
     const ss = s.current;
@@ -431,13 +474,18 @@ export function PlayGame(p: PlayProps) {
     sound.current.unlock();
     if (primary.kind === 'grab') { ss.grasp(primary.target); haptic('tick', hapticsOn); }
     else if (primary.kind === 'drop') { ss.grasp(); haptic('tick', hapticsOn); }
-    else if (primary.kind === 'go' && goal) { ss.goal(goal[0], goal[1]); setAuto(true); }
+    else if (primary.kind === 'go' && goal) { if (liveSrc.current) liveSrc.current.goal(goal[0], goal[1]); else ss.goal(goal[0], goal[1]); setAuto(true); }
     else { say(primary.why ?? 'Nothing to do here'); sound.current.refuse(); }
   };
 
   const toggleAuto = async () => {
     const ss = s.current;
     if (!ss || latched) return;
+    if (liveSrc.current) {                       // LIVE: Nav2 drives to the goal; leaving AUTO hands the stick back
+      if (auto) { liveSrc.current.manual(); setAuto(false); say('Manual: you drive (LIVE)'); return; }
+      if (!goal) { say('Set a goal on the map first'); return; }
+      liveSrc.current.goal(goal[0], goal[1]); setAuto(true); say('AUTO: Nav2 to the goal (LIVE)'); return;
+    }
     if (auto) { ss.manual(); setAuto(false); say('Manual: you drive'); return; }
     if (isFetch(p.game)) {
       const gTo = await ss.query<{ x: number; y: number; why: string } | null>('auto_goal');
@@ -501,6 +549,13 @@ export function PlayGame(p: PlayProps) {
     return () => { window.removeEventListener('keydown', down); window.removeEventListener('keyup', up); };
   });
 
+  /** R5.2: every drive input, to the model or (LIVE) to COCO's coco.v1 gateway, scaled to the robot's teleop limits */
+  const driveCmd = (f: number, t: number) => {
+    const L = liveSrc.current;
+    if (!L) { s.current?.drive(f, t); return; }
+    const lim = (s.current?.world?.limits ?? {}) as Record<string, number>;
+    L.drive(f * (lim.teleop_linear ?? 0.5), t * (lim.teleop_angular ?? 1.2));
+  };
   const lastKeys = useRef('');
   const applyHeld = () => {
     const h = held.current, ss = s.current;
@@ -511,7 +566,7 @@ export function PlayGame(p: PlayProps) {
     lastKeys.current = k;
     const f = (h.has('f') ? 1 : 0) - (h.has('b') ? 1 : 0), t = (h.has('l') ? 1 : 0) - (h.has('r') ? 1 : 0);
     if (f || t) setAuto(false);
-    ss.drive(f, t);
+    driveCmd(f, t);
   };
 
   // gamepad: left stick drives, triggers scale throttle and brake; A grab, X auto, Y camera, B STOP, Start pause
@@ -521,7 +576,7 @@ export function PlayGame(p: PlayProps) {
     if (!gp || !s.current || !started) return;
     const b = gp.buttons.map((x) => x.pressed);
     const edge = (i: number) => b[i] && !pads.current[i];
-    if (edge(1)) { if (!s.current.latched) stop(); else release(); }
+    if (edge(1)) { if (!(liveSrc.current ? liveSrc.current.latched : s.current.latched)) stop(); else release(); }
     if (edge(9)) p.onPause();
     if (!p.paused) {
       if (edge(0)) doPrimary();
@@ -530,8 +585,8 @@ export function PlayGame(p: PlayProps) {
       const ax = Math.abs(gp.axes[0]) > 0.12 ? gp.axes[0] : 0, ay = Math.abs(gp.axes[1]) > 0.12 ? gp.axes[1] : 0;
       const rt = gp.buttons[7]?.value ?? 0, lt = gp.buttons[6]?.value ?? 0;
       const fwd = rt > 0.05 || lt > 0.05 ? rt - lt : -ay;
-      if (ax || ay || rt > 0.05 || lt > 0.05) { if (!stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [fwd, -ax]; s.current.drive(fwd, -ax); }
-      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; perf.driveRelease(); s.current.drive(0, 0); }
+      if (ax || ay || rt > 0.05 || lt > 0.05) { if (!stick.current[0] && !stick.current[1]) perf.driveInput(); stick.current = [fwd, -ax]; driveCmd(fwd, -ax); }
+      else if (stick.current[0] || stick.current[1]) { stick.current = [0, 0]; perf.driveRelease(); driveCmd(0, 0); }
     }
     pads.current = b;
   };
@@ -630,7 +685,7 @@ export function PlayGame(p: PlayProps) {
       {error && <p role="alert" className="g1-note" style={{ color: 'var(--g1-danger)' }}>{error}</p>}
     </section>}
     {started && <div className="g1-safe">
-      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); else if (!f && !t) perf.driveRelease(); stick.current = [f, t]; if (f || t) setAuto(false); s.current?.drive(f, t); }} />
+      <FloatJoystick enabled={!latched && !p.paused} hint={desktop ? 'WASD / ARROWS' : 'DRAG TO DRIVE'} onChange={(f, t) => { if ((f || t) && !stick.current[0] && !stick.current[1]) perf.driveInput(); else if (!f && !t) perf.driveRelease(); stick.current = [f, t]; if (f || t) setAuto(false); driveCmd(f, t); }} />
       {world && occ.current && <Minimap world={world} occupancy={occ.current} marks={marks} headingUp={false} onOpen={() => setMapOpen(true)} />}
       <div className="g1-pill g1-glass" data-testid="objective">{p.game === 'fetch_colour'
         ? fr ? <><span className="g2-colour-dot" data-colour={p.colour ?? 'red'} aria-hidden /><span data-testid="colour-objective">{fr.deliveries ? `DELIVERED THE ${(p.colour ?? 'red').toUpperCase()} ROD` : colourObjective(p.colour ?? 'red', !!tick?.game?.assist?.carried, world?.game.colour?.drop_label)}</span><span className="sep">·</span><span className={`num${fr.seconds - fr.t < 30 ? ' low' : ''}`}>⏱ {fmt(fr.seconds - fr.t)}</span>{fr.contacts > 0 && <><span className="sep">·</span><span className="num">✖ {fr.contacts}</span></>}</> : <span>FETCH BY COLOUR · {colourChip(p.colour ?? 'red')}</span>
@@ -639,13 +694,19 @@ export function PlayGame(p: PlayProps) {
         : <><span>FREE DRIVE</span><span className="sep">·</span><span>{p.world === 'depot' ? 'DEPOT' : 'PROVING GROUND'}</span></>}</div>
       <div className="g1-top-right">
         <button className="g1-icon g1-glass" data-testid="g1-pause" aria-label="Pause (Esc)" onClick={p.onPause}><Pause size={20} />{desktop && <kbd>ESC</kbd>}</button>
+        {p.game === 'free' && <button className={`g1-icon g1-glass ${liveOn ? 'is-on' : ''}`} data-testid="r5-live-button" aria-pressed={liveOn} aria-label={liveOn ? 'ROS 2: LIVE (connected)' : 'Connect to ROS 2 (LIVE)'} onClick={() => setLiveSheet((x) => !x)}><Plug size={20} /></button>}
         <button className={`g1-icon g1-glass ${panels ? 'is-on' : ''}`} data-testid="g2-panels-button" aria-pressed={panels} aria-label="ROS 2 panels (P): displays, graph, topic echo, plot (model)" onClick={() => setPanels((x) => !x)}><Network size={20} />{desktop && <kbd>P</kbd>}</button>
         <ViewSwitch view={view} desktop={!!desktop} onView={(v) => { setView(v); if (v !== view) say(v === 'sim' ? 'SIM: the same moment, as RViz would show it (model)' : 'GAME view'); }} />
       </div>
-      {view === 'sim' && <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b><span className="g2-sim-frame"> · Fixed Frame: map</span></p>}
-      <button className="g1-chip g1-glass" onClick={() => setInfo((x) => !x)} aria-expanded={info} aria-label="What is real here"><Info size={11} style={{ verticalAlign: '-2px' }} /> MODEL · kinematic</button>
+      {view === 'sim' && (liveOn
+        ? <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of COCO's ROS 2 stack, running now <b>LIVE</b> (Gazebo simulation)<span className="g2-sim-frame"> · Fixed Frame: map</span></p>
+        : <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b><span className="g2-sim-frame"> · Fixed Frame: map</span>{p.game === 'free' && <> · <button className="link" data-testid="r5-sim-connect" onClick={() => setLiveSheet(true)}>Connect to ROS 2</button></>}</p>)}
+      <button className="g1-chip g1-glass" data-testid="r5-evidence-chip" onClick={() => setInfo((x) => !x)} aria-expanded={info} aria-label="What is real here"><Info size={11} style={{ verticalAlign: '-2px' }} /> {liveOn ? 'LIVE · ROS 2 in Gazebo' : 'MODEL · kinematic'}</button>
+      {liveSheet && <LiveConnect on={liveOn || !!liveSrc.current} words={liveWords} level={p.world === 'depot' ? 'Depot (--level depot)' : 'Proving Ground (--level arena)'}
+        onConnect={connectLive} onDisconnect={() => disconnectLive(true)} onClose={() => setLiveSheet(false)} />}
       {info && <div className="g1-sheet g1-glass" role="note">
         <h3>WHAT IS REAL HERE</h3>
+        {liveOn && <p data-testid="r5-info-live"><b>LIVE · ROS 2 in Gazebo.</b> COCO is driven by its real ROS 2 stack (Jazzy, Nav2, cmd_vel_arbiter), running now in your coco-ros2 container: a simulation, never hardware. The world drawn here is COCO Lab's model of the same level; the robot, scan and plan are the stack's.</p>}
         <p><b>MODEL · kinematic.</b> COCO is driven by the Arena model (coco_lab, in your browser): planar kinematics with the robot's real speed and acceleration limits, its real LiDAR geometry. No physics engine; nothing tips or slips.</p>
         {world?.game.v3 && <p><b>MODEL · MoveIt-style.</b> Grasp Assist decides each pick from COCO's own reach envelope and gripper limits. Two fingers and a magnet; the magnet holds.</p>}
         {p.game === 'fetch_colour' && <p><b>SIMPLIFIED.</b> Here COCO is handed the {p.colour ?? 'red'} rod's id; in COCO's real stack (Gazebo) the camera found the rod by its colour (target_finder).</p>}
@@ -659,7 +720,7 @@ export function PlayGame(p: PlayProps) {
       {panels && <Panels tab={panelTab} onTab={setPanelTab} onClose={() => setPanels(false)} displays={displays} onDisplays={changeDisplays}
         info={world?.game.ros ?? null} stats={stats.current} recorder={recorder.current} frame={recorder.current.frames[recorder.current.frames.length - 1] ?? null}
         map={world ? { width: world.width, height: world.height, resolution: world.resolution, origin: world.origin } : null} occupancy={occ.current} goal={planGoal.current}
-        echo={echo} onEcho={(topic) => { setEcho(topic); setPanelTab('echo'); }} />}
+        echo={echo} onEcho={(topic) => { setEcho(topic); setPanelTab('echo'); }} live={liveOn ? { graph: liveGraph } : null} />}
       {desktop && view === 'sim' && <GazeboBar clock={clock.current} now={performance.now()} />}
       <RosoutConsole lines={log} />
       <button className={`g1-btn g1-primary ${primary.enabled ? (primary.kind === 'drop' ? 'is-drop' : '') : 'is-grey'}`} data-testid="hud-primary" aria-disabled={!primary.enabled} onClick={doPrimary}

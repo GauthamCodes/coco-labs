@@ -108,8 +108,10 @@ function GameRun({ game, world, seed, mode, race, planner, colour }: { game: Gam
     else if (r.stars !== null && r.card) keepStars(r.seed, mode, planner, r.stars, Number(r.card.net_deliveries ?? 0), Number(r.card.time_used ?? 0));
   };
   const restart = () => { setResult(null); setPaused(false); setRestartKey((k) => k + 1); };
+  // R5.2: the pause menu's CONNECT TO ROS 2 opens Play's LIVE sheet (Free drive only)
+  const [liveAsk, setLiveAsk] = useState(0);
   return <>
-    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)}
+    <PlayGame key={`${restartKey}-${tier}`} world={world} game={game} seed={seed} mode={mode} tier={tier} paused={paused || !!result} onPause={() => setPaused((x) => !x)} liveAsk={liveAsk}
       onResult={onResult} restartKey={restartKey} showPerf={showPerf} tutorialSeen={tutorialSeen} ghost={ghost}
       onTutorialDone={() => { writePref('tutorial', true); setTutorialSeen(true); }} race={race} planner={planner} colour={colour}
       onRecommended={(to) => { writePref('quality', to.quality); writePref('phone120', to.phone120); setTier(to.quality); restart(); }} />
@@ -119,6 +121,7 @@ function GameRun({ game, world, seed, mode, race, planner, colour }: { game: Gam
         <button className="main" autoFocus onClick={() => setPaused(false)}>RESUME</button>
         <button onClick={restart}>RESTART</button>
         <button onClick={() => setSettings(true)}>SETTINGS</button>
+        {game === 'free' && <button data-testid="r5-menu-live" onClick={() => { setPaused(false); setLiveAsk((k) => k + 1); }}>CONNECT TO ROS 2</button>}
         <BagButton />
         <a href={`${BASE}?view=play`}>EXIT</a>
       </nav>

@@ -1,14 +1,15 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
 /**
- * R5.2: LIVE ticks from real ROS 2 messages (src/live/live_source.ts): COCO's pose is the real tf
+ * R5.2: LIVE ticks from real ROS 2 messages (src/ros/live_read.ts; the sockets: src/live/live_source.ts): COCO's pose is the real tf
  * chain map -> odom -> base_footprint composed (nothing invented while a link is missing), velocity is
  * /odom's, the plan is Nav2's /plan, the command source is the arbiter's (via the coco.v1 gateway),
  * and a LIVE tick carries no model hash. Messages arrive as CDR, as foxglove_bridge sends them.
  */
 import { describe, expect, it } from 'vitest';
 import { serialize } from '../src/ros/cdr';
-import { apply, buildTick, emptyState, gatewayUrl, poseInMap, sourceOf } from '../src/live/live_source';
+import { apply, buildTick, emptyState, poseInMap, sourceOf } from '../src/ros/live_read';
+import { gatewayUrl } from '../src/live/live_source';
 import { quaternion } from '../src/ros/shapes';
 import type { Telemetry } from '../src/live/protocol';
 

@@ -20,6 +20,7 @@ import { laserScan, occupancyGrid, odometry, path, twistStamped, type RosGraph, 
 import { STACK_NODES, STACK_TOPICS } from '../../ros/stack';
 import { toYaml } from '../../ros/yaml';
 import { LEARN, type PanelId } from './learn';
+import type { LiveGraph } from '../../ros/foxglove';
 
 export interface MapMeta { width: number; height: number; resolution: number; origin: [number, number] }
 
@@ -29,6 +30,8 @@ export interface PanelsProps {
   info: RosInfo | null; stats: TopicStats; recorder: Recorder; frame: Frame | null;
   map: MapMeta | null; occupancy: Uint8Array | null; goal: [number, number] | null;
   echo: string; onEcho: (topic: string) => void;
+  /** R5.2: while LIVE (COCO's ROS 2 stack running now), the real graph from foxglove_bridge */
+  live?: { graph: LiveGraph | null } | null;
 }
 
 const TABS: [PanelId, string][] = [['displays', 'Displays'], ['graph', 'ROS 2 graph'], ['echo', 'Topic echo'], ['plot', 'Plot']];
@@ -42,11 +45,14 @@ export function Panels(p: PanelsProps) {
       <button className="q" aria-expanded={learn} aria-label={`What is ${l.title}?`} data-testid="g2-learn" onClick={() => setLearn((x) => !x)}>?</button>
       <button className="x" aria-label="Close the panels" onClick={p.onClose}>✕</button>
     </header>
-    <p className="g2-panel-tag"><b>MODEL</b> {p.tab === 'graph' ? "ROS 2 graph (model of COCO's stack)" : 'the browser model\'s messages, ROS 2 shapes — not ROS 2'}</p>
+    {p.live
+      ? <p className="g2-panel-tag" data-testid="r5-panel-tag-live"><b>LIVE</b> {p.tab === 'graph' ? "ROS 2 graph of COCO's stack in your container (a Gazebo simulation)" : "values from COCO's ROS 2 stack in your container, shown in ROS 2 shapes"}</p>
+      : <p className="g2-panel-tag"><b>MODEL</b> {p.tab === 'graph' ? "ROS 2 graph (model of COCO's stack)" : 'the browser model\'s messages, ROS 2 shapes — not ROS 2'}</p>}
     {learn && <p className="g2-learn" data-testid="g2-learn-text"><b>{l.title}.</b> {l.text}</p>}
     <div className="g2-panel-body">
       {p.tab === 'displays' && <DisplaysPanel displays={p.displays} onDisplays={p.onDisplays} />}
-      {p.tab === 'graph' && p.info && <GraphPanel graph={p.info.graph} stats={p.stats} onEcho={p.onEcho} />}
+      {p.tab === 'graph' && p.live && <LiveGraphPanel graph={p.live.graph} />}
+      {p.tab === 'graph' && !p.live && p.info && <GraphPanel graph={p.info.graph} stats={p.stats} onEcho={p.onEcho} />}
       {p.tab === 'echo' && <EchoPanel {...p} />}
       {p.tab === 'plot' && <PlotPanel recorder={p.recorder} frame={p.frame} goal={p.goal} info={p.info} />}
     </div>
@@ -79,6 +85,25 @@ const NODE_POS: Record<string, [number, number]> = {
   slam_or_amcl: [290, 70], global_planner: [360, 160], local_controller: [500, 70], cmd_vel_arbiter: [500, 265], diff_drive: [620, 165],
 };
 const boxW = (n: string) => Math.max(96, n.length * 8.2 + 16);
+
+/** R5.2: the real ROS 2 graph, as foxglove_bridge's connection graph reports it (node names per topic) */
+export function LiveGraphPanel({ graph }: { graph: LiveGraph | null }) {
+  if (!graph) return <p className="g2-learn" data-testid="r5-live-graph">Waiting for the bridge's connection graph…</p>;
+  const topics = [...new Set([...graph.publishers.keys(), ...graph.subscribers.keys()])].sort();
+  const nodes = new Set<string>();
+  for (const m of [graph.publishers, graph.subscribers]) for (const ns of m.values()) for (const n of ns) nodes.add(n);
+  return <div className="g2-graph" data-testid="r5-live-graph">
+    <p className="g2-learn">{nodes.size} nodes, {topics.length} topics in the running stack.</p>
+    <table className="g2-rates">
+      <thead><tr><th>topic</th><th>published by</th><th>subscribed by</th></tr></thead>
+      <tbody>{topics.map((t) => <tr key={t} data-testid={`r5-live-topic-${t}`}>
+        <td><code>{t}</code></td>
+        <td>{(graph.publishers.get(t) ?? []).join(', ') || '—'}</td>
+        <td>{(graph.subscribers.get(t) ?? []).join(', ') || '—'}</td>
+      </tr>)}</tbody>
+    </table>
+  </div>;
+}
 
 function GraphPanel({ graph, stats, onEcho }: { graph: RosGraph; stats: TopicStats; onEcho: (t: string) => void }) {
   const now = performance.now();
