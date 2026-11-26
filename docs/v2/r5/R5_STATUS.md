@@ -55,6 +55,15 @@ R5.2–R5.6, the localisation v1.1 suites and the leaderboard matrix: not starte
   checksums; arena stock (7.5 MB).
 - Still NOT verified: the image build, its size, the in-container acceptance and the bridge probe (CI, next).
 
+## Decisions from Gautham, 2026-11-26
+
+1. **R5.2 control path: (a).** The browser publishes only `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` and
+   `/initialpose` through foxglove_bridge (the image's `client_topic_whitelist`); every wheel command stays behind
+   `cmd_vel_arbiter` (STOP is the arbiter's). README invariant 2 gets a dated amendment for a visitor's own local
+   LIVE container only; COCO Lab's MODEL and the Stack tab keep `coco.v1`.
+2. **GHCR:** Gautham makes `ghcr.io/gauthamcodes/coco-ros2` public on its package page after the first green push;
+   anonymous access is then re-checked.
+
 ## Questions for Gautham (R5)
 
 1. **Control path for R5.2.** README invariant 2 says browser code that controls COCO's Stack never names a ROS topic and speaks `coco.v1`; R5.2 asks the joystick to publish `/cmd_vel` through the arbiter over a ROS bridge. Options: (a) the browser publishes `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` through foxglove_bridge (the image's whitelist keeps everything behind the arbiter) and invariant 2 is amended for a visitor's local LIVE container; (b) control stays `coco.v1` (platform_server in the image, a second port; coco_web is frozen and arena-shaped, so it may need changes) and the bridge is read-only. Default until you decide: no browser control code is written.

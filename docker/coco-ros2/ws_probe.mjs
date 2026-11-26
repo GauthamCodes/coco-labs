@@ -48,7 +48,10 @@ const subs = new Map();
 const graph = new Map();
 const pubs = (topic) => [...(graph.get(topic) ?? [])].sort();
 
-const ws = new WebSocket(url, ['foxglove.websocket.v1']);
+// foxglove_bridge 3.x (the Foxglove SDK server) accepts only 'foxglove.sdk.v1' ("expected
+// sec-websocket-protocol header foxglove.sdk.v1", its own error, CI run 45862342162); older bridges speak
+// 'foxglove.websocket.v1'. Offer both: the server's choice is recorded as rec.protocol.
+const ws = new WebSocket(url, ['foxglove.sdk.v1', 'foxglove.websocket.v1']);
 ws.binaryType = 'arraybuffer';
 const opened = new Promise((resolve, reject) => {
   ws.onopen = resolve;
