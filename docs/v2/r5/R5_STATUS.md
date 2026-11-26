@@ -89,6 +89,24 @@ gateway node in the image (its own port) that accepts only four control intents 
 a Nav2 goal, the initial pose) and publishes only to four hard-coded topics behind `cmd_vel_arbiter`.**
 README invariant 2 stays as written (control speaks `coco.v1`-style intents); no amendment.
 
+## R5.2 · LIVE control gateway — image part DONE 2026-11-26/27 (browser part next)
+
+- **Gateway = COCO's own `coco_web` platform_server** in the image (`remote:=true`: `/ws` and `/healthz` only;
+  origin allowlist: the Pages site and localhost), port 8766. Found on the way, each measured in CI:
+  1. `remote:=true` with `access:=open` is refused by platform_server itself (run 45874005506): the gateway uses
+     **code access**; the CSPRNG control code is printed in the container's log (`CONTROL CODE: ...`); STOP needs
+     no code. Right for `docker -p`, which publishes on every interface.
+  2. Ubuntu's tornado 6.4.0 hung up every connection at its first keepalive ping, 10 s in (run 45876908783, a
+     clean close without a code): the image now installs **tornado 6.5.7**, the version ci.yml pins for coco_web.
+  3. My probe's blocking `docker exec` froze its own event loop (run 45874896939); made asynchronous.
+- **CI run 45877911153 PASS** (`744a9f4`), pushed `ghcr.io/gauthamcodes/coco-ros2:sha-744a9f4ca2a7`, **public**;
+  3,943,847,507 bytes unpacked (budget 4,000,000,000: 1.4 % left), 1,176,225,404 bytes per pull.
+  `gw_probe` (LIVE, CI runner): driving without the code refused (`spectator`); claim with the code; welcome
+  `coco.v1`; teleop moved COCO 0.17 m (Gazebo truth); wheel publishers `[/cmd_vel_arbiter]`, teleop-input
+  publishers `[/coco_web_platform]`; STOP latched, arbiter `idle`, 0.000 m moved after; `set_mode auto` released
+  the latch; a goal 1 m ahead: NavigateToPose `executing`, plan 21 points; origin `https://evil.example` 403, the
+  Pages site 101. [data/r52/ci/](data/r52/ci/)
+
 ## Questions for Gautham (R5)
 
 1. **Control path for R5.2.** README invariant 2 says browser code that controls COCO's Stack never names a ROS topic and speaks `coco.v1`; R5.2 asks the joystick to publish `/cmd_vel` through the arbiter over a ROS bridge. Options: (a) the browser publishes `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` through foxglove_bridge (the image's whitelist keeps everything behind the arbiter) and invariant 2 is amended for a visitor's local LIVE container; (b) control stays `coco.v1` (platform_server in the image, a second port; coco_web is frozen and arena-shaped, so it may need changes) and the bridge is read-only. Default until you decide: no browser control code is written.
