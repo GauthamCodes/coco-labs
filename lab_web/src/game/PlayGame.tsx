@@ -48,6 +48,7 @@ import { FpsWatch, heavier, recommendedSettings, type PlaySettings } from './fps
 import { LiveSource } from '../live/live_source';
 import { failureWords, type LiveGraph } from '../ros/foxglove';
 import { LiveConnect } from './hud/LiveConnect';
+import { LiveLeg, MODEL_WORLD, modelSide, modelSpec, sideWords, type Side } from '../live/model_vs_live';
 
 const BASE = import.meta.env.BASE_URL;
 const STOP_HOLD_MS = 600;
@@ -85,6 +86,10 @@ export function PlayGame(p: PlayProps) {
   const [liveWords, setLiveWords] = useState('');
   const [liveGraph, setLiveGraph] = useState<LiveGraph | null>(null);
   useEffect(() => { if (p.liveAsk) setLiveSheet(true); }, [p.liveAsk]);
+  // R5.3: Model vs LIVE for the last LIVE goal
+  const leg = useRef<LiveLeg | null>(null);
+  const modelPath = useRef<[number, number][] | null>(null);
+  const [cmp, setCmp] = useState<{ goal: [number, number]; model: Side | null; modelNote: string; live: Side } | null>(null);
   const sound = useRef(new GameSound(readPref('sound', false, isBool)));
   const hapticsOn = readPref('haptics', true, isBool);
   const [stage, setStage] = useState<string>('worker');
@@ -277,6 +282,15 @@ export function PlayGame(p: PlayProps) {
   const onTick = (t: GameTick, ranges: Float32Array) => {
     const rr = r.current;
     if (!rr) return;
+    // R5.3: the LIVE leg of a Model vs LIVE comparison
+    const lg = leg.current;
+    if (lg && liveSrc.current) {
+      const done = lg.add(t);
+      const live = lg.side();
+      setCmp((c) => (c ? { ...c, live } : c));
+      rr.setCompare(modelPath.current, live.path);
+      if (done) leg.current = null;
+    }
     const before = prev.current;
     prev.current = t;
     const now = performance.now();
@@ -463,11 +477,32 @@ export function PlayGame(p: PlayProps) {
   const disconnectLive = (byUser = true) => {
     const was = !!liveSrc.current;
     liveSrc.current?.close(); liveSrc.current = null;
-    setLiveOn(false); setLiveGraph(null);
+    setLiveOn(false); setLiveGraph(null); leg.current = null; modelPath.current = null; setCmp(null); r.current?.setCompare(null, null);
     if (was && started && !p.paused) s.current?.resume();
     if (byUser) setLiveWords('Disconnected: back to the browser model (MODEL)');
   };
   useEffect(() => () => { liveSrc.current?.close(); liveSrc.current = null; }, []);
+
+  /** R5.3: the same goal to the model, from the LIVE robot's pose now (an R1 experiment run in this worker) */
+  const c_live = () => leg.current?.path ?? null;
+  const startCompare = (goalXY: [number, number]) => {
+    const lt = liveSrc.current?.lastTick;
+    const worldId = MODEL_WORLD[p.world];
+    if (!lt || !worldId || !s.current) return;
+    // the same start for both: where Nav2 believes COCO is (the map frame both plan in); truth is reported beside it
+    const start = lt.pose as [number, number, number];
+    leg.current = new LiveLeg(goalXY, start, lt.t_world);
+    modelPath.current = null;
+    setCmp({ goal: goalXY, model: null, modelNote: 'MODEL: running the same goal…', live: leg.current.side() });
+    const frames: { truth: [number, number, number] }[] = [];
+    const w = s.current.client.worker;
+    const onMsg = (m: MessageEvent) => { const d = m.data as { type: string; frames?: { truth: [number, number, number] }[] }; if (d.type === 'experiment_frames' && d.frames) frames.push(...d.frames); };
+    w.addEventListener('message', onMsg);
+    s.current.client.experiment<{ status: string; metrics: Record<string, number | null> }[]>('replay', JSON.stringify(modelSpec(worldId, start, goalXY)), worldId, [0])
+      .then((recs) => { const m = modelSide(recs?.[0] ?? null, frames); modelPath.current = m?.path ?? null; setCmp((c) => (c && c.goal === goalXY ? { ...c, model: m } : c)); r.current?.setCompare(modelPath.current, c_live()); })
+      .catch((e) => setCmp((c) => (c && c.goal === goalXY ? { ...c, modelNote: `MODEL: could not run (${String(e).slice(0, 120)})` } : c)))
+      .finally(() => w.removeEventListener('message', onMsg));
+  };
 
   const doPrimary = () => {
     const ss = s.current;
@@ -475,7 +510,7 @@ export function PlayGame(p: PlayProps) {
     sound.current.unlock();
     if (primary.kind === 'grab') { ss.grasp(primary.target); haptic('tick', hapticsOn); }
     else if (primary.kind === 'drop') { ss.grasp(); haptic('tick', hapticsOn); }
-    else if (primary.kind === 'go' && goal) { if (liveSrc.current) liveSrc.current.goal(goal[0], goal[1]); else ss.goal(goal[0], goal[1]); setAuto(true); }
+    else if (primary.kind === 'go' && goal) { if (liveSrc.current) { liveSrc.current.goal(goal[0], goal[1]); startCompare(goal); } else ss.goal(goal[0], goal[1]); setAuto(true); }
     else { say(primary.why ?? 'Nothing to do here'); sound.current.refuse(); }
   };
 
@@ -485,7 +520,7 @@ export function PlayGame(p: PlayProps) {
     if (liveSrc.current) {                       // LIVE: Nav2 drives to the goal; leaving AUTO hands the stick back
       if (auto) { liveSrc.current.manual(); setAuto(false); say('Manual: you drive (LIVE)'); return; }
       if (!goal) { say('Set a goal on the map first'); return; }
-      liveSrc.current.goal(goal[0], goal[1]); setAuto(true); say('AUTO: Nav2 to the goal (LIVE)'); return;
+      liveSrc.current.goal(goal[0], goal[1]); startCompare(goal); setAuto(true); say('AUTO: Nav2 to the goal (LIVE)'); return;
     }
     if (auto) { ss.manual(); setAuto(false); say('Manual: you drive'); return; }
     if (isFetch(p.game)) {
@@ -703,6 +738,14 @@ export function PlayGame(p: PlayProps) {
         ? <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of COCO's ROS 2 stack, running now <b>LIVE</b> (Gazebo simulation)<span className="g2-sim-frame"> · Fixed Frame: map</span></p>
         : <p className="g2-sim-caption g1-glass" data-testid="g2-sim-caption">SIM · RViz-style view of the browser model <b>MODEL</b><span className="g2-sim-frame"> · Fixed Frame: map</span>{p.game === 'free' && <> · <button className="link" data-testid="r5-sim-connect" onClick={() => setLiveSheet(true)}>Connect to ROS 2</button></>}</p>)}
       <button className="g1-chip g1-glass" data-testid="r5-evidence-chip" onClick={() => setInfo((x) => !x)} aria-expanded={info} aria-label="What is real here"><Info size={11} style={{ verticalAlign: '-2px' }} /> {liveOn ? 'LIVE · ROS 2 in Gazebo' : 'MODEL · kinematic'}</button>
+      {cmp && <section className="g1-sheet g1-glass r5-compare" data-testid="r5-compare" aria-label="Model vs LIVE: the same goal from the same start">
+        <h3>MODEL vs LIVE <small>same goal, same start</small></h3>
+        <p data-testid="r5-compare-model"><span className="r5-dot" style={{ background: '#a78bfa' }} aria-hidden /> {sideWords(cmp.model, cmp.modelNote)}</p>
+        <p data-testid="r5-compare-live"><span className="r5-dot" style={{ background: '#f59e0b' }} aria-hidden /> {sideWords(cmp.live, 'LIVE: driving…')}</p>
+        <p className="r5-note">Start: where Nav2 believes COCO is (AMCL), in the map frame both plan in.</p>
+        <p className="r5-note">Both times are simulated seconds: the model's, and Gazebo's. The MODEL is an R1 experiment run (kinematic, Regulated Pure Pursuit); LIVE is Nav2 with RPP in your container.</p>
+        <button className="x" aria-label="Close the comparison" onClick={() => { setCmp(null); modelPath.current = null; r.current?.setCompare(null, null); }}>✕</button>
+      </section>}
       {liveSheet && <LiveConnect on={liveOn || !!liveSrc.current} words={liveWords} level={p.world === 'depot' ? 'Depot (--level depot)' : 'Proving Ground (--level arena)'}
         onConnect={connectLive} onDisconnect={() => disconnectLive(true)} onClose={() => setLiveSheet(false)} />}
       {info && <div className="g1-sheet g1-glass" role="note">

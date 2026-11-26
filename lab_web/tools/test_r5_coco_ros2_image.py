@@ -264,6 +264,7 @@ def test_the_gateway_is_cocos_own_coco_v1_server_in_remote_mode():
     assert 'ros2 run coco_web platform_server' in text and '-p remote:=true' in text
     # remote mode requires code access (platform_server refuses an open remote session): a CSPRNG code
     assert '-p access:=code' in text and '-p access:=open' not in text and 'session_code' in text
+    assert '-p session_idle_s:=1800.0' in text     # a visitor's own container: 30 min, not the 60 s demo default
     assert 'origins:=${GW_ORIGINS}' in text and 'https://gauthamcodes.github.io' in text
     srv = open(os.path.join(REPO, 'coco_web', 'coco_web', 'platform_server.py')).read()
     pubs = re.findall(r"create_publisher\(\s*\w+,\s*([^,]+),", srv)

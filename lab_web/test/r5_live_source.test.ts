@@ -9,7 +9,7 @@
 import { describe, expect, it } from 'vitest';
 import { serialize } from '../src/ros/cdr';
 import { apply, buildTick, emptyState, poseInMap, sourceOf } from '../src/ros/live_read';
-import { gatewayUrl } from '../src/live/live_source';
+import { arrivalOnce, gatewayUrl } from '../src/live/live_source';
 import { quaternion } from '../src/ros/shapes';
 import type { Telemetry } from '../src/live/protocol';
 
@@ -53,7 +53,8 @@ describe('LIVE ticks', () => {
     expect(t.plans).toHaveLength(1);
     expect(t.plans[0].waypoints).toEqual([[23, 6], [24, 6]]);
     expect(t.plans[0].goal).toEqual([24, 6]);
-    expect(t.plans[0].status).toBe('executing');
+    expect(t.plans[0].status).toBe('found');                 // the model's planner vocabulary: a path exists
+    expect(t.plans[0].summary.nav_status).toBe('executing');   // Nav2's goal verdict
     expect(t.arrived).toBe(false);
     expect(t.source).toBe('teleop');
     expect(t.truth).toEqual([23.01, 6.02, 0.1]);         // Gazebo's truth, as the gateway reports it
@@ -75,6 +76,14 @@ describe('LIVE ticks', () => {
       time_increment: 0, scan_time: 0, range_min: 0.15, range_max: 12, ranges: [1.5, 2.25, Infinity], intensities: [] }));
     expect(Array.from(s.scan!.ranges)).toEqual([1.5, 2.25, Infinity]);
     expect(s.scan!.header.frame_id).toBe('lidar_link');
+  });
+
+  it('reports arrival once per goal, and not for a goal that finished before connecting', () => {
+    expect(arrivalOnce(true, '100', null, true)).toEqual({ arrived: false, seen: '100' });     // old news
+    expect(arrivalOnce(true, '100', '100', false)).toEqual({ arrived: false, seen: '100' });  // still the old goal
+    expect(arrivalOnce(false, '200', '100', false)).toEqual({ arrived: false, seen: '100' }); // a new goal, driving
+    expect(arrivalOnce(true, '200', '100', false)).toEqual({ arrived: true, seen: '200' });   // reached: once
+    expect(arrivalOnce(true, '200', '200', false)).toEqual({ arrived: false, seen: '200' });  // not again
   });
 
   it('finds the gateway beside the bridge: same host, next port, /ws', () => {

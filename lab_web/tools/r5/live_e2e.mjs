@@ -83,11 +83,21 @@ try {
   await page.screenshot({ path: join(out, `${browserName}_2_drive.png`) });
 
   // a goal: a click ahead of COCO in the chase view, then GO (G)
-  await page.mouse.click(640, 300); await sleep(400);
+  const goalBefore = last?.nav?.goal?.sent_at ?? null;   // the gateway keeps the last goal: this one must be new
+  // metres ahead, not inside Nav2's 0.25 m goal tolerance (a click at y=300 landed 0.2 m ahead: an instant 'succeeded')
+  await page.mouse.click(640, 190); await sleep(400);
   await page.keyboard.press('KeyG');
-  const goalOk = await until(() => ['executing', 'accepted', 'succeeded'].includes(last?.nav?.goal?.status), 20_000);
+  const goalOk = await until(() => (last?.nav?.goal?.sent_at ?? null) !== goalBefore && ['executing', 'accepted', 'succeeded'].includes(last?.nav?.goal?.status), 20_000);
   await sleep(1500);
   rec.steps.goal = { nav_status: last?.nav?.goal?.status ?? null, goal: last?.nav?.goal ? [last.nav.goal.x, last.nav.goal.y] : null, path_points: last?.nav?.path?.length ?? 0, ok: goalOk };
+  // R5.3: Model vs LIVE -- the card fills both sides (the MODEL run in the page's worker, the LIVE leg to Nav2's verdict)
+  const cmpOk = await page.waitForFunction(() => {
+    const m = document.querySelector('[data-testid="r5-compare-model"]')?.textContent ?? '';
+    const l = document.querySelector('[data-testid="r5-compare-live"]')?.textContent ?? '';
+    return /driven/.test(m) && /succeeded|aborted|stopped/.test(l) && !/running/.test(m);
+  }, null, { timeout: 60_000 }).then(() => true, () => false);
+  rec.steps.compare = { ok: cmpOk, model: await page.getByTestId('r5-compare-model').textContent().catch(() => null),
+    live: await page.getByTestId('r5-compare-live').textContent().catch(() => null), gap: await page.getByTestId('r5-compare-gap').textContent().catch(() => null) };
   await page.screenshot({ path: join(out, `${browserName}_3_goal.png`) });
 
   // the ROS 2 graph panel: the real nodes, from the bridge's connection graph
@@ -129,6 +139,7 @@ try {
     graph_shows_real_nodes: /cmd_vel_arbiter/.test(rec.steps.graph.wheels_row ?? '') && /LIVE/.test(rec.steps.graph.tag ?? ''),
     drive_moves_coco: (rec.steps.drive.moved_m ?? 0) > 0.1 && rec.steps.drive.arbiter_mode_while_driving === 'teleop',
     goal_reaches_nav2: rec.steps.goal.ok,
+    model_vs_live_both_sides: rec.steps.compare.ok,
     stop_latches_and_holds: rec.steps.stop.latched && (rec.steps.stop.moved_after_stop_m ?? 1) < 0.02,
     release_unlatches: rec.steps.release.released,
     sim_says_live: /LIVE/.test(rec.steps.sim.caption ?? ''),

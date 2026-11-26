@@ -70,7 +70,8 @@ export function buildTick(s: LiveState, k: number): GameTick | null {
   const plans: PlanInfo[] = [];
   if (s.plan && s.plan.poses.length) {
     plans.push({ search_id: 0, planner: 'Nav2', goal: goal ? [goal.x, goal.y] : [s.plan.poses.at(-1)!.pose.position.x, s.plan.poses.at(-1)!.pose.position.y],
-      tick: k, status: goal?.status ?? 'live', summary: {}, waypoints: s.plan.poses.map((p) => [p.pose.position.x, p.pose.position.y]) });
+      // `status` in the model's planner vocabulary (a path exists: 'found'); Nav2's goal verdict travels in summary.nav_status
+      tick: k, status: 'found', summary: { nav_status: goal?.status ?? null }, waypoints: s.plan.poses.map((p) => [p.pose.position.x, p.pose.position.y]) });
   }
   const truth = t?.robot.truth;
   const tf: TFMessage = { transforms: [s.tf.get('odom'), s.tf.get('base_footprint')].filter((x): x is TransformStamped => !!x) };

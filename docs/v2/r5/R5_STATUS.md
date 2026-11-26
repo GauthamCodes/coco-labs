@@ -133,6 +133,28 @@ README invariant 2 stays as written (control speaks `coco.v1`-style intents); no
   after deploy, in Chromium and Firefox. Displays/Topic echo/Plot show LIVE values rebuilt in ROS 2 shapes from
   the LIVE ticks (not raw messages): labelled so. Version mismatch is unit-tested (fake server), not run live.
 
+## R5.3 · Model vs LIVE — DONE on the laptop 2026-11-27
+
+- Every LIVE goal (GO or AUTO) is also run in the browser model: one R1 experiment (`coco_lab.experiments`,
+  family `control`, an inline scenario: start = where Nav2 believes COCO is (AMCL, the map frame both plan in),
+  goal = the goal, controller `rpp`), replayed in Play's own worker, so its numbers are an experiment record's.
+  The LIVE leg is followed from the goal to Nav2's verdict for THAT goal (`src/live/model_vs_live.ts`). Both paths
+  are drawn (MODEL violet, LIVE amber; colour-blind-distinguishable) with distance driven and sim time.
+- **Laptop (LIVE; `tools/r5/live_e2e.mjs`, 11/11 in Chromium and Firefox; image `sha-744a9f4ca2a7`):** a goal
+  ~1 m ahead: Chromium MODEL 0.95 m / 3.9 s vs LIVE 0.95 m / 4.2 s; Firefox MODEL 0.94 m / 3.8 s vs LIVE 0.92 m /
+  3.9 s; all `succeeded`. One goal each: an example, not a rate. [data/r53/laptop/](data/r53/laptop/)
+- Found on the way, each fixed: (1) a LIVE tick said `arrived` while the gateway kept reporting the LAST goal's
+  `succeeded`, and Play cleared every new goal at once: arrival is now once per goal (`arrivalOnce`, tested);
+  (2) the comparison could take that stale verdict for a new goal: only a verdict for THIS goal counts (tested);
+  (3) Nav2's goal status sat in the model's plan-status field and Play's console said "no path" while Nav2 drove:
+  the plan is `found`, the verdict travels separately; (4) coco_web's session idle limit (60 s, for shared demos)
+  ended a visitor's own session and latched STOP after a minute without input: the image now sets 30 min
+  (`session_idle_s`), STOP still ends it -- needs the CI rebuild (next run).
+- **UNRESOLVED:** the gateway's `robot.truth` (Gazebo's model odometry) read x = 25.0 with COCO on the start pad
+  at x = 23.0 (CI run 45877911153) and later ~1.9 m from AMCL's pose: an offset of that topic's frame, not
+  measured AMCL error. Distances driven on it are unaffected (an offset cancels); no truth-vs-belief number is
+  shown. Probable cause (not checked): the odometry plugin's origin vs the start teleport.
+
 ## Questions for Gautham (R5)
 
 1. **Control path for R5.2.** README invariant 2 says browser code that controls COCO's Stack never names a ROS topic and speaks `coco.v1`; R5.2 asks the joystick to publish `/cmd_vel` through the arbiter over a ROS bridge. Options: (a) the browser publishes `/cmd_vel_teleop`, `/mission/mode`, `/goal_pose` through foxglove_bridge (the image's whitelist keeps everything behind the arbiter) and invariant 2 is amended for a visitor's local LIVE container; (b) control stays `coco.v1` (platform_server in the image, a second port; coco_web is frozen and arena-shaped, so it may need changes) and the bridge is read-only. Default until you decide: no browser control code is written.

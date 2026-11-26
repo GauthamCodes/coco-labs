@@ -192,9 +192,11 @@ run_stack() {
   # Remote mode needs code access (platform_server refuses an open remote session): `docker -p`
   # publishes the port on every interface, so without a code anyone on the same network could drive.
   # The code (a CSPRNG, coco_web/control.py) is printed below; STOP needs no code, from any client.
+  # Idle 30 min (coco_web's default 60 s is for shared remote demos: in a visitor's OWN container a minute
+  # without input ended the session and latched STOP, measured on the laptop 2026-11-27); STOP still ends it.
   start gateway ros2 run coco_web platform_server --ros-args -p use_sim_time:=true \
     -p "http_port:=${GW_PORT}" -p remote:=true -p access:=code -p "origins:=${GW_ORIGINS}" \
-    -p session_cap_s:=86400.0
+    -p session_cap_s:=86400.0 -p session_idle_s:=1800.0
   if [ -n "$LEVEL_MAP" ]; then
     start nav ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
       map:="$LEVEL_MAP" params_file:="$LEVEL_PARAMS"

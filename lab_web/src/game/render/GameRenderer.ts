@@ -123,6 +123,9 @@ export class GameRenderer {
   private radius = 0.22;
   private readonly planLine: THREE.Mesh;
   private readonly ghostLine: THREE.Mesh;
+  /** R5.3: Model vs LIVE -- the MODEL run's driven path (violet) and the LIVE robot's (amber), both views */
+  private readonly modelLine: THREE.Mesh;
+  private readonly liveLine: THREE.Mesh;
   private readonly ghostChevrons: THREE.InstancedMesh;
   private readonly goalPin: THREE.Group;
   private clock = 0;
@@ -230,7 +233,9 @@ export class GameRenderer {
     const head = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 8).translate(0, 0, 0.34), new THREE.MeshBasicMaterial({ color: 0xf43f8e }));
     this.goalPin.add(pin, head);
     this.goalPin.visible = false;
-    this.scene.add(this.cues, this.planLine, this.ghostLine, this.goalPin);
+    this.modelLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xa78bfa, transparent: true, opacity: 0.9, depthWrite: false }));
+    this.liveLine = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.9, depthWrite: false }));
+    this.scene.add(this.cues, this.planLine, this.ghostLine, this.goalPin, this.modelLine, this.liveLine);
     this.applyTier(tier);
   }
 
@@ -594,6 +599,11 @@ export class GameRenderer {
   }
 
   // G2.2: a thin line (the prompt: "the global plan as a thin line"), G1's colour
+  /** R5.3: draw (or clear) the Model vs LIVE paths */
+  setCompare(model: [number, number][] | null, live: [number, number][] | null) {
+    this.ribbon(this.modelLine, model ?? [], 0.03, 0.02);
+    this.ribbon(this.liveLine, live ?? [], 0.03, 0.025);
+  }
   setPlan(pts: [number, number][]) { this.planPts = pts; this.ribbon(this.planLine, pts, 0.035, 0.012); }
   private planPts: [number, number][] = [];
   private ghostOn = false;

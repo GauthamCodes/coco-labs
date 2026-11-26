@@ -31,6 +31,19 @@ export function gatewayUrl(bridgeUrl: string): string {
 
 export type LivePhase = 'connecting' | 'live' | 'failed' | 'closed';
 
+/**
+ * `arrived` as Play means it: once, on the tick a goal is reached. The gateway keeps reporting the last
+ * goal's status (a 'succeeded' persists), and Play clears a newly set goal on every arrived tick, so
+ * arrival is reported once per goal (the gateway's `sent_at`); a goal already finished when this page
+ * connected is not this page's arrival. Returns the tick's arrived flag and the key to remember.
+ */
+export function arrivalOnce(arrived: boolean, goalKey: string | null, seen: string | null, first: boolean): { arrived: boolean; seen: string | null } {
+  if (first && arrived) return { arrived: false, seen: goalKey };     // old news when we connected
+  if (!arrived || goalKey === null) return { arrived: false, seen };
+  if (goalKey === seen) return { arrived: false, seen };
+  return { arrived: true, seen: goalKey };
+}
+
 export interface LiveSourceEvents {
   onTick(tick: GameTick, ranges: Float32Array): void;
   onPhase?(phase: LivePhase, words: string): void;
@@ -51,6 +64,7 @@ export class LiveSource {
   latched = false;
   /** the stick as last set: coco_web zeroes a driver whose drive frames stop (its dead-man), so it is re-sent at 10 Hz */
   private held: [number, number] = [0, 0];
+  private arrivedFor: string | null = null;
 
   constructor(readonly url: string, private code: string, private ev: LiveSourceEvents) {
     this.bridge = new FoxgloveClient(normaliseUrl(url), {
@@ -84,6 +98,9 @@ export class LiveSource {
     if (this.held[0] || this.held[1]) this.control.send({ type: 'drive', linear: this.held[0], angular: this.held[1] });
     const t = buildTick(this.state, this.k);
     if (!t) return;
+    const g = this.state.telemetry?.nav.goal ?? null;
+    const a = arrivalOnce(t.arrived, g ? String(g.sent_at) : null, this.arrivedFor, this.k === 0);
+    t.arrived = a.arrived; this.arrivedFor = a.seen;
     this.k += 1;
     if (this.k === 1) this.ev.onPhase?.('live', 'LIVE: COCO\'s ROS 2 stack, running now (a Gazebo simulation)');
     this.lastTick = t;
