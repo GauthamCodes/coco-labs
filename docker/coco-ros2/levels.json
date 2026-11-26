@@ -1,0 +1,47 @@
+{
+ "schema": "coco_ros2.level_registry",
+ "version": 1,
+ "note": "R5.1: the levels the coco-ros2 image carries. World Spec levels are generated at image build time by docker/coco-ros2/gen_levels.py (tools/m6/gen_level.py) and must equal the committed checksums of the files COCO's recorded STACK runs used, or the build fails. Generated files stay out of git; their checksums are committed.",
+ "levels": [
+  {
+   "alias": "depot",
+   "id": "coco_depot_v1",
+   "kind": "world_spec",
+   "spec": "worlds/coco_depot_v1.yaml",
+   "derivation": 5,
+   "arena_res": [0.1, 0.05],
+   "nav_res": 0.05,
+   "verify": {"record": "docs/v2/g2/data/g29/coco_depot_v1_outputs_d5.json"},
+   "provenance": "G2.9 derivation 5 (Regulated Pure Pursuit, the odometry calibration, the actors' scenario rule): the Depot of the G2.9, R2.7 and R3.4 STACK runs (tools/m6/m6f8_run.sh)"
+  },
+  {
+   "alias": "depot_colours",
+   "id": "coco_depot_colours_v1",
+   "kind": "world_spec",
+   "spec": "worlds/coco_depot_colours_v1.yaml",
+   "derivation": 5,
+   "arena_res": [0.1, 0.05],
+   "nav_res": 0.05,
+   "verify": {"record": "docs/v2/g2/data/g29/coco_depot_colours_v1_outputs_d5.json"},
+   "provenance": "G2.9 derivation 5, the colour-fetch Depot"
+  },
+  {
+   "alias": "depot_clutter",
+   "id": "coco_depot_clutter_v1",
+   "kind": "world_spec",
+   "spec": "worlds/coco_depot_clutter_v1.yaml",
+   "derivation": 5,
+   "arena_res": [0.1, 0.05],
+   "nav_res": 0.05,
+   "verify": {"session_meta": "docs/v2/r3/data/r34/sessions/depot-clutter-50_plan_rep1/meta.json"},
+   "provenance": "R3.4's cluttered Depot (tools/r3/prepare_gazebo.py: derivation 5); its world SDF and map are checked against an R3.4 STACK session's recorded sha256s (the session's nav2_params.yaml was a controller variant, so it is not compared)"
+  },
+  {
+   "alias": "arena",
+   "id": "coco_navigation",
+   "kind": "stock",
+   "spec": "worlds/coco_arena_v2.yaml",
+   "provenance": "COCO's own Gazebo navigation world (gazebo_models/worlds/coco_navigation.world, the default of full_world_robo.launch.py), its saved map (gazebo_models/maps/coco_navigation.yaml) and nav2_params.yaml, as installed: the Proving Ground (World Spec coco_arena_v2 describes it). Nothing is generated, teleported or recalibrated."
+  }
+ ]
+}

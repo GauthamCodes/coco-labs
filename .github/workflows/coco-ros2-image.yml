@@ -1,0 +1,234 @@
+# R5.1 · ghcr.io/gauthamcodes/coco-ros2: COCO's ROS 2 stack, headless (docker/coco-ros2/).
+#
+# Built, measured and tested HERE, before anyone pulls it (the laptop has ~7.5 GB free; the 8.18 GB
+# appliance does not fit). In order: build; measure the unpacked size against MAX_IMAGE_BYTES; start
+# it with the README's command; R5.1's acceptance inside the container (every Nav2 lifecycle node
+# active; /scan /odom /tf /map /plan /cmd_vel exist; cmd_vel_arbiter the only wheel publisher); the
+# bridge from outside (ws://127.0.0.1:8765, as a browser sees it; a client cannot add a wheel
+# publisher). Only if all of that passed: push, then measure the registry's compressed size and
+# whether the package can be pulled anonymously. Every record is in the coco-ros2-image artifact
+# and the job summary; tools/r5/preflight_pull.sh uses size.json to decide whether a machine has
+# room before it pulls.
+name: coco-ros2 image
+
+on:
+  push:
+    branches: [ main, 'v2/r5-*' ]
+    paths:
+      - 'docker/coco-ros2/**'
+      - '.github/workflows/coco-ros2-image.yml'
+      - 'gazebo_models/**'
+      - 'custom_teleop/**'
+      - 'coco_config/**'
+      - 'coco_sim/**'
+      - 'coco_lab/coco_lab/**'
+      - 'tools/m6/gen_level.py'
+      - 'worlds/**'
+  workflow_dispatch:
+    inputs:
+      push_image:
+        description: 'Push to ghcr.io if every check passes'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: coco-ros2-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  image:
+    name: Build, measure and test coco-ros2 (push only if it passes)
+    runs-on: ubuntu-24.04
+    # First build: no measurement yet. The old appliance's build spent most of 4353 s on a slow
+    # packages.ros.org (docs/DOCKER.md); the bring-up under software rendering has a 600 s budget.
+    timeout-minutes: 150
+    env:
+      IMAGE: ghcr.io/gauthamcodes/coco-ros2
+      # Unpacked bytes. A budget chosen from a measurement, not a measurement: the laptop had
+      # 7,552,487,424 bytes free (docs/v2/r5/R5_STATUS.md); a pull keeps the unpacked image AND its
+      # compressed layers, and ~2 GB must stay free.
+      MAX_IMAGE_BYTES: '4000000000'
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Room on the runner (preinstalled SDKs this job never uses)
+        run: |
+          mkdir -p out
+          df -B1 / > out/runner_df_before.txt
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -B1 / > out/runner_df_after.txt
+          docker version > out/docker_version.txt
+          docker info --format '{{.Driver}} {{json .DriverStatus}}' > out/docker_storage.txt
+          cat out/runner_df_after.txt out/docker_storage.txt
+
+      - name: Build
+        run: |
+          set -o pipefail
+          start=$(date +%s)
+          docker build -f docker/coco-ros2/Dockerfile --build-arg GIT_SHA="$GITHUB_SHA" \
+            --progress=plain -t coco-ros2:ci . 2>&1 | tee out/build.log
+          echo "BUILD_S=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
+
+      - name: Measure the image against the budget (before it is started or pushed)
+        run: |
+          set -o pipefail
+          docker image inspect coco-ros2:ci --format '{{.Size}}' > out/inspect_size_bytes.txt
+          docker history --no-trunc --format '{{.Size}}\t{{.CreatedBy}}' coco-ros2:ci > out/history.txt
+          docker run --rm --entrypoint sh coco-ros2:ci -c 'du -sxb / 2>/dev/null | cut -f1' > out/du_root_bytes.txt
+          docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/levels/index.json > out/levels_index.json
+          docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/packages.txt > out/packages.txt
+          docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/image.json > out/image.json
+          python3 - <<'PY'
+          import json, os
+          inspect = int(open('out/inspect_size_bytes.txt').read().strip())
+          du = int(open('out/du_root_bytes.txt').read().strip())
+          cap = int(os.environ['MAX_IMAGE_BYTES'])
+          levels = json.load(open('out/levels_index.json'))
+          size = {'schema': 'coco_ros2.size', 'version': 1, 'git_sha': os.environ['GITHUB_SHA'],
+                  'docker_image_inspect_size_bytes': inspect, 'du_root_bytes': du,
+                  'unpacked_bytes': max(inspect, du), 'max_image_bytes': cap,
+                  'build_seconds': int(os.environ['BUILD_S']),
+                  'levels_all_verified': levels.get('all_verified'),
+                  'levels': {a: e['verification']['result'] for a, e in levels['levels'].items()}}
+          size['within_budget'] = size['unpacked_bytes'] <= cap
+          json.dump(size, open('out/size.json', 'w'), indent=1, sort_keys=True)
+          print(json.dumps(size, indent=1, sort_keys=True))
+          raise SystemExit(0 if size['within_budget'] and size['levels_all_verified'] else
+                           'over the size budget, or a level is not verified: not pushed')
+          PY
+
+      - name: Start it with the README's command (detached and named for the test)
+        run: |
+          docker run -d --rm --name coco -p 8765:8765 coco-ros2:ci --level depot
+          nohup docker logs -f coco > out/container.log 2>&1 &
+          start=$(date +%s)
+          for i in $(seq 1 150); do
+            docker exec coco test -f /tmp/coco/ready.json 2>/dev/null && break
+            docker ps -q -f name=^coco$ | grep -q . || { echo "the container exited"; break; }
+            sleep 5
+          done
+          echo "READY_S=$(( $(date +%s) - start ))" >> "$GITHUB_ENV"
+          tail -n 60 out/container.log
+          docker exec coco test -f /tmp/coco/ready.json
+
+      - name: R5.1 acceptance inside the container
+        run: |
+          set -o pipefail
+          docker exec coco coco-ros2 check --json --window 15 | tee out/check.json
+          docker exec coco coco-ros2 check --window 5
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: lab_web/.nvmrc
+
+      - name: The bridge from outside the container (ws://127.0.0.1:8765)
+        run: node docker/coco-ros2/ws_probe.mjs ws://127.0.0.1:8765 out/probe.json --seconds 10 --container coco
+
+      - name: After the probe, the stack still passes (the arbiter still the only wheel publisher)
+        run: |
+          set -o pipefail
+          docker exec coco coco-ros2 check --json --window 5 > out/check_after_probe.json
+          docker exec coco coco-ros2 levels | tee out/levels.txt
+
+      - name: The container's own logs
+        if: always()
+        run: |
+          docker cp coco:/tmp/coco out/container_logs 2>/dev/null || echo "no container left to copy from"
+          docker stop -t 30 coco 2>/dev/null || true
+          sleep 2
+          docker ps -a > out/docker_ps_after_stop.txt
+
+      - name: Push to ghcr.io (every check above passed)
+        if: github.event_name == 'push' || inputs.push_image
+        id: push
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -o pipefail
+          echo "$TOKEN" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+          sha="sha-${GITHUB_SHA::12}"
+          if [ "$GITHUB_REF_NAME" = main ]; then extra=latest; else extra="${GITHUB_REF_NAME//\//-}"; fi
+          for t in "$sha" "$extra"; do
+            docker tag coco-ros2:ci "$IMAGE:$t"
+            docker push "$IMAGE:$t" | tee -a out/push.log
+          done
+          echo "tags=$sha $extra" >> "$GITHUB_OUTPUT"
+          echo "ref=$IMAGE:$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Measure what a pull downloads (the registry's compressed layers), and anonymous access
+        if: steps.push.outcome == 'success'
+        env:
+          REF: ${{ steps.push.outputs.ref }}
+          TAGS: ${{ steps.push.outputs.tags }}
+        run: |
+          set -o pipefail
+          docker buildx imagetools inspect --raw "$REF" > out/manifest_top.json
+          python3 - <<'PY'
+          import json, os, subprocess
+          ref, top = os.environ['REF'], json.load(open('out/manifest_top.json'))
+          man = top
+          if 'manifests' in top:          # an index: the linux/amd64 image manifest
+              d = next(m for m in top['manifests'] if m.get('platform', {}).get('architecture') == 'amd64'
+                       and m.get('platform', {}).get('os') == 'linux')
+              base = ref.rsplit(':', 1)[0]
+              man = json.loads(subprocess.run(['docker', 'buildx', 'imagetools', 'inspect', '--raw',
+                                               f'{base}@{d["digest"]}'], check=True,
+                                              capture_output=True, text=True).stdout)
+          layers = [l['size'] for l in man['layers']]
+          size = json.load(open('out/size.json'))
+          size.update(registry_ref=ref, tags=os.environ['TAGS'].split(), registry_layers=len(layers),
+                      registry_compressed_bytes=sum(layers) + man['config']['size'],
+                      laptop_needs_bytes_estimate=size['unpacked_bytes'] + sum(layers) + man['config']['size'])
+          json.dump(size, open('out/size.json', 'w'), indent=1, sort_keys=True)
+          print(json.dumps(size, indent=1, sort_keys=True))
+          PY
+          docker logout ghcr.io
+          if docker buildx imagetools inspect "$REF" > out/anonymous_inspect.txt 2>&1; then
+            echo public > out/anonymous_pull.txt
+          else
+            echo "not public (anonymous inspect refused)" > out/anonymous_pull.txt
+          fi
+          cat out/anonymous_pull.txt
+
+      - name: Summary
+        if: always()
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, os
+          def load(p):
+              try:
+                  return json.load(open(p))
+              except Exception as e:
+                  return {'missing': f'{p}: {e}'}
+          size, check, probe = load('out/size.json'), load('out/check.json'), load('out/probe.json')
+          anon = open('out/anonymous_pull.txt').read().strip() if os.path.exists('out/anonymous_pull.txt') else 'not pushed'
+          print('## coco-ros2 image (R5.1)\n')
+          print('| | |\n|---|---|')
+          for k in ('unpacked_bytes', 'docker_image_inspect_size_bytes', 'du_root_bytes', 'max_image_bytes',
+                    'registry_compressed_bytes', 'laptop_needs_bytes_estimate', 'build_seconds', 'levels', 'tags'):
+              print(f'| {k} | {size.get(k)} |')
+          print(f'| seconds to READY | {os.environ.get("READY_S")} |')
+          print(f'| anonymous pull | {anon} |')
+          acc = check.get('acceptance', {})
+          print(f'| Nav2 active | {acc.get("nav2_active")} |')
+          print(f'| topics exist | {acc.get("topics_exist")} |')
+          req = check.get('required_also', {})
+          print(f'| wheel topic publishers | {req.get("wheel_topic_publishers")} |')
+          print(f'| messages per s | {req.get("messages_per_s")} |')
+          rec = check.get('recorded', {})
+          print(f'| real-time factor | {rec.get("real_time_factor")} over {rec.get("rtf_window_s")} s |')
+          print(f'| localisation (AMCL vs truth) | {rec.get("localisation")} |')
+          print(f'| check pass | {check.get("pass")} |')
+          print(f'| bridge probe pass | {probe.get("pass")} ({probe.get("acceptance")}) |')
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coco-ros2-image
+          path: out/
+          retention-days: 90

@@ -1,5 +1,80 @@
 # DOCKER — the local platform runtime
 
+Two images live in this repository:
+
+- **`coco-ros2` (R5.1, below):** COCO's ROS 2 stack, headless, on a COCO Lab level, with a
+  WebSocket bridge for the website's LIVE view. Built in CI and pushed to GHCR.
+- **The appliance (`/Dockerfile`, from "Status: authored, not runtime-tested" on):** the 2026-10
+  single-container platform with the `coco.v1` web UI, measured at 8.18 GB. Kept as written.
+
+## coco-ros2 (R5.1)
+
+**Status, 2026-11-24: authored, NOT built, NOT run.** Nothing in this section has been executed
+yet; the first green run of `.github/workflows/coco-ros2-image.yml` decides it, and its numbers go
+to `docs/v2/r5/R5_STATUS.md`. Until then every statement below is design, not evidence.
+
+```bash
+docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+docker exec <container> coco-ros2 check      # R5.1's acceptance, against the running stack
+docker run --rm ghcr.io/gauthamcodes/coco-ros2 levels
+```
+
+**What is in it** (`docker/coco-ros2/Dockerfile`, three stages):
+
+1. *levels* — `docker/coco-ros2/gen_levels.py` runs `tools/m6/gen_level.py` for every level of
+   `docker/coco-ros2/levels.json` and compares each output with the committed checksums of the files
+   COCO's recorded STACK runs used (the Depot and the colour Depot: G2.9's derivation-5 records in
+   `docs/v2/g2/data/g29/`; the cluttered Depot: an R3.4 session's recorded world and map sha256s).
+   Any difference fails the build. `arena` is COCO's own `coco_navigation.world` with its saved
+   map and parameters, as installed. `lab_web/tools/test_r5_coco_ros2_image.py` runs the same
+   generation in the tools suite.
+2. *overlay* — `coco_config`, `coco_sim`, `custom_teleop` (the arbiter) and `gazebo_models`, built
+   from this repository (never the COCO robot repository).
+3. *runtime* — `ros:jazzy-ros-base-noble` plus Gazebo Harmonic (`ros_gz`), `gz_ros2_control` and
+   the controllers, Nav2 (`navigation2`, `nav2_bringup`), CycloneDDS, `foxglove_bridge`, Xvfb and
+   Mesa (software OpenGL). Not in it: the desktop variant, MoveIt, torch and the RL climb, the
+   mission executive, perception, `coco_web` and `web_video_server`.
+
+**Bring-up** (`docker/coco-ros2/entrypoint.sh`) is `tools/m6/m6f8_run.sh`'s, which every recorded
+Depot STACK run used: `full_world_robo.launch.py gui:=false world:=<level>`; wait for `/scan`;
+teleport COCO to the level's start; re-spawn `diff_drive_controller` with the level's odometry
+calibration; `arbiter.launch.py initial_mode:=nav`; `nav.launch.py arbiter:=true` with the level's
+map and parameters; wait until the same ten Nav2 lifecycle nodes are active and AMCL publishes.
+The image adds Xvfb (the GPU LiDAR and the camera need OpenGL; no GPU is assumed), `/odom` (a relay
+of `/diff_drive_controller/odom`, `docker/coco-ros2/odom_relay.py`) and the bridge. Ready =
+`/tmp/coco/ready.json` (the HEALTHCHECK).
+
+**Known differences from the recorded STACK runs** (to be stated wherever LIVE is shown): the
+Depot's actors are not driven (`tools/g2/actor_scenario.py` is not started; they stand at their
+t = 0 poses); Gazebo renders the sensors in software, so the real-time factor is whatever the
+host's CPU gives (measured by `coco-ros2 check`, not assumed); ROS binary package versions are
+whatever `packages.ros.org` served when the image was built (`/opt/coco/packages.txt`; the laptop's
+recorded versions are in each session's `meta.json`).
+
+**The bridge cannot get around the arbiter** (`docker/coco-ros2/foxglove_bridge.yaml`): every topic
+is visible; a client may publish only to `/cmd_vel_teleop` (the arbiter's teleop input),
+`/mission/mode`, `/goal_pose` and `/initialpose`; the `parameters` and `services` capabilities are
+off (with them a client could reconfigure a node into a second wheel publisher). CI's probe
+(`docker/coco-ros2/ws_probe.mjs`) advertises `/diff_drive_controller/cmd_vel` and fails if it gains
+a publisher. Whether the website should drive through these topics or through `coco.v1` (README
+invariant 2) is an open question for Gautham, recorded in `docs/v2/r5/R5_STATUS.md`.
+
+**Disk: measured before pulling.** CI measures the unpacked size (`docker image inspect` and `du`
+inside the image) and fails above `MAX_IMAGE_BYTES` (4,000,000,000: a budget chosen from the
+laptop's measured 7,552,487,424 free bytes, keeping ~2 GB free, since a pull with the containerd
+image store keeps the compressed layers too); after pushing it measures the registry's compressed
+layers and whether the package can be pulled anonymously. On a machine, before any pull:
+
+```bash
+bash tools/r5/preflight_pull.sh ghcr.io/gauthamcodes/coco-ros2:sha-<12> size.json   # exit 0 = room
+```
+
+(`size.json` from the run's `coco-ros2-image` artifact). It reads only the manifest; it never pulls.
+
+---
+
+## The appliance (`/Dockerfile`)
+
 ```bash
 git clone <this repo> && cd coco-labs
 docker compose build          # first build is long: ROS desktop + CPU torch

@@ -1,0 +1,18 @@
+# R5.1: foxglove_bridge in the coco-ros2 image (ws://<host>:8765, the Foxglove WebSocket protocol).
+#
+# The bridge shows every topic. What a client may DO is narrowed to what cannot get around
+# cmd_vel_arbiter (README invariant 3: the arbiter is the only wheel publisher; STOP > the person
+# driving > autonomy):
+#   - publish only to the arbiter's teleop input, the arbiter's mode, Nav2's goal topic and
+#     AMCL's initial pose -- never /diff_drive_controller/cmd_vel or any other velocity topic;
+#   - no `parameters` and no `services` capability: with them a client could reconfigure a node
+#     (for example a lifecycle node's output topic) and add a second wheel publisher.
+# The CI probe (docker/coco-ros2/ws_probe.mjs) checks the advertised capabilities and that a
+# client advertising /diff_drive_controller/cmd_vel adds no publisher there.
+/**:
+  ros__parameters:
+    port: 8765
+    address: "0.0.0.0"
+    use_sim_time: true
+    capabilities: ["clientPublish", "connectionGraph"]
+    client_topic_whitelist: ["^/cmd_vel_teleop$", "^/mission/mode$", "^/goal_pose$", "^/initialpose$"]

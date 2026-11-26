@@ -29,6 +29,22 @@ COCO_WORLDS=$PWD/worlds .venv/bin/python -m coco_lab.experiments run \
 # your own algorithm file:  ... run SPEC.json --algorithm my_planner.py --out results/
 ```
 
+**COCO's ROS 2 stack in Docker (R5.1 — authored, NOT yet built or verified).** One command is
+meant to start Gazebo Harmonic (headless), Nav2 and `cmd_vel_arbiter` on a COCO Lab level, with a
+WebSocket bridge (foxglove_bridge) on port 8765 — a simulation, labelled LIVE while it runs, never
+hardware:
+
+```bash
+docker run --rm -p 8765:8765 ghcr.io/gauthamcodes/coco-ros2 --level depot
+# levels: depot, depot_colours, depot_clutter, arena;  docker exec <id> coco-ros2 check
+```
+
+The image is built, size-checked and tested in CI before it is pushed
+([`.github/workflows/coco-ros2-image.yml`](.github/workflows/coco-ros2-image.yml)); until a green
+run of that workflow is recorded in [`docs/v2/r5/R5_STATUS.md`](docs/v2/r5/R5_STATUS.md), the
+image does not exist yet. Before pulling, check the disk:
+`bash tools/r5/preflight_pull.sh IMAGE size.json`. Details: [`docs/DOCKER.md`](docs/DOCKER.md#coco-ros2-r51).
+
 Write an algorithm: [`docs/v2/r2/API.md`](docs/v2/r2/API.md) · the paper:
 [`docs/paper/`](docs/paper/) · **Cite:** [`CITATION.cff`](CITATION.cff) (About → Cite on the site) ·
 Apache-2.0.
