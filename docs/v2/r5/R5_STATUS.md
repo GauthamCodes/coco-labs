@@ -53,7 +53,23 @@ R5.2–R5.6, the localisation v1.1 suites and the leaderboard matrix: not starte
 - `pytest lab_web/tools/test_r5_coco_ros2_image.py`: **16 passed**.
 - `docker/coco-ros2/gen_levels.py` run locally: depot, depot_colours, depot_clutter **identical** to the committed
   checksums; arena stock (7.5 MB).
-- Still NOT verified: the image build, its size, the in-container acceptance and the bridge probe (CI, next).
+- CI run 45862342162: build 95 s, 3.80 GB, levels identical, in-container acceptance PASS; the bridge probe could
+  not connect: foxglove_bridge 3.x accepts only the subprotocol `foxglove.sdk.v1` (its own handshake error).
+- CI run 45866330520 (probe fixed): the probe connected and **caught a bypass**: `client_topic_whitelist` is not
+  applied by 3.6.3 (source: parsed, never checked), and a client advertise made `/foxglove_bridge` a second
+  publisher on `/diff_drive_controller/cmd_vel`. Nothing was pushed (the push is gated on the probe).
+- **R5.1 DONE.** CI run 45867550987 (`831fe48`), the bridge read-only: **PASS** and pushed
+  `ghcr.io/gauthamcodes/coco-ros2:sha-831fe4817f2e` (+ `v2-r5-live-ros2`), digest `sha256:797d856d...`.
+  Unpacked 3,797,579,707 bytes (budget 4,000,000,000); a pull downloads 1,124,312,927 bytes (17 layers); build
+  79 s. **Public**: anonymous `imagetools inspect` after `docker logout` succeeded in CI, and the laptop pulled it
+  anonymously (the package is linked to the public repository). Probe: `foxglove.sdk.v1`, capabilities
+  `connectionGraph`, `time`; the six topics advertised; /scan /odom /tf flowing; a client advertise of the wheel
+  topic adds no publisher (graph and ROS agree: `/cmd_vel_arbiter` only). [data/r51/](data/r51/)
+- **Laptop (LIVE, 2026-11-26, AC, balanced):** `tools/r5/preflight_pull.sh` room (need 6.92 GB incl. 2 GB kept
+  free); pull took 5.22 GB on disk (12 -> 6.3 GB free); README command (+ `--ulimit core=0`, the laptop's apport
+  core trap) healthy after **40 s**; `coco-ros2 check`: Nav2 active, the six topics, wheel publishers
+  `['/cmd_vel_arbiter']`, /scan 8.9/s, /odom 44.1/s, RTF 0.88; probe PASS. Container stopped, image removed
+  (back to 12 GB). [data/r51/laptop/](data/r51/laptop/)
 
 ## Decisions from Gautham, 2026-11-26
 
@@ -63,6 +79,15 @@ R5.2–R5.6, the localisation v1.1 suites and the leaderboard matrix: not starte
    LIVE container only; COCO Lab's MODEL and the Stack tab keep `coco.v1`.
 2. **GHCR:** Gautham makes `ghcr.io/gauthamcodes/coco-ros2` public on its package page after the first green push;
    anonymous access is then re-checked.
+
+### Revised 2026-11-26 (Gautham), after a measured fact
+
+foxglove_bridge 3.6.3 does not apply `client_topic_whitelist` (its source parses it and never checks it;
+CI run 45866330520: a client advertising `/diff_drive_controller/cmd_vel` made `/foxglove_bridge` a second
+wheel publisher). Decision 1 is replaced: **the bridge is read-only; LIVE control goes through a small COCO
+gateway node in the image (its own port) that accepts only four control intents (teleop velocity, STOP/mode,
+a Nav2 goal, the initial pose) and publishes only to four hard-coded topics behind `cmd_vel_arbiter`.**
+README invariant 2 stays as written (control speaks `coco.v1`-style intents); no amendment.
 
 ## Questions for Gautham (R5)
 

@@ -1,0 +1,8 @@
+level        coco_depot_v1
+nav2 active  True  
+topics       /scan=yes /odom=yes /tf=yes /map=yes /plan=yes /cmd_vel=yes
+wheel pubs   ['/cmd_vel_arbiter']
+rates /s     {'/scan': 8.9, '/odom': 44.1, '/clock': 441.4, '/amcl_pose': 0.1, '/model/coco/odometry': 44.1}
+RTF          0.88 over 10 s
+localisation {'amcl_map': [23.0, 6.0], 'truth_world': [23.0, 6.0], 'world_to_map': [0.0, 0.0], 'error_m': 0.0}
+PASS
