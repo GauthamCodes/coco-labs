@@ -125,7 +125,12 @@ try {
   rec.window_s = seconds;
   rec.graph_publishers_before = { [WHEELS]: pubs(WHEELS), [TELEOP]: pubs(TELEOP) };
 
-  if (caps.includes('clientPublish')) {
+  // Always try (2026-11-26): foxglove_bridge 3.6.3 parses client_topic_whitelist and never applies it
+  // (ros2_foxglove_bridge.cpp: clientAdvertise/clientMessage do not check it; CI run 45866330520 saw
+  // /foxglove_bridge become a second publisher on the wheel topic). The image's bridge is therefore
+  // read-only, and this probe proves a client advertise cannot add a wheel publisher, whatever the
+  // server says its capabilities are.
+  {
     const t0 = Date.now();
     ws.send(JSON.stringify({ op: 'advertise', channels: [
       { id: 901, topic: WHEELS, encoding: 'cdr', schemaName: 'geometry_msgs/msg/TwistStamped' },
@@ -156,10 +161,12 @@ try {
   rec.acceptance = {
     topics_advertised: advertised, messages_arrive: flowing,
     no_parameters_or_services: !caps.includes('parameters') && !caps.includes('services'),
-    wheel_topic_gains_no_publisher: caps.includes('clientPublish') ? noBypass : 'no clientPublish capability (nothing to test)',
+    wheel_topic_gains_no_publisher: noBypass,
+    read_only: !caps.includes('clientPublish'),
   };
   rec.pass = Object.values(advertised).every(Boolean) && Object.values(flowing).every(Boolean)
-    && rec.acceptance.no_parameters_or_services && rec.acceptance.wheel_topic_gains_no_publisher !== false;
+    && rec.acceptance.no_parameters_or_services && rec.acceptance.read_only
+    && rec.acceptance.wheel_topic_gains_no_publisher === true;
   code = rec.pass ? 0 : 1;
 } catch (e) {
   rec.errors.push(String(e?.message ?? e));

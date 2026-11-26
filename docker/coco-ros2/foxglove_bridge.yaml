@@ -1,12 +1,12 @@
 # R5.1: foxglove_bridge in the coco-ros2 image (ws://<host>:8765, the Foxglove WebSocket protocol).
 #
-# The bridge shows every topic. What a client may DO is narrowed to what cannot get around
-# cmd_vel_arbiter (README invariant 3: the arbiter is the only wheel publisher; STOP > the person
-# driving > autonomy):
-#   - publish only to the arbiter's teleop input, the arbiter's mode, Nav2's goal topic and
-#     AMCL's initial pose -- never /diff_drive_controller/cmd_vel or any other velocity topic;
-#   - no `parameters` and no `services` capability: with them a client could reconfigure a node
-#     (for example a lifecycle node's output topic) and add a second wheel publisher.
+# READ-ONLY (2026-11-26). The bridge shows every topic; a client can publish NOTHING. foxglove_bridge
+# 3.6.3 parses `client_topic_whitelist` but never applies it (ros2_foxglove_bridge.cpp: clientAdvertise
+# and clientMessage do not check it), and CI run 45866330520 measured it: a client advertising
+# /diff_drive_controller/cmd_vel made /foxglove_bridge a second wheel publisher, around cmd_vel_arbiter
+# (README invariant 3). So `clientPublish` is off, as are `parameters` and `services` (with them a
+# client could reconfigure a node into a second wheel publisher). LIVE control (R5.2) needs a path that
+# is restricted by construction; see docs/v2/r5/R5_STATUS.md.
 # The CI probe (docker/coco-ros2/ws_probe.mjs) checks the advertised capabilities and that a
 # client advertising /diff_drive_controller/cmd_vel adds no publisher there.
 /**:
@@ -14,5 +14,6 @@
     port: 8765
     address: "0.0.0.0"
     use_sim_time: true
-    capabilities: ["clientPublish", "connectionGraph"]
-    client_topic_whitelist: ["^/cmd_vel_teleop$", "^/mission/mode$", "^/goal_pose$", "^/initialpose$"]
+    capabilities: ["connectionGraph"]
+    # not enforced by 3.6.3 (see above); kept empty so nothing suggests otherwise
+    client_topic_whitelist: ["(?!)"]

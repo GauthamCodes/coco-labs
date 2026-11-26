@@ -208,16 +208,17 @@ def test_the_entrypoint_launches_the_arbiter_and_nav2_through_it():
 def test_the_bridge_cannot_publish_around_the_arbiter():
     p = yaml.safe_load(open(os.path.join(D, 'foxglove_bridge.yaml')))['/**']['ros__parameters']
     assert p['port'] == 8765
-    assert 'parameters' not in p['capabilities'] and 'services' not in p['capabilities']
+    # read-only: foxglove_bridge 3.6.3 does not apply client_topic_whitelist (R5_STATUS, 2026-11-26),
+    # so no client publishing at all, and no parameters/services (reconfiguring a node)
+    assert p['capabilities'] == ['connectionGraph']
     allowed = [re.compile(x) for x in p['client_topic_whitelist']]
-    ok = lambda t: any(r.search(t) for r in allowed)   # noqa: E731
     arbiter = open(os.path.join(REPO, 'custom_teleop', 'custom_teleop', 'cmd_vel_arbiter.py')).read()
-    teleop = re.search(r"declare_parameter\('teleop_topic', '([^']+)'\)", arbiter).group(1)
     wheels = re.search(r"declare_parameter\('output_topic', '([^']+)'\)", arbiter).group(1)
-    assert ok(teleop) and ok('/goal_pose') and ok('/mission/mode')
-    for t in (wheels, '/cmd_vel', '/cmd_vel_nav', '/cmd_vel_smoothed', '/cmd_vel_gated',
-              '/cmd_vel_rl', '/cmd_vel_approach', '/cmd_vel_teleop_x', '/x/cmd_vel_teleop'):
-        assert not ok(t), t
+    for t in (wheels, '/cmd_vel', '/cmd_vel_teleop', '/cmd_vel_nav', '/goal_pose'):
+        assert not any(r.search(t) for r in allowed), t
+    probe = open(os.path.join(D, 'ws_probe.mjs')).read()
+    assert "if (caps.includes('clientPublish'))" not in probe          # the advertise is always tried
+    assert 'wheel_topic_gains_no_publisher === true' in probe
 
 
 def test_the_python_scripts_compile():

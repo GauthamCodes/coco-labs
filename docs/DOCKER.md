@@ -51,13 +51,13 @@ host's CPU gives (measured by `coco-ros2 check`, not assumed); ROS binary packag
 whatever `packages.ros.org` served when the image was built (`/opt/coco/packages.txt`; the laptop's
 recorded versions are in each session's `meta.json`).
 
-**The bridge cannot get around the arbiter** (`docker/coco-ros2/foxglove_bridge.yaml`): every topic
-is visible; a client may publish only to `/cmd_vel_teleop` (the arbiter's teleop input),
-`/mission/mode`, `/goal_pose` and `/initialpose`; the `parameters` and `services` capabilities are
-off (with them a client could reconfigure a node into a second wheel publisher). CI's probe
-(`docker/coco-ros2/ws_probe.mjs`) advertises `/diff_drive_controller/cmd_vel` and fails if it gains
-a publisher. Whether the website should drive through these topics or through `coco.v1` (README
-invariant 2) is an open question for Gautham, recorded in `docs/v2/r5/R5_STATUS.md`.
+**The bridge is read-only** (`docker/coco-ros2/foxglove_bridge.yaml`): every topic is visible, and a
+client can publish nothing (`clientPublish`, `parameters` and `services` are off). Measured 2026-11-26:
+foxglove_bridge 3.6.3 does **not** apply its `client_topic_whitelist` (the source parses it and never
+checks it), and with `clientPublish` on, a client advertising `/diff_drive_controller/cmd_vel` made the
+bridge a second wheel publisher around `cmd_vel_arbiter` (CI run 45866330520). CI's probe
+(`docker/coco-ros2/ws_probe.mjs`) always tries that advertise and fails if the wheel topic gains any
+publisher. How the website drives LIVE (R5.2) is recorded in `docs/v2/r5/R5_STATUS.md`.
 
 **Disk: measured before pulling.** CI measures the unpacked size (`docker image inspect` and `du`
 inside the image) and fails above `MAX_IMAGE_BYTES` (4,000,000,000: a budget chosen from the
