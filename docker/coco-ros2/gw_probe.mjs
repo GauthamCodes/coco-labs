@@ -30,7 +30,10 @@ const rec = {
   schema: 'coco_ros2.gw_probe', version: 1, url, utc: new Date().toISOString(),
   evidence_class: "LIVE (COCO's ROS 2 stack running now: a Gazebo simulation, never hardware)",
   welcome: null, acks: [], errors_from_server: [], telemetry_frames: 0, steps: {}, errors: [],
+  timeline: [],   // [ms since start, 'tx'|'rx'|'ev', what]: where a session ends, if it does
 };
+const T0 = Date.now();
+const mark = (dir, what) => { if (rec.timeline.length < 400) rec.timeline.push([Date.now() - T0, dir, what]); };
 let last = null;           // the latest telemetry
 const acks = new Map();    // id -> ack/error frame
 
@@ -69,12 +72,14 @@ let code = 1;
 let nextId = 1;
 try {
   const ws = new WebSocket(url);
-  const send = (frame) => { const id = nextId++; ws.send(JSON.stringify({ ...frame, id })); return id; };
+  const send = (frame) => { const id = nextId++; mark('tx', `${frame.type}#${id}`); ws.send(JSON.stringify({ ...frame, id })); return id; };
   await new Promise((resolve, reject) => { ws.onopen = resolve; ws.onerror = () => reject(new Error(`could not open ${url}`)); });
-  ws.onclose = (e) => { rec.closed = { at_ms: Date.now(), code: e.code, reason: e.reason }; };
+  ws.onclose = (e) => { rec.closed = { at_ms: Date.now(), code: e.code, reason: e.reason, clean: e.wasClean }; mark('ev', `close ${e.code} ${e.reason}`); };
+  ws.addEventListener('error', (e) => mark('ev', `error ${e?.message ?? e?.error?.message ?? ''}`));
   ws.onmessage = (ev) => {
-    if (typeof ev.data !== 'string') return;              // binary frames (camera, map) are not needed here
+    if (typeof ev.data !== 'string') { mark('rx', `binary ${ev.data?.byteLength ?? '?'}`); return; }
     let m; try { m = JSON.parse(ev.data); } catch { return; }
+    if (m.type !== 'telemetry' || rec.telemetry_frames % 10 === 0) mark('rx', m.type === 'ack' || m.type === 'error' ? `${m.type} ${m.command ?? m.code}#${m.id}` : m.type);
     if (m.type === 'welcome') rec.welcome = { protocol: m.protocol, commands: m.commands, limits: m.limits };
     else if (m.type === 'telemetry') { last = m; rec.telemetry_frames++; }
     else if (m.type === 'ack' || m.type === 'error') {
