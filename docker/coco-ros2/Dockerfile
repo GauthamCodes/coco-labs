@@ -15,7 +15,9 @@
 # Kept out, to stay far below the 8.18 GB appliance (/Dockerfile: osrf/ros:jazzy-desktop, MoveIt,
 # CPU torch): the desktop variant, MoveIt, torch and the RL climb, the mission executive, perception
 # and web_video_server. coco_web runs in remote mode (/ws and /healthz only), with OpenCV's headless
-# wheel instead of Ubuntu's python3-opencv (its GUI stack would not fit the size budget). The arm's controllers still load (full_world_robo
+# wheel instead of Ubuntu's python3-opencv (its GUI stack would not fit the size budget), and tornado
+# 6.5.7 as ci.yml pins it for coco_web's suite: Ubuntu's 6.4.0 hung up every connection at its first
+# keepalive ping (10 s) with platform_server's equal ping interval and timeout (CI run 45876908783). The arm's controllers still load (full_world_robo
 # spawns them); nothing here plans arm motions.
 #
 # Build context: the repository root.
@@ -84,10 +86,10 @@ RUN apt-get update \
       tini \
       ros-jazzy-std-srvs \
       ros-jazzy-trajectory-msgs \
-      python3-tornado \
       python3-numpy \
       python3-pip \
- && python3 -m pip install --no-cache-dir --break-system-packages --no-deps opencv-python-headless==4.10.0.84 \
+ && python3 -m pip install --no-cache-dir --break-system-packages --no-deps \
+      opencv-python-headless==4.10.0.84 tornado==6.5.7 \
  && python3 -c "import cv2, numpy, tornado; print('cv2', cv2.__version__, 'numpy', numpy.__version__, 'tornado', tornado.version)" \
  && apt-get purge -y python3-pip && apt-get autoremove -y \
  && rm -rf /var/lib/apt/lists/*
