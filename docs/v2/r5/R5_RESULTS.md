@@ -168,6 +168,13 @@ and emulated phone landscape: Play, pause menu, SIM, Workbench › World editor.
   The site's words for a refused connection were wrong ("nothing answered … is the container running?"), so they
   now name the browser's prompt, or the denial when Chrome reports one, and the Connect sheet mentions the prompt up
   front: follow-up PR (below).
+- **PR #45** (the local-network words): CI, Paper and Lab green on the exact head `ee63f81`; merged as **`02a7282`**;
+  **deploy run 45971894923: success**; live smoke **PASS 8/8** ([data/r56/smoke_45/](data/r56/smoke_45/)). On the
+  live origin, without the permission (headless Chromium: state "prompt"): the Connect sheet shows the prompt note,
+  and the refused connection's words end "…choose Allow (Chrome and Firefox ask before a website can reach
+  localhost)" ([screenshot](data/r56/live_from_https/chromium_denied_words.png)). With it, from the live site:
+  **Chromium and Firefox pass** again: drive 0.59 m / 0.54 m (teleop through the arbiter), a Nav2 goal executing
+  (22-point plan), STOP held at 0.000 m ([data/r56/live_from_https_after45/](data/r56/live_from_https_after45/)).
 - Disk: on the laptop's Docker (containerd image store) the pulled image takes **5.42 GB** (1.18 GB of compressed
   layers kept beside the unpacked 4.2 GB). The README now says so.
 
