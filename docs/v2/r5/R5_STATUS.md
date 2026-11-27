@@ -35,6 +35,12 @@ Authored: docker/coco-ros2/ (Dockerfile; entrypoint `coco-ros2 --level depot`; g
 
 R5.2–R5.6, the localisation v1.1 suites and the leaderboard matrix: not started (each needs code to be run and measured).
 
+## Decision from Gautham, 2026-11-27
+
+Ship R5.1-R5.5 first (R5.6 now: suites, PR "R5 · Live ROS 2", merge under the gate, deploy, live checks). The
+localisation v1.1 suites (loc-global-active-20, loc-kidnap-active-20) and the leaderboard re-verify matrix follow
+as a separate PR from the new main.
+
 ## R5.1 · verified 2026-11-26 (a session that can run code)
 
 - Disk: 6.2 GB free at the start; a cleanup of caches and unused versions freed 5.52 GB -> 12 GB
