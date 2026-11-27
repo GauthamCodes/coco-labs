@@ -56,7 +56,8 @@ connection (container stopped): words, back to MODEL. Screen recording: `data/r5
 Fails safe: a device too slow to send drive frames every 0.5 s has its stick zeroed by the gateway (measured with
 headless SwiftShader).
 
-**https → ws://localhost:** see R5.6 below (the live site).
+**https → ws://localhost (the public site):** works in both browsers once the visitor allows local network access;
+see R5.6 below.
 
 ## Model vs LIVE
 
@@ -151,7 +152,24 @@ and emulated phone landscape: Play, pause menu, SIM, Workbench › World editor.
 
 ## PRs, merges, deploys, live smoke
 
-_R5.6: filled in at the close._
+- **PR #44 "R5 · Live ROS 2"**: CI, Paper and Lab green on the exact head `f0e3de4` (WebKit determinism included);
+  self-review on the PR; merged with a merge commit as **`78b662b`**. The image workflow on main `78b662b`: success
+  (pushes `latest`). **Deploy run 45956408353: success.**
+- **Live smoke (`tools/r3/live_smoke.mjs`): PASS 9/9**: a tab opened before the deploy showed "New version ready"
+  without a reload; title; Play (Fetch Rush, COCO moves under AUTO); Compare; Workbench experiment; Studio A*;
+  Leaderboard; Learn; 0 page errors. [data/r56/smoke/](data/r56/smoke/)
+- **https → ws://localhost, from the public site, with the published image** (`ghcr.io/gauthamcodes/coco-ros2:latest`
+  pulled from GHCR, digest `sha256:65fea6ad…`, healthy in 35 s). Found: **Chromium 156 blocks it**
+  (`net::ERR_BLOCKED_BY_LOCAL_NETWORK_ACCESS_CHECKS`) and **Firefox 157 holds it on its local-network prompt**,
+  until the visitor allows the site to reach the local network; with that permission given (`--allow-local-network`:
+  the visitor's Allow), **Chromium and Firefox 11/11 each** from `https://gauthamcodes.github.io/coco-labs/`: the real
+  graph (36 nodes, 184 topics), W drove COCO 0.62 m / 0.56 m through the arbiter, a Nav2 goal succeeded, STOP latched
+  and held (0.000 m), release, SIM LIVE, disconnect. [data/r56/live_from_https/](data/r56/live_from_https/)
+  The site's words for a refused connection were wrong ("nothing answered … is the container running?"), so they
+  now name the browser's prompt, or the denial when Chrome reports one, and the Connect sheet mentions the prompt up
+  front: follow-up PR (below).
+- Disk: on the laptop's Docker (containerd image store) the pulled image takes **5.42 GB** (1.18 GB of compressed
+  layers kept beside the unpacked 4.2 GB). The README now says so.
 
 ## Questions for Gautham
 

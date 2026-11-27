@@ -178,9 +178,29 @@ export class FoxgloveClient {
 }
 
 /** Words for a failure, shown where the visitor connected. */
-export function failureWords(f: FoxgloveFailure): string {
+/** A host on this computer or a private network: a public https page needs the visitor's permission to reach it. */
+export function isLocalHost(host: string): boolean {
+  const h = host.replace(/^\[|\]$/g, '').toLowerCase();
+  return h === 'localhost' || h.endsWith('.localhost') || h === '::1' || /^127\./.test(h) || /^10\./.test(h) || /^192\.168\./.test(h)
+    || /^172\.(1[6-9]|2\d|3[01])\./.test(h) || /^169\.254\./.test(h) || /^f[cd][0-9a-f]{2}:/.test(h) || /^fe80:/.test(h);
+}
+
+/**
+ * Where the connection was attempted from (R5.6): Chrome (Local Network Access) and Firefox ask the visitor before a
+ * public https site may reach localhost. Chrome refuses at once without it; Firefox waits on its prompt. A refused
+ * connection then looks exactly like 'no container', so the words must name the permission too.
+ */
+export interface FailureContext { pageHost?: string; pageSecure?: boolean; targetHost?: string; localNetwork?: string }
+
+export function failureWords(f: FoxgloveFailure, c: FailureContext = {}): string {
+  const askedPermission = !!c.pageSecure && !!c.pageHost && !isLocalHost(c.pageHost) && !!c.targetHost && isLocalHost(c.targetHost);
   switch (f.kind) {
-    case 'unreachable': return `Could not connect: ${f.detail}. Start it with: docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot`;
+    case 'unreachable':
+      if (askedPermission && c.localNetwork === 'denied') {
+        return `Your browser blocked this site from reaching ${c.targetHost}: local network access is denied for it. Allow "Local network access" for this site in the browser's site settings, then Connect again.`;
+      }
+      return `Could not connect: ${f.detail}. Start it with: docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot`
+        + (askedPermission ? '. If your browser asked whether this site may connect to devices on your local network, choose Allow (Chrome and Firefox ask before a website can reach localhost).' : '');
     case 'mismatch': return `Connected, but this is not a COCO ROS 2 bridge this page understands: ${f.detail}.`;
     case 'lost': return `Lost the connection to ROS 2: ${f.detail}. Back to the browser model (MODEL).`;
   }

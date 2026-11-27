@@ -498,7 +498,13 @@ export function PlayGame(p: PlayProps) {
         onGraph: (g) => setLiveGraph({ publishers: new Map(g.publishers), subscribers: new Map(g.subscribers) }),
         onFailure: (f) => {
           if (f.kind === 'control') { setLiveWords(`Control: ${f.detail}`); return; }
-          setLiveWords(failureWords(f)); disconnectLive(false);
+          // R5.6: a public https page reaching localhost needs the visitor's permission; say so (Chrome reports a denial)
+          let target = ''; try { target = new URL(url.includes('://') ? url : `ws://${url}`).hostname; } catch { /* the words without it */ }
+          const ctx = { pageHost: window.location.hostname, pageSecure: window.location.protocol === 'https:', targetHost: target };
+          setLiveWords(failureWords(f, ctx)); disconnectLive(false);
+          void navigator.permissions?.query({ name: 'local-network-access' as PermissionName })
+            .then((st) => { if (f.kind === 'unreachable' && st.state === 'denied') setLiveWords(failureWords(f, { ...ctx, localNetwork: st.state })); })
+            .catch(() => undefined);
         },
         onControl: (words) => setLiveWords(words),
       });

@@ -8,7 +8,7 @@
  * connection) is reported once, in words.
  */
 import { describe, expect, it } from 'vitest';
-import { FoxgloveClient, failureWords, normaliseUrl, type FoxgloveFailure, type SocketLike } from '../src/ros/foxglove';
+import { FoxgloveClient, failureWords, isLocalHost, normaliseUrl, type FoxgloveFailure, type SocketLike } from '../src/ros/foxglove';
 import { serialize } from '../src/ros/cdr';
 import { deserialize } from '../src/ros/cdr_read';
 
@@ -114,5 +114,25 @@ describe('the foxglove_bridge client', () => {
     expect(normaliseUrl('localhost:8765')).toBe('ws://localhost:8765');
     expect(normaliseUrl(' ws://127.0.0.1:8765/ ')).toBe('ws://127.0.0.1:8765');
     expect(() => normaliseUrl('http://localhost:8765')).toThrow(/not a WebSocket URL/);
+  });
+});
+
+describe('a public https page reaching localhost (R5.6: Local Network Access)', () => {
+  const site = { pageHost: 'gauthamcodes.github.io', pageSecure: true };
+  const f = { kind: 'unreachable' as const, detail: 'nothing answered at ws://localhost:8765 (is the container running, on this port?)' };
+  it('knows which hosts are on this computer or a private network', () => {
+    for (const h of ['localhost', '127.0.0.1', '[::1]', '10.0.0.4', '192.168.1.20', '172.20.0.2', 'coco.localhost']) expect(isLocalHost(h)).toBe(true);
+    for (const h of ['gauthamcodes.github.io', '8.8.8.8', '172.32.0.1', 'example.com']) expect(isLocalHost(h)).toBe(false);
+  });
+  it('names the permission prompt only where a browser asks it', () => {
+    expect(failureWords(f, { ...site, targetHost: 'localhost' })).toMatch(/choose Allow/);
+    expect(failureWords(f, { pageHost: '127.0.0.1', pageSecure: false, targetHost: 'localhost' })).not.toMatch(/Allow/);
+    expect(failureWords(f, { ...site, targetHost: 'bridge.example.com' })).not.toMatch(/Allow/);
+    expect(failureWords(f)).toMatch(/^Could not connect: nothing answered.*docker run/);
+  });
+  it('says so plainly when the browser reports the permission denied', () => {
+    const w = failureWords(f, { ...site, targetHost: 'localhost', localNetwork: 'denied' });
+    expect(w).toMatch(/blocked this site from reaching localhost/);
+    expect(w).not.toMatch(/is the container running/);
   });
 });
