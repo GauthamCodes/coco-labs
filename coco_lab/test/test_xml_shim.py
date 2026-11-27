@@ -11,16 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""R5.4: coco_lab._xml (Pyodide has no xml) gives worldgen byte-identical SDF to the standard library."""
+"""R5.4: coco_lab._xml (Pyodide has no xml) gives worldgen the standard library's SDF exactly."""
 from pathlib import Path
 import xml.etree.ElementTree as StdET
-
-import pytest
-import yaml
 
 from coco_lab import _xml, worldgen
 from coco_lab import worldspec_v3 as v3
 from coco_lab.worldspec import normalize
+import pytest
+import yaml
 
 REPO = Path(__file__).resolve().parents[2]
 TEMPLATE = (REPO / 'gazebo_models/worlds/coco_navigation.world').read_text(encoding='utf-8')
@@ -45,12 +44,16 @@ def test_sdf_world_identical(path):
     assert shim[1] == std[1]
     if v3.is_v3(s):
         for o in v3.objects(s):
-            assert _with(_xml, worldgen.object_sdf, s, o['id']) == _with(StdET, worldgen.object_sdf, s, o['id']), o['id']
+            assert _with(_xml, worldgen.object_sdf, s, o['id']) == _with(
+                StdET, worldgen.object_sdf, s, o['id']
+            ), o['id']
 
 
 def test_round_trip_and_escaping_match_the_standard_library():
-    doc = ('<?xml version="1.0"?>\n<sdf version="1.9"><world name="a&amp;b"><model name="m">'
-           '<pose>1 2 3</pose><static/>tail &lt;x&gt;</model><e attr=\'q"t\'></e></world></sdf>')
+    doc = (
+        '<?xml version="1.0"?>\n<sdf version="1.9"><world name="a&amp;b"><model name="m">'
+        '<pose>1 2 3</pose><static/>tail &lt;x&gt;</model><e attr=\'q"t\'></e></world></sdf>'
+    )
     for et in (StdET, _xml):
         r = et.fromstring(doc)
         w = r.find('world')

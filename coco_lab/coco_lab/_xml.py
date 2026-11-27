@@ -49,7 +49,7 @@ class Element:
     def __getitem__(self, i):
         return self._children[i]
 
-    def __bool__(self):                               # as ElementTree warns: test `is None`, not truth
+    def __bool__(self):  # as ElementTree warns: test `is None`, not truth
         return True
 
     def append(self, el):
@@ -64,13 +64,13 @@ class Element:
     def get(self, key, default=None):
         return self.attrib.get(key, default)
 
-    def set(self, key, value):
+    def set(self, key, value):  # noqa: A003 (ElementTree's own name)
         self.attrib[key] = value
 
     def items(self):
         return list(self.attrib.items())
 
-    def iter(self, tag=None):
+    def iter(self, tag=None):  # noqa: A003 (ElementTree's own name)
         if tag is None or self.tag == tag:
             yield self
         for c in self._children:
@@ -92,7 +92,7 @@ def SubElement(parent, tag, attrib=None, **extra):  # noqa: N802 (ElementTree's 
 
 
 def _select(el, path):
-    """ElementTree's paths, the ones worldgen uses: 'tag', 'a/b', './/a/b' (descendants)."""
+    """Select by the ElementTree paths worldgen uses: 'tag', 'a/b', './/a/b' (descendants)."""
     if path.startswith('.//'):
         steps = path[3:].split('/')
         first = [d for c in el for d in c.iter(steps[0])]
@@ -105,8 +105,11 @@ def _select(el, path):
     return current
 
 
-_TOKEN = re.compile(r'<\?.*?\?>|<!--.*?-->|<(/?)([A-Za-z_][\w.:-]*)((?:\s+[\w.:-]+\s*=\s*(?:"[^"]*"|\'[^\']*\'))*)\s*(/?)>',
-                    re.S)
+_TOKEN = re.compile(
+    r'<\?.*?\?>|<!--.*?-->|<(/?)([A-Za-z_][\w.:-]*)'
+    r'((?:\s+[\w.:-]+\s*=\s*(?:"[^"]*"|\'[^\']*\'))*)\s*(/?)>',
+    re.S,
+)
 _ATTR = re.compile(r'([\w.:-]+)\s*=\s*(?:"([^"]*)"|\'([^\']*)\')')
 
 
@@ -120,6 +123,7 @@ def _unescape(s):
         if e in _ENTITY:
             return _ENTITY[e]
         raise ValueError(f'undefined entity &{e};')
+
     return re.sub(r'&(#x[0-9A-Fa-f]+|#[0-9]+|\w+);', one, s)
 
 
@@ -133,9 +137,9 @@ def fromstring(text):
             if '<' in between:
                 raise ValueError(f'not well-formed near offset {m.start()}')
             s = _unescape(between)
-            if last is not None:                  # after a closed element: its tail
+            if last is not None:  # after a closed element: its tail
                 last.tail = (last.tail or '') + s
-            elif stack:                           # after an opening tag: the parent's text
+            elif stack:  # after an opening tag: the parent's text
                 stack[-1].text = (stack[-1].text or '') + s
             elif s.strip():
                 raise ValueError('text outside the root element')
@@ -147,8 +151,13 @@ def fromstring(text):
                 raise ValueError(f'mismatched </{tag}>')
             last = stack.pop()
             continue
-        el = Element(tag, {a.group(1): _unescape(a.group(2) if a.group(2) is not None else a.group(3))
-                           for a in _ATTR.finditer(attrs)})
+        el = Element(
+            tag,
+            {
+                a.group(1): _unescape(a.group(2) if a.group(2) is not None else a.group(3))
+                for a in _ATTR.finditer(attrs)
+            },
+        )
         if stack:
             stack[-1].append(el)
         elif root is None:
@@ -168,7 +177,7 @@ def fromstring(text):
 
 
 def indent(tree, space='  ', level=0):
-    """CPython 3.12's ``ElementTree.indent``, verbatim in behaviour."""
+    """Indent as CPython 3.12's ``ElementTree.indent`` does, verbatim in behaviour."""
     if level < 0:
         raise ValueError(f'Initial indentation level must be >= 0, got {level}')
     if not len(tree):
@@ -206,8 +215,15 @@ def _escape_cdata(s):
 
 
 def _escape_attrib(s):
-    for a, b in (('&', '&amp;'), ('<', '&lt;'), ('>', '&gt;'), ('"', '&quot;'),
-                 ('\r', '&#13;'), ('\n', '&#10;'), ('\t', '&#09;')):
+    for a, b in (
+        ('&', '&amp;'),
+        ('<', '&lt;'),
+        ('>', '&gt;'),
+        ('"', '&quot;'),
+        ('\r', '&#13;'),
+        ('\n', '&#10;'),
+        ('\t', '&#09;'),
+    ):
         if a in s:
             s = s.replace(a, b)
     return s
@@ -231,7 +247,11 @@ def _serialize(write, elem):
 
 
 def tostring(element, encoding='unicode'):
-    """``ElementTree.tostring(element, encoding='unicode')`` (the only form worldgen uses)."""
+    """
+    Serialize ``element`` to a str, as ElementTree's ``tostring`` does.
+
+    Only ``encoding='unicode'``, the one form worldgen uses.
+    """
     if encoding != 'unicode':
         raise ValueError("this shim serializes to str only (encoding='unicode')")
     out = []
