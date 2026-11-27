@@ -1,0 +1,73 @@
+{
+ "site": "https://gauthamcodes.github.io/coco-labs/",
+ "started_utc": "2026-11-27T07:09:03.400Z",
+ "steps": [
+  {
+   "name": "an open tab shows \"New version ready\" and was not reloaded",
+   "ok": true,
+   "shown": true,
+   "reloaded": false
+  },
+  {
+   "name": "title screen",
+   "ok": true,
+   "title": "COCO Lab"
+  },
+  {
+   "name": "Play: a Fetch Rush round starts and COCO moves under AUTO",
+   "ok": true,
+   "a": {
+    "tick": 7,
+    "pose": [
+     9.950000000000001,
+     6.050000000000001,
+     -0.7853981633974492
+    ]
+   },
+   "b": {
+    "tick": 39,
+    "pose": [
+     10.600538238691634,
+     5.399461761308368,
+     -0.7853981633974492
+    ]
+   }
+  },
+  {
+   "name": "Compare: the workspace is ready",
+   "ok": true
+  },
+  {
+   "name": "Workbench: a small experiment runs",
+   "ok": true,
+   "digest": "Digest d4d0646135b6bd5a… · 6 workers"
+  },
+  {
+   "name": "Studio: the A* starter runs",
+   "ok": true,
+   "status": "found ✓"
+  },
+  {
+   "name": "Leaderboard: the boards render",
+   "ok": true,
+   "theta_listed": true
+  },
+  {
+   "name": "Learn renders",
+   "ok": true
+  },
+  {
+   "name": "no page errors",
+   "ok": true,
+   "n": 0
+  }
+ ],
+ "errors": [],
+ "open_tab_before": {
+  "controlled": false,
+  "build": "3c9acdc84e20ebf05f3dca90a5b0098e4e795fe8017f3fcb4902060ea29b067d"
+ },
+ "page_errors": 0,
+ "finished_utc": "2026-11-27T08:01:03.813Z",
+ "pass": true
+}

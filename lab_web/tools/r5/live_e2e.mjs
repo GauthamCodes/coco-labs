@@ -44,8 +44,12 @@ const B = browserName === 'firefox' ? firefox : chromium;
 // Chromium on the laptop's GPU: headless Chromium's default SwiftShader drew one Play frame per ~1.1 s and
 // starved the 100 ms drive timer past coco_web's 0.5 s dead-man (tools/r5/frame_gaps.mjs); a visitor's
 // browser uses its GPU. The renderer is recorded.
-const browser = await B.launch({ headless: true, ...(browserName === 'chromium' ? { args: ['--enable-gpu', '--use-angle=gl', '--ignore-gpu-blocklist'] } : {}) });
+const browser = await B.launch({ headless: true, ...(browserName === 'chromium' ? { args: ['--enable-gpu', '--use-angle=gl', '--ignore-gpu-blocklist'] } : {}),
+  ...(browserName === 'firefox' && process.argv.includes('--allow-local-network') ? { firefoxUserPrefs: { 'network.lna.blocking': false } } : {}) });
 const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, ...(video ? { recordVideo: { dir: out, size: { width: 1280, height: 720 } } } : {}) });
+// R5.6 --allow-local-network: the visitor's Allow on the browser's local-network prompt (a public https page reaching
+// localhost). Chromium: the site's local-network-access permission; Firefox: set at launch (it has no such permission API).
+if (process.argv.includes('--allow-local-network') && browserName === 'chromium') await context.grantPermissions(['local-network-access'], { origin: new URL(site).origin });
 // the tutorial has been seen (as tools/r3/live_smoke.mjs): its overlay would cover the HUD
 await context.addInitScript(() => { try { localStorage.setItem('coco.prefs.v1.tutorial', 'true'); } catch { /* none */ } });
 const page = await context.newPage();
