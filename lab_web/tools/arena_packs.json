@@ -162,6 +162,23 @@
     "course/files/m6_logodds_solution.py",
     "course/files/m6_logodds_starter.py"
    ]
+  },
+  "level": {
+   "about": "R5.4: a level as a ROS 2 package (coco_lab.level_package); loaded only when one is asked for: worldgen's SDF needs the _xml shim in Pyodide, and Play must not import it at boot",
+   "requires": [
+    "game"
+   ],
+   "modules": [
+    "level_check.py",
+    "level_files.py",
+    "level_package.py",
+    "level_package/README.md.tmpl",
+    "level_package/bringup.py.tmpl",
+    "level_package/launch.py.tmpl",
+    "level_package/package.xml.tmpl",
+    "level_package/run_goals.py.tmpl",
+    "level_package/setup.py.tmpl"
+   ]
   }
  }
 }

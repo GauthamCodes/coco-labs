@@ -45,7 +45,11 @@ import io
 import json
 import struct
 from typing import Dict, List, Optional, Tuple
-import xml.etree.ElementTree as ET
+try:
+    import xml.etree.ElementTree as ET
+except ImportError:                                # Pyodide has no xml package (R5.4):
+    # the same subset, byte-identical (test_xml_shim.py)
+    from coco_lab import _xml as ET  # noqa: N814
 
 from . import worldspec_v3 as v3
 from .maps import FREE, LabMap, OCCUPIED, UNKNOWN

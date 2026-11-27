@@ -1,0 +1,73 @@
+{
+ "schema": "coco_lab.r5.live_e2e",
+ "version": 1,
+ "site": "http://127.0.0.1:4184/coco-labs/",
+ "browser": "chromium",
+ "utc": "2026-11-26T19:42:05.679Z",
+ "evidence_class": "LIVE (COCO's ROS 2 stack running now: a Gazebo simulation, never hardware)",
+ "steps": {
+  "wrong_port": {
+   "words": "Could not connect: nothing answered at ws://localhost:9 (is the container running, on this port?). Start it with: docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot",
+   "chip": " MODEL · kinematic",
+   "ok": true
+  },
+  "connect": {
+   "chip_live": true,
+   "status": "LIVE: COCO's ROS 2 stack, running now (a Gazebo simulation)"
+  },
+  "drive": {
+   "moved_m": 0.6599036563764962,
+   "arbiter_mode_while_driving": "teleop"
+  },
+  "goal": {
+   "nav_status": "succeeded",
+   "goal": [
+    23.309012971319575,
+    5.9996556550425275
+   ],
+   "path_points": 6,
+   "ok": true
+  },
+  "graph": {
+   "summary": "36 nodes, 184 topics in the running stack.",
+   "tag": "LIVE ROS 2 graph of COCO's stack in your container (a Gazebo simulation)",
+   "wheels_row": "/diff_drive_controller/cmd_vel/cmd_vel_arbiter/diff_drive_controller"
+  },
+  "stop": {
+   "latched": true,
+   "arbiter_mode": "idle",
+   "moved_after_stop_m": 0
+  },
+  "release": {
+   "released": true
+  },
+  "sim": {
+   "caption": "SIM · RViz-style view of COCO's ROS 2 stack, running now LIVE (Gazebo simulation) · Fixed Frame: map"
+  },
+  "disconnect": {
+   "how": "container stopped",
+   "chip_model": true,
+   "status": "Lost the connection to ROS 2: the connection closed (code 1005). Back to the browser model (MODEL)."
+  }
+ },
+ "page_errors": [],
+ "console_errors": [
+  "WebSocket connection to 'ws://localhost:9/' failed: Error in connection establishment: net::ERR_UNSAFE_PORT",
+  "WebSocket connection to 'ws://localhost:10/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED"
+ ],
+ "renderer": "ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2, OpenGL 4.5.0)",
+ "acceptance": {
+  "wrong_port_said_in_words": true,
+  "connects_and_says_live": true,
+  "graph_shows_real_nodes": true,
+  "drive_moves_coco": true,
+  "goal_reaches_nav2": true,
+  "stop_latches_and_holds": true,
+  "release_unlatches": true,
+  "sim_says_live": true,
+  "disconnect_back_to_model": true,
+  "no_page_errors": true
+ },
+ "pass": true,
+ "observer_samples": 246
+}

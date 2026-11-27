@@ -37,7 +37,7 @@ export class ArenaClient {
   tick = 0;
   private readonly ready: Promise<World>;
 
-  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2 | 3; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile; game?: BootRequest['game'] } = {}) {
+  constructor(ev: ArenaEvents, opts: { hashVersion?: 1 | 2 | 3; seed?: number; planner?: string; pyodide?: PyodideSource; spec?: SpecFile; specJson?: string; game?: BootRequest['game'] } = {}) {
     // G1.8: the worker loads its runtime and data pinned to this page's build
     const pinned = pinnedBase();
     perf.mark('worker_create', wallMs());
@@ -104,6 +104,7 @@ export class ArenaClient {
       batchSize: 2048,
       hashVersion: opts.hashVersion ?? 1,
       ...(opts.spec ? { spec: opts.spec } : {}),
+      ...(opts.specJson ? { specJson: opts.specJson } : {}),
       ...(opts.game ? { game: opts.game } : {}),
     };
     this.worker.postMessage(boot);
@@ -194,11 +195,11 @@ export class ArenaClient {
    * R1: an experiment request (coco_lab.experiments in this worker): `plan`, or `replay` the
    * runs `arg` names -- Compare's view of runs from the Workbench, their numbers the table's.
    */
-  experiment<T>(op: import('./protocol').ExperimentRequest['op'], spec: string, world: string, arg?: unknown): Promise<T> {
+  experiment<T>(op: import('./protocol').ExperimentRequest['op'], spec: string, world: string, arg?: unknown, worldSpec?: string): Promise<T> {
     const id = this.expNext++;
     return new Promise<T>((resolve, reject) => {
       this.expWaiting.set(id, { resolve: resolve as (v: unknown) => void, reject });
-      this.worker.postMessage({ type: 'experiment', id, op, spec, world, ...(arg === undefined ? {} : { arg: JSON.stringify(arg) }) });
+      this.worker.postMessage({ type: 'experiment', id, op, spec, world, ...(arg === undefined ? {} : { arg: JSON.stringify(arg) }), ...(worldSpec ? { worldSpec } : {}) });
     });
   }
 

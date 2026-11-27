@@ -366,3 +366,14 @@ body:has([data-testid="g1-results"]) .g1-stop-layer, body:has([data-testid="g1-r
 .g1-gauge { background: radial-gradient(ellipse at 50% 100%, rgba(10,13,18,.88), rgba(10,13,18,.62) 70%, transparent 72%); }
 .g2-telemetry { background: rgba(8, 11, 16, .86); }
 .g1-pill { background: rgba(17, 22, 32, .86); }
+
+/* ---- R5.2/R5.3: Connect to ROS 2 (LIVE) and Model vs LIVE ---- */
+.r5-live form { display: grid; gap: 6px; margin: 6px 0; }
+.r5-live label { display: grid; gap: 2px; font-size: 11px; color: #c7cfdc; }
+.r5-live input { font: 12px ui-monospace, monospace; padding: 4px 6px; border-radius: 6px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.35); color: var(--g1-ink); }
+.r5-live button.main { padding: 6px 10px; border-radius: 8px; font-weight: 700; }
+.r5-live .x, .r5-compare .x { position: absolute; top: 6px; right: 8px; background: none; border: 0; color: var(--g1-ink); cursor: pointer; }
+.r5-cmd { font: 10px/1.35 ui-monospace, monospace; white-space: pre-wrap; word-break: break-all; background: rgba(0,0,0,.35); padding: 6px; border-radius: 6px; margin: 4px 0; user-select: all; }
+.r5-note { font-size: 11px; opacity: .85; }
+.r5-compare { top: auto; bottom: calc(150px * var(--g1-s)); left: calc(12px * var(--g1-s)); right: auto; }
+.r5-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }

@@ -1,0 +1,26 @@
+{
+ "build_seconds": 79,
+ "docker_image_inspect_size_bytes": 3797579707,
+ "du_root_bytes": 3766771158,
+ "git_sha": "831fe4817f2e7aa30a930a6d8c15cdcfd1c67d70",
+ "laptop_needs_bytes_estimate": 4921892634,
+ "levels": {
+  "arena": "stock (as installed by gazebo_models)",
+  "depot": "identical",
+  "depot_clutter": "identical",
+  "depot_colours": "identical"
+ },
+ "levels_all_verified": true,
+ "max_image_bytes": 4000000000,
+ "registry_compressed_bytes": 1124312927,
+ "registry_layers": 17,
+ "registry_ref": "ghcr.io/gauthamcodes/coco-ros2:sha-831fe4817f2e",
+ "schema": "coco_ros2.size",
+ "tags": [
+  "sha-831fe4817f2e",
+  "v2-r5-live-ros2"
+ ],
+ "unpacked_bytes": 3797579707,
+ "version": 1,
+ "within_budget": true
+}

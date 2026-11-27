@@ -1,0 +1,72 @@
+{
+ "about": "R5.2: rclpy.serialization.serialize_message on ROS 2 Jazzy (the laptop), for the CDR reader",
+ "samples": [
+  {
+   "type": "geometry_msgs/msg/PoseWithCovarianceStamped",
+   "what": "AMCL-shaped pose",
+   "msg": {
+    "header": {
+     "stamp": {
+      "sec": 1234,
+      "nanosec": 500000000
+     },
+     "frame_id": "map"
+    },
+    "pose": {
+     "pose": {
+      "position": {
+       "x": 23.0,
+       "y": 6.25,
+       "z": 0.0
+      },
+      "orientation": {
+       "x": 0.0,
+       "y": 0.0,
+       "z": 0.3826834323650898,
+       "w": 0.9238795325112867
+      }
+     },
+     "covariance": [
+      0.0,
+      0.01,
+      0.02,
+      0.03,
+      0.04,
+      0.05,
+      0.06,
+      0.07,
+      0.08,
+      0.09,
+      0.1,
+      0.11,
+      0.12,
+      0.13,
+      0.14,
+      0.15,
+      0.16,
+      0.17,
+      0.18,
+      0.19,
+      0.2,
+      0.21,
+      0.22,
+      0.23,
+      0.24,
+      0.25,
+      0.26,
+      0.27,
+      0.28,
+      0.29,
+      0.3,
+      0.31,
+      0.32,
+      0.33,
+      0.34,
+      0.35000000000000003
+     ]
+    }
+   },
+   "cdr": "00010000d20400000065cd1d040000006d6170000000000000003740000000000000194000000000000000000000000000000000000000000000000063a9aea6e27dd83f468d32cf6b90ed3f00000000000000007b14ae47e17a843f7b14ae47e17a943fb81e85eb51b89e3f7b14ae47e17aa43f9a9999999999a93fb81e85eb51b8ae3fec51b81e85ebb13f7b14ae47e17ab43f0ad7a3703d0ab73f9a9999999999b93f295c8fc2f528bc3fb81e85eb51b8be3fa4703d0ad7a3c03fec51b81e85ebc13f333333333333c33f7b14ae47e17ac43fc3f5285c8fc2c53f0ad7a3703d0ac73f52b81e85eb51c83f9a9999999999c93fe17a14ae47e1ca3f295c8fc2f528cc3f713d0ad7a370cd3fb81e85eb51b8ce3f000000000000d03fa4703d0ad7a3d03f48e17a14ae47d13fec51b81e85ebd13f8fc2f5285c8fd23f333333333333d33fd7a3703d0ad7d33f7b14ae47e17ad43f1f85eb51b81ed53fc3f5285c8fc2d53f676666666666d63f"
+  }
+ ]
+}

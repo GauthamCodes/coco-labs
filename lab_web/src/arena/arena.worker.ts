@@ -32,7 +32,7 @@ interface Pyodide {
   unpackArchive(buf: Uint8Array, format: string, opts: { extractDir: string }): void;
   runPython(code: string): unknown;
   pyimport(name: string): { init: (...a: unknown[]) => PyProxy; step: (s: string) => PyProxy;
-    compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; game_prefetch: (ms: number) => boolean;
+    compare: (...a: unknown[]) => string; costmap_view: (delta?: boolean) => void; game_init: (...a: unknown[]) => PyProxy; game_op: (op: string, arg: string | null) => string; level_package_op: (arg: string | null) => string; level_check_op: (arg: string | null) => string; game_prefetch: (ms: number) => boolean;
     loop_compare_begin: (request: string) => void; loop_compare_advance: () => string;
     begin: (s: string) => void; advance: (n: number) => boolean; amend: (s: string) => void; finish: () => PyProxy; play: (s: string) => string;
     experiment: (op: string, spec: string, arg: string | null) => string; experiment_world: (id: string, spec: string) => void;
@@ -104,8 +104,9 @@ function column(cols: PyProxy, name: string): ArrayBufferView {
 
 async function boot(req: Extract<ToWorker, { type: 'boot' | 'warm' }>) {
   mark('worker_boot');
-  // Only allow a shipped spec; overlap its fetch with a cold interpreter boot.
-  const specP = req.type === 'boot' ? fetch(`${req.assetsBase}arena/${Object.values(SPEC_FILES).find((f) => f === req.spec) ?? SPEC_FILES.v1}`, { credentials: 'omit' }).then((r) => r.text()) : null;
+  // A shipped spec (fetched by name from the allowlist), or (R5.5) a world-editor level given inline, which the
+  // Python reader validates like any spec; overlap the fetch with a cold interpreter boot.
+  const specP = req.type === 'boot' && req.specJson ? Promise.resolve(req.specJson) : req.type === 'boot' ? fetch(`${req.assetsBase}arena/${Object.values(SPEC_FILES).find((f) => f === req.spec) ?? SPEC_FILES.v1}`, { credentials: 'omit' }).then((r) => r.text()) : null;
   // The title warms the interpreter, not an Arena. A claimed worker creates a
   // fresh Arena from this request's spec/seed/hash version using the same glue.
   if (!booted) {
@@ -233,6 +234,14 @@ async function play(req: Extract<ToWorker, { type: 'play' }>) {
 function gameQuery(req: Extract<ToWorker, { type: 'game' }>) {
   try {
     if (!glue) throw new Error('game query before boot');
+    // R5.4: a level as a ROS 2 package needs no running game (Play and the world editor), and its own
+    // pack (worldgen's SDF), loaded only now so that Play never imports it at boot
+    if (req.op === 'level_package' || req.op === 'level_check') {
+      const g = glue;
+      void loadPack('level').then(() => post({ type: 'game_done', id: req.id, result: req.op === 'level_check' ? g.level_check_op(req.arg) : g.level_package_op(req.arg) }))
+        .catch((e) => post({ type: 'game_done', id: req.id, error: e instanceof Error ? e.message : String(e) }));
+      return;
+    }
     post({ type: 'game_done', id: req.id, result: glue.game_op(req.op, req.arg) });
   } catch (e) {
     post({ type: 'game_done', id: req.id, error: e instanceof Error ? e.message : String(e) });
@@ -247,7 +256,11 @@ async function experiment(req: Extract<ToWorker, { type: 'experiment' }>) {
   try {
     if (!glue || !booted) throw new Error('experiment before the interpreter is warm');
     await loadPack('experiments');
-    if (!experimentWorlds.has(req.world)) {
+    if (req.worldSpec) {
+      // R5.5: a world-editor level, given inline (the Python reader validates it); re-registered each time
+      glue.experiment_world(req.world, req.worldSpec);
+      experimentWorlds.add(req.world);
+    } else if (!experimentWorlds.has(req.world)) {
       const file = Object.values(SPEC_FILES).find((f) => f === `${req.world}.json`);
       if (!file) throw new Error(`${req.world} is not a world this site ships`);
       glue.experiment_world(req.world, await (await fetch(`${booted.assetsBase}arena/${file}`, { credentials: 'omit' })).text());

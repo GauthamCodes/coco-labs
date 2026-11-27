@@ -1,0 +1,23 @@
+{
+ "schema": "coco_lab.level_package.results",
+ "version": 1,
+ "package": "coco_level_coco_depot_v1",
+ "level": "coco_depot_v1",
+ "scenario": "play_goal",
+ "evidence_class": "STACK (COCO's ROS 2 stack in Gazebo: a simulation, never hardware)",
+ "utc": "2026-11-26T21:13:30Z",
+ "results": [
+  {
+   "id": "g001",
+   "goal": [
+    24.080404614272453,
+    6.0
+   ],
+   "status": "SUCCEEDED",
+   "sim_s": 3.13,
+   "amcl_to_goal_m": 0.333
+  }
+ ],
+ "succeeded": 1,
+ "goals": 1
+}

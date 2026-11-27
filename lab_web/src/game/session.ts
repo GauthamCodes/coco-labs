@@ -109,14 +109,16 @@ export class GameSession {
   ticks = 0;
 
   constructor(world: WorldId, readonly game: GameKind, readonly seed: number, ev: SessionEvents,
-    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar', readonly colour: FetchColourId = 'red') {
+    readonly mode: 'phone' | 'full' = 'phone', readonly planner: PlayPlanner = 'astar', readonly colour: FetchColourId = 'red',
+    /** R5.5: a world-editor level (its World Spec as JSON) instead of `world`'s shipped file */
+    specJson?: string) {
     this.ev = ev;
     this.client = new ArenaClient({
       onWorld: (w, occ) => { this.world = w as World & { game: GameInfo }; ev.onWorld(this.world, occ); },
       onTick: (t, ranges) => this.arrived(t as GameTick, ranges),
       onError: (stage, m) => { this.inFlight = false; ev.onError(stage, m); },
       onFamily: (msg) => ev.onFamily?.(msg),
-    }, { hashVersion: 3, seed: 1, spec: SPEC_FOR[world], game: { game, arg: game === 'fetch_rush' ? seed : game === 'fetch_colour' ? colour : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
+    }, { hashVersion: 3, seed: 1, ...(specJson ? { specJson } : { spec: SPEC_FOR[world] }), game: { game, arg: game === 'fetch_rush' ? seed : game === 'fetch_colour' ? colour : 0, ...(game === 'fetch_rush' ? { mode } : {}) } });
   }
 
   whenReady() { return this.client.whenReady(); }

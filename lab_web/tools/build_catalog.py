@@ -506,6 +506,24 @@ def leaderboard_index(path):
     mod.index(Path(path))
 
 
+def level_templates(path):
+    """R5.4: the three repository files coco_lab.level_files needs, for the browser (JSON)."""
+    import yaml
+    files = {'world_template': 'gazebo_models/worlds/coco_navigation.world',
+             'nav2_params': 'gazebo_models/config/nav2_params.yaml',
+             'controllers': 'gazebo_models/urdf/coco_controllers.yaml'}
+    doc = {'schema': 'coco_lab.level_templates', 'version': 1, 'sources': {}}
+    for key, rel in files.items():
+        with open(os.path.join(common.REPO, rel), 'rb') as f:
+            raw = f.read()
+        doc['sources'][key] = {'path': rel, 'sha256': hashlib.sha256(raw).hexdigest()}
+        doc[key] = raw.decode('utf-8') if key == 'world_template' else yaml.safe_load(raw)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    # the YAML files' own key order (not sorted): coco_lab.level_files dumps the parameters in it
+    with open(path, 'w') as f:
+        f.write(json.dumps(doc, indent=1) + '\n')
+
+
 def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
           with_map=True, with_search=True, with_move=True):
     """Build the site data under ``out``; return the catalog."""
@@ -644,6 +662,10 @@ def build(out=OUT, wheel='build', with_benchmark=True, with_localise=True,
     # build (it was a committed copy that a verified submission's result made stale);
     # build_arena_assets.mjs copies it to generated/r2/leaderboard.json
     leaderboard_index(os.path.join(out, 'leaderboard_index.json'))
+    # R5.4: COCO's own templates for "Download as ROS 2 package" (coco_lab.level_package in the browser's
+    # worker): the world template as text, nav2_params.yaml and coco_controllers.yaml parsed (the browser
+    # has no PyYAML); each with its repository path and sha256
+    level_templates(os.path.join(out, 'levels', 'templates.json'))
     with open(os.path.join(out, 'catalog.json'), 'w') as f:
         f.write(json.dumps(catalog, indent=1, sort_keys=True) + '\n')
     return catalog
