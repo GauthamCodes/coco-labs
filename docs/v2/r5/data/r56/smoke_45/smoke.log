@@ -1,0 +1,9 @@
+ok   title screen {"title":"COCO Lab"}
+ok   Play: a Fetch Rush round starts and COCO moves under AUTO {"a":{"tick":8,"pose":[9.950000000000001,6.050000000000001,-0.7853981633974492]},"b":{"tick":41,"pose":[10.62175144212723,5.378248557872771,-0.7853981633974492]}}
+ok   Compare: the workspace is ready {}
+ok   Workbench: a small experiment runs {"digest":"Digest d4d0646135b6bd5a… · 6 workers"}
+ok   Studio: the A* starter runs {"status":"found ✓"}
+ok   Leaderboard: the boards render {"theta_listed":true}
+ok   Learn renders {}
+ok   no page errors {"n":0}
+LIVE SMOKE PASS
