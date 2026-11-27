@@ -29,21 +29,21 @@ COCO_WORLDS=$PWD/worlds .venv/bin/python -m coco_lab.experiments run \
 # your own algorithm file:  ... run SPEC.json --algorithm my_planner.py --out results/
 ```
 
-**COCO's ROS 2 stack in Docker (R5.1 — authored, NOT yet built or verified).** One command is
-meant to start Gazebo Harmonic (headless), Nav2 and `cmd_vel_arbiter` on a COCO Lab level, with a
-WebSocket bridge (foxglove_bridge) on port 8765 — a simulation, labelled LIVE while it runs, never
-hardware:
+**COCO's ROS 2 stack in Docker (R5).** One command starts Gazebo Harmonic (headless), Nav2 and
+`cmd_vel_arbiter` on a COCO Lab level: a simulation, labelled LIVE while it runs, never hardware.
+Port 8765 is a **read-only** foxglove_bridge; port 8766 is the control gateway (coco_web's `coco.v1`, with the
+access code the container prints). In Play, **Connect to ROS 2** shows and drives it:
 
 ```bash
 docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
 # levels: depot, depot_colours, depot_clutter, arena;  docker exec <id> coco-ros2 check
 ```
 
-The image is built, size-checked and tested in CI before it is pushed
-([`.github/workflows/coco-ros2-image.yml`](.github/workflows/coco-ros2-image.yml)); until a green
-run of that workflow is recorded in [`docs/v2/r5/R5_STATUS.md`](docs/v2/r5/R5_STATUS.md), the
-image does not exist yet. Before pulling, check the disk:
-`bash tools/r5/preflight_pull.sh IMAGE size.json`. Details: [`docs/DOCKER.md`](docs/DOCKER.md#coco-ros2-r51).
+The image is public, about 1.2 GB to pull and 3.9 GB on disk. Every push builds it, checks its size and
+tests it in CI before it is pushed ([`.github/workflows/coco-ros2-image.yml`](.github/workflows/coco-ros2-image.yml)).
+Before pulling, check the disk: `bash tools/r5/preflight_pull.sh IMAGE size.json`. Details:
+[`docs/DOCKER.md`](docs/DOCKER.md#coco-ros2-r51). A level (from the site's "Download as ROS 2 package" or
+the World editor) runs on your own ROS 2 Jazzy too: [`docs/v2/r5/R5_RESULTS.md`](docs/v2/r5/R5_RESULTS.md).
 
 Write an algorithm: [`docs/v2/r2/API.md`](docs/v2/r2/API.md) · the paper:
 [`docs/paper/`](docs/paper/) · **Cite:** [`CITATION.cff`](CITATION.cff) (About → Cite on the site) ·

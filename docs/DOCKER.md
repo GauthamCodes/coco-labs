@@ -9,9 +9,9 @@ Two images live in this repository:
 
 ## coco-ros2 (R5.1)
 
-**Status, 2026-11-24: authored, NOT built, NOT run.** Nothing in this section has been executed
-yet; the first green run of `.github/workflows/coco-ros2-image.yml` decides it, and its numbers go
-to `docs/v2/r5/R5_STATUS.md`. Until then every statement below is design, not evidence.
+**Status: built and verified** (2026-11-26; first green CI run 45867550987, latest verified tag
+`sha-cebbcea6a835`, laptop run healthy in 40 s; numbers in `docs/v2/r5/R5_STATUS.md` and `R5_RESULTS.md`).
+The 2026-11-24 version of this section was design only; what changed on the way is recorded there.
 
 ```bash
 docker run --rm -p 8765:8765 -p 8766:8766 ghcr.io/gauthamcodes/coco-ros2 --level depot
