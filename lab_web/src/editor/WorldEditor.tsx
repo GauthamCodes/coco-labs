@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArenaClient } from '../arena/client';
 import { saveBytes, zipFiles } from '../workbench/exports';
 import { encodeLevel, levelFromHash } from './level_link';
-import { PIECES, History, addDoor, addGoal, addSolid, addWall, levelId, move, newLevel, remove, removeGoal, resize, rotate, setStart, toSpec, turnStart, type Level, type Piece } from './model';
+import { PIECES, History, addDoor, asLevel, addGoal, addSolid, addWall, levelId, move, newLevel, remove, removeGoal, resize, rotate, setStart, toSpec, turnStart, type Level, type Piece } from './model';
 
 const BASE = import.meta.env.BASE_URL;
 type Tool = 'select' | 'erase' | 'start' | 'goal' | (typeof PIECES)[number];
@@ -54,7 +54,8 @@ export function WorldEditor() {
       const d = await (await fetch(`${BASE}generated/arena/coco_depot_v1.json`, { credentials: 'omit' })).json() as Depot;
       depot.current = { robot: d.robot, arena: d.arena };
       const fromLink = await levelFromHash(window.location.hash).catch(() => null);
-      if (fromLink?.editor) { hist.current = new History(fromLink.editor as Level); setLevel(hist.current.now); }
+      const linked = asLevel(fromLink?.editor);           // untrusted: checked field by field, else ignored
+      if (linked) { hist.current = new History(linked); setLevel(hist.current.now); }
       client.current = new ArenaClient({}, { hashVersion: 3 });
       await client.current.whenReady();
       setStatus('ready');

@@ -107,7 +107,47 @@ level without actors made every Play tick invalid JSON (`clearance: Infinity`); 
 
 ## Tests, determinism, fps, security
 
-_R5.6: filled in at the close._
+**Local suites** (`tools/g2/suites.sh`, laptop, balanced, AC). The first full run (on `03fbc09`) caught the R5
+modules breaking three of the model's own rules: `level_files` imported `math` (the model takes it from `numerics`),
+`level_check` used float `**`, and the level-package CLI imported PyYAML (`coco_lab` imports the standard library
+only). Also flake8/pep257 on the R5 Python. Fixed in `1fac4ae` and `[R5.6]` after it: the CLI moved to
+`tools/r5/level_package.py` (its output byte-identical to the old CLI's, 37/37 files); `numerics.hypot` replaced the
+float pows. Second full run (`1fac4ae`): every step green except one more float pow (fixed; the rule file passes,
+38/38) and determinism (below). Final checks after the last fix: `coco_lab` package suite (see PR), lab_web tools
+324/324, vitest 686/686, typecheck, build, `check_dist`, native gate (818,951 planner values exact), coco verify
+18/18, update isolation, screenshots, chase HUD, saved view, v1 links 50/50, replays.
+
+**Determinism** (hash v1, 10 sessions / 1,500 ticks; terrain, 3 sessions / 2,100 ticks): Chromium, Firefox and
+Pyodide-in-Node **0 mismatched ticks**, identical digests (`9a9d582d03f4`, `3a8c227eca45`). WebKit: the laptop's
+no-sudo WebKit runner was deleted in the 2026-11-26 disk cleanup, so WebKit runs in CI only (lab.yml runs all three
+browsers on the PR). [data/r56/](data/r56/)
+
+**Play fps** (`tools/g1/perf_play.mjs`, Fetch Rush, 2 min, `G1_GPU=nvidia`: ANGLE on the RTX 4050, driver
+580.178.04; balanced, AC). Baseline = the live site (main `c629821`, deployed):
+
+| run | drawn fps median | min | frame interval median / p99 / max (ms) |
+| --- | --- | --- | --- |
+| baseline, desktop high | 60.26 | 58.44 | 16.6 / 18.2 / 51.3 |
+| **R5, desktop high** | **60.27** | **59.12** | 16.6 / 18.3 / 21.1 |
+| baseline, emulated phone medium | 60.03 | 57.57 | 16.6 / 21.5 / 35.3 |
+| **R5, emulated phone medium** | **60.03** | **56.25** | 16.6 / 21.1 / 36.7 |
+
+Unchanged. (A first attempt ran on SwiftShader, software rendering; it was discarded as not comparable.)
+
+**Security.** The bridge is read-only, and every command goes through coco_web's gateway (access code, origin
+allowlist, STOP latch, dead-man): the CI image probes check both on every push. The browser names no ROS topic to
+command COCO (`test/live_gate.test.ts`). New input, the `#level=` link: a hostile-link check
+(`tools/r5/hostile_links.mjs`, Chromium and Firefox, **14/14 each**, in Play and the World editor: a deflate bomb,
+not base64, wrong version, a 300 kB token, a script in the title, a broken editor state, non-numeric goals). Every
+case fails in words or is ignored, with no script run, no dialog and no page error. Found and fixed: (1) the
+512 kB cap was checked only *after* full inflation (a few-kB bomb could have inflated without limit), so it now
+applies while streaming, plus a token-length cap; (2) the link's editor state was trusted, so it is now checked
+field by field (`asLevel`); (3) Play showed a raw Python traceback for a refused spec, so it now shows the reader's
+own reason (`boot: SpecError: spec: missing ['robot', 'arena']`). R2's sandbox escape tests: **PASS** in Chromium
+and Firefox.
+
+**Screenshots:** [screens/before/](screens/before/) (the live site) and [screens/after/](screens/after/), desktop
+and emulated phone landscape: Play, pause menu, SIM, Workbench › World editor. For Gautham's review.
 
 ## PRs, merges, deploys, live smoke
 

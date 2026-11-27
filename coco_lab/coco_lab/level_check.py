@@ -96,8 +96,7 @@ def check(spec, goals: Sequence[Sequence[float]] = ()) -> Dict[str, object]:
                     p = found.path
                     r['path_m'] = round(
                         sum(
-                            res
-                            * ((p[i + 1][0] - p[i][0]) ** 2 + (p[i + 1][1] - p[i][1]) ** 2) ** 0.5
+                            res * numerics.hypot(p[i + 1][0] - p[i][0], p[i + 1][1] - p[i][1])
                             for i in range(len(p) - 1)
                         ),
                         2,

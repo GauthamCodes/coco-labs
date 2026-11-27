@@ -1,0 +1,80 @@
+{
+ "conditions": {
+  "start": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-11-27T05:21:47.523Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.3,
+    "5m": 2.82,
+    "15m": 3.01
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  },
+  "end": {
+   "gpu_driver": "NVIDIA GeForce RTX 4050 Laptop GPU, 580.178.04",
+   "at_utc": "2026-11-27T05:21:47.663Z",
+   "power_profile": "balanced",
+   "ac_power": true,
+   "battery": {
+    "status": "Full",
+    "capacity_pct": 100
+   },
+   "cpu_governor": "powersave",
+   "load_average": {
+    "1m": 2.3,
+    "5m": 2.82,
+    "15m": 3.01
+   },
+   "cpu": "13th Gen Intel(R) Core(TM) i5-13420H",
+   "threads": 12,
+   "standard": true
+  }
+ },
+ "criterion": "identical per-tick hashes across engines, 100 recorded terrain sessions on World Spec v2 (M4.3)",
+ "spec_file": "coco_arena_v2.json",
+ "engines": {
+  "chromium": {
+   "version": "chromium 156.0.8078.4",
+   "seconds": 31.262,
+   "sessions": 3,
+   "ticks_compared": 2100,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "3a8c227eca452512962cfe674f149712b2175cea9a427f87f07ce0a0d97a667e",
+   "page_errors": []
+  },
+  "firefox": {
+   "version": "firefox 157.0",
+   "seconds": 42.31,
+   "sessions": 3,
+   "ticks_compared": 2100,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "3a8c227eca452512962cfe674f149712b2175cea9a427f87f07ce0a0d97a667e",
+   "page_errors": []
+  },
+  "pyodide-node": {
+   "version": "Pyodide 314.0.7, Node v24.21.0",
+   "seconds": 3494.23,
+   "sessions": 3,
+   "ticks_compared": 2100,
+   "ticks_mismatched": 0,
+   "sessions_differing": 0,
+   "first_differences": [],
+   "all_hashes_sha256": "3a8c227eca452512962cfe674f149712b2175cea9a427f87f07ce0a0d97a667e",
+   "page_errors": []
+  }
+ },
+ "pass": true
+}

@@ -14,6 +14,7 @@
 
 import type { PlayPlanner } from './planners';
 import { registerRunSaver } from '../offline/updates';
+import { pyReason } from '../arena/py_error';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Camera, Hand, Pause, PackageCheck, Route, Navigation2, Info, Network, Plug } from 'lucide-react';
@@ -211,7 +212,8 @@ export function PlayGame(p: PlayProps) {
         if (w.game.ros) { renderer.setRos(w.game.ros, { width: w.width, height: w.height, resolution: w.resolution, origin: w.origin }, o); void renderer.precompile(); }
       },
       onTick: (t, ranges) => onTick(t, ranges),
-      onError: (stg, m) => setError(`${stg}: ${m}`),
+      // a traceback in words: its last line (the reader's own reason); the frames go to the console
+      onError: (stg, m) => { if (m !== pyReason(m)) console.warn(m); setError(`${stg}: ${pyReason(m)}`); },
       onFamily: (msg) => {
         // SIM's Global and Local Costmap displays: the model's costmap cells (coco_lab.costmap)
         if (msg.channel === 'coco.costmap.layers.cells.v1' && msg.columns) {

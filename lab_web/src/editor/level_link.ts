@@ -10,6 +10,7 @@
 
 export const LINK_VERSION = 'v1';
 const MAX_JSON = 512 * 1024;                     // a level's JSON is a few kB; refuse anything absurd
+const MAX_TOKEN = 128 * 1024;                    // the link itself (a URL fragment)
 
 /** `editor`: the editor's own state, so a shared link opens again for editing (Play ignores it) */
 export interface EditorLevel { spec: Record<string, unknown>; goals: [number, number][]; editor?: unknown }
@@ -27,11 +28,29 @@ export async function encodeLevel(level: EditorLevel): Promise<string> {
   return `${LINK_VERSION}.${b64url(await pipe(json, new CompressionStream('deflate-raw')))}`;
 }
 
+/** Inflate, refusing as soon as the output passes `max` bytes: a few-kB deflate bomb never reaches memory. */
+async function inflateCapped(bytes: Uint8Array, max: number): Promise<Uint8Array> {
+  const reader = new Blob([bytes as Uint8Array<ArrayBuffer>]).stream().pipeThrough(new DecompressionStream('deflate-raw')).getReader();
+  const chunks: Uint8Array[] = [];
+  let n = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    n += value.length;
+    if (n > max) { await reader.cancel().catch(() => undefined); throw new Error('the level link is too large'); }
+    chunks.push(value);
+  }
+  const out = new Uint8Array(n);
+  let at = 0;
+  for (const c of chunks) { out.set(c, at); at += c.length; }
+  return out;
+}
+
 export async function decodeLevel(token: string): Promise<EditorLevel> {
   const dot = token.indexOf('.');
   if (dot < 0 || token.slice(0, dot) !== LINK_VERSION) throw new Error(`not a ${LINK_VERSION} level link`);
-  const raw = await pipe(unb64url(token.slice(dot + 1)), new DecompressionStream('deflate-raw'));
-  if (raw.length > MAX_JSON) throw new Error('the level link is too large');
+  if (token.length > MAX_TOKEN) throw new Error('the level link is too large');
+  const raw = await inflateCapped(unb64url(token.slice(dot + 1)), MAX_JSON);
   const doc = JSON.parse(new TextDecoder().decode(raw)) as { spec?: Record<string, unknown>; goals?: unknown; editor?: unknown };
   if (!doc.spec || doc.spec.spec_version !== 'coco.world_spec.v3') throw new Error('the link holds no World Spec v3');
   const goals = Array.isArray(doc.goals) ? doc.goals : [];

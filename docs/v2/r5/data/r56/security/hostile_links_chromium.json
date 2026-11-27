@@ -1,0 +1,132 @@
+{
+ "browser": "chromium",
+ "cases": [
+  {
+   "name": "deflate bomb (8 MB of JSON in a few kB)",
+   "view": "play",
+   "ok": true,
+   "words": "level link could not be opened: Error: the level link is too large Open the world editor",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "deflate bomb (8 MB of JSON in a few kB)",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "not base64",
+   "view": "play",
+   "ok": true,
+   "words": "level link could not be opened: TypeError: Compressed input was truncated",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "not base64",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "wrong version",
+   "view": "play",
+   "ok": true,
+   "words": "level link could not be opened: Error: not a v1 level link Open the world editor",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "wrong version",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "huge token",
+   "view": "play",
+   "ok": true,
+   "words": "level link could not be opened: Error: the level link is too large Open the world editor",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "huge token",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "script in the title, invalid spec",
+   "view": "play",
+   "ok": true,
+   "words": "boot: SpecError: spec: missing ['robot', 'arena'] STOP SPACE",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "script in the title, invalid spec",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "broken editor state",
+   "view": "play",
+   "ok": true,
+   "words": "boot: SpecError: spec: missing ['robot', 'arena'] STOP SPACE",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "broken editor state",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "goals not numbers",
+   "view": "play",
+   "ok": true,
+   "words": "level link could not be opened: Error: the link's goals are not [x, y] pairs Open the world editor",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  },
+  {
+   "name": "goals not numbers",
+   "view": "editor",
+   "ok": true,
+   "words": "editor open",
+   "pwned": false,
+   "dialog": false,
+   "page_errors": []
+  }
+ ],
+ "pass": true
+}

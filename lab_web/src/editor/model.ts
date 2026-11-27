@@ -133,6 +133,35 @@ export function toSpec(l: Level, depot: { robot: unknown; arena: unknown }): Rec
     start: { ...l.start }, arena: depot.arena, kit, sources: { editor: 'COCO Lab world editor (R5.5)' } };
 }
 
+const num = (v: unknown, lo = -1e6, hi = 1e6): v is number => typeof v === 'number' && Number.isFinite(v) && v >= lo && v <= hi;
+const pt = (v: unknown): v is [number, number] => Array.isArray(v) && v.length === 2 && num(v[0]) && num(v[1]);
+const ID = /^[a-z][a-z0-9_]{0,39}$/;
+const SIDES = new Set(['+x', '-x', '+y', '-y']);
+
+/**
+ * A level from a share link (untrusted), or null: every field type- and range-checked, so a hostile link
+ * cannot crash the editor. (The World Spec it makes is still validated by the Python reader.)
+ */
+export function asLevel(x: unknown): Level | null {
+  if (!x || typeof x !== 'object') return null;
+  const l = x as Record<string, unknown>;
+  const s = l.start as Record<string, unknown> | undefined;
+  if (typeof l.title !== 'string' || l.title.length > 80 || !num(l.w, 4, 60) || !num(l.h, 4, 60) || !Number.isInteger(l.seq) || !num(l.seq, 1, 1e6)) return null;
+  if (!s || !num(s.x) || !num(s.y) || !num(s.theta, -4, 4)) return null;
+  if (!Array.isArray(l.goals) || l.goals.length > 50 || !l.goals.every(pt)) return null;
+  if (!Array.isArray(l.pieces) || l.pieces.length > 400) return null;
+  for (const p of l.pieces as Record<string, unknown>[]) {
+    if (!p || typeof p !== 'object' || typeof p.id !== 'string' || !ID.test(p.id)) return null;
+    if (p.kind === 'wall') { if (!pt(p.from) || !pt(p.to)) return null; }
+    else if (p.kind === 'door') { if (typeof p.wall !== 'string' || !ID.test(p.wall) || !num(p.at, 0, 60) || !num(p.width, 0.5, 5)) return null; }
+    else if (p.kind === 'rack' || p.kind === 'bench' || p.kind === 'pallet' || p.kind === 'box') {
+      if (!pt(p.center) || !Array.isArray(p.size) || p.size.length !== 2 || !p.size.every((v) => num(v, 0.1, 20)) || !num(p.height, 0.05, 5)) return null;
+      if (p.aisles !== undefined && (!Array.isArray(p.aisles) || !p.aisles.every((a) => SIDES.has(a as string)))) return null;
+    } else return null;
+  }
+  return x as Level;
+}
+
 /** Undo/redo over whole-level snapshots (a level is small). */
 export class History {
   private past: Level[] = [];

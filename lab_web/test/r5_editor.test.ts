@@ -7,7 +7,7 @@
  * coco_lab/test/test_level_check.py builds the same kind of level).
  */
 import { describe, expect, it } from 'vitest';
-import { History, addDoor, addGoal, addSolid, addWall, levelId, move, newLevel, remove, rotate, setStart, toSpec, turnStart } from '../src/editor/model';
+import { History, addDoor, asLevel, addGoal, addSolid, addWall, levelId, move, newLevel, remove, rotate, setStart, toSpec, turnStart } from '../src/editor/model';
 import { decodeLevel, encodeLevel } from '../src/editor/level_link';
 
 const depot = { robot: { radius: 0.22 }, arena: { resolution: 0.1 } };
@@ -75,5 +75,33 @@ describe('the world editor', () => {
     expect(back.editor).toEqual(l);
     await expect(decodeLevel('v9.abc')).rejects.toThrow(/v1/);
     await expect(decodeLevel(`v1.${token.slice(3, 20)}`)).rejects.toThrow();
+  });
+
+  it('refuses hostile links: a deflate bomb stops at the cap, a broken editor state is ignored', async () => {
+    // 8 MB of spaces deflate to a few kB: inflating stops at 512 kB, never 8 MB
+    const big = new TextEncoder().encode(`{"spec":{"spec_version":"coco.world_spec.v3"},"goals":[]${' '.repeat(8 * 1024 * 1024)}}`);
+    const z = new Uint8Array(await new Response(new Blob([big]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer());
+    let b = ''; for (const c of z) b += String.fromCharCode(c);
+    const token = `v1.${btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}`;
+    expect(token.length).toBeLessThan(64 * 1024);
+    await expect(decodeLevel(token)).rejects.toThrow(/too large/);
+    await expect(decodeLevel(`v1.${'A'.repeat(200 * 1024)}`)).rejects.toThrow(/too large/);
+    const ok = addGoal(addSolid(newLevel(), 'rack', [5, 5]), [9, 7]);
+    expect(asLevel(JSON.parse(JSON.stringify(ok)))).toEqual(ok);
+    for (const bad of [null, 'x', { ...ok, pieces: 'x' }, { ...ok, w: 1e9 }, { ...ok, title: '<img src=x onerror=alert(1)>'.repeat(10) },
+      { ...ok, pieces: [{ id: '<b>', kind: 'box', center: [1, 1], size: [1, 1], height: 1 }] },
+      { ...ok, pieces: [{ id: 'box_1', kind: 'script', center: [1, 1] }] }, { ...ok, goals: [[1, Infinity]] }, { ...ok, start: { x: 1 } }]) {
+      expect(asLevel(bad)).toBeNull();
+    }
+  });
+});
+
+import { pyReason } from '../src/arena/py_error';
+
+describe('a worker error in words (R5.6)', () => {
+  it('keeps a traceback\'s last line, and anything else as it is', () => {
+    const tb = 'Traceback (most recent call last):\n  File "/home/pyodide/arena_glue.py", line 86, in init\n    _arena = Arena(...)\ncoco_lab.worldspec.WorldSpecError: robot: required';
+    expect(pyReason(tb)).toBe('WorldSpecError: robot: required');
+    expect(pyReason('the worker stopped')).toBe('the worker stopped');
   });
 });
