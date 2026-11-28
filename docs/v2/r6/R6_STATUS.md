@@ -168,3 +168,33 @@ Read: 33x the particles and the right to stop and turn do not make the suites so
 every public report was wrong; after a kidnap nothing re-localised. The R4 diagnosis (a filter cannot win while the
 robot acts on a wrong belief) now has a sharper form: the filter's own confidence is wrong in the Depot's symmetric
 aisles, so stopping until it is confident does not help. Negative, kept.
+
+## A7 · the leaderboard re-verify matrix
+
+What it replaced: one job that re-verified every entry in turn, cancelled at GitHub's 6-hour limit on main
+(62096d1, 5a9f54d). Now (`.github/workflows/leaderboard-reverify.yml`, `tools/r2/reverify_plan.py`):
+
+- **plan** lists the entries to re-verify: their recorded `versions` changed (suite, model hash version, experiment,
+  API, verifier), or their OWN inputs changed since the commit they were verified at (suite file, world,
+  submission; a result CI wrote names no commit, so the commit that last wrote it stands in), or that commit is not
+  in history. Gautham, 2026-11-28: "re-checking only entries whose versions changed". Weekly (Sunday 03:17 UTC) and
+  on request (`all`, `only`) it re-verifies everything named. Locally now: 0 of 84 to re-verify.
+- **one job per suite x entry**, by the procedure that made the entry. The 83 built-in entries come from the R3
+  baselines: the job re-runs that entry's runs from its baseline export in the sandbox
+  (`coco_lab.experiments verify --algorithm`, new), chains and counts must match, then rewrites the entry from
+  those records with the command that wrote it (`builtin-bench` / `mcl-reference`) and compares it exactly. The one
+  submission (Theta*) is verified as before.
+- **each job within 1 hour**: an entry whose recorded compute time exceeds the job's budget re-runs a
+  deterministic sample of its runs (`--sample`, seeded by the spec) and says so in its log. Coverage is the price:
+  at the 100 CPU-minute budget, 27 of 84 entries are sampled (the least: depot-nav-100/mcl_augmented, a few per
+  cent of its runs). Full coverage of those would need longer jobs or many shards (estimated ~330 CPU-hours for
+  everything: 373 jobs at 80 CPU-min, past GitHub's 256-job matrix limit) — a question for Gautham.
+
+A defect the first full run found, fixed before anything merged: the first matrix (run 46146500783) failed 65 jobs
+on chains and spec ids alone — no number differed — because it re-made bench-derived entries by another procedure.
+
+Full run (46152197199, `all`, budget 180): **84 entry jobs, 83 passed, 0 failed, 1 cancelled** at the 60-minute
+limit (arena-nav-50/mcl_augmented, 3,615 s). Longest successful job: depot-nav-100/mppi, **45.7 min**. 992
+job-minutes, 69 min wall (20 at a time). Budget lowered to 100 CPU-minutes; the cancelled entry re-run alone (run 46158203548, `only`): **passed in 30.7 min**
+on a 4-CPU runner — sample 0.18, 9 public + 3 held-out runs re-run, all matching; the entry rewritten from its
+records equals the committed one.
