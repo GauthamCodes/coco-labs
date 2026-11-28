@@ -116,7 +116,8 @@
     "algorithms/planner_rrt.py",
     "algorithms/planner_rrt_star.py",
     "algorithms/planner_prm.py",
-    "algorithms/planner_hybrid_astar.py"
+    "algorithms/planner_hybrid_astar.py",
+    "algorithms/localiser_ekf_scanmatch.py"
    ]
   },
   "user": {

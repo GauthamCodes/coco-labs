@@ -614,7 +614,7 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
 
 def _attach(a, name: str, params: Dict, descriptor: Dict, on_event):
     """R2: attach the descriptor's algorithm file to the Arena; return exp_user (or None)."""
-    if name != 'user':
+    if not descriptor.get('code_sha256'):   # a user's file, or an API built-in (R6.B2)
         return None
     from . import exp_user
     exp_user.attach(a, exp_user.load(descriptor['code_sha256']), params, on_event)

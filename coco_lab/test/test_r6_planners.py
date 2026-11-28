@@ -68,3 +68,15 @@ def test_theta_star_is_gautham_anils_entry_unchanged():
     built = ex.api_builtin_source('theta_star')
     assert entry.split('"""', 2)[2] == built.split('"""', 2)[2]
     assert 'Gautham Anil' in built
+
+
+def test_ekf_scanmatch_tracks_from_a_known_start():
+    """EKF + scan matching: a tracker (deterministic; within half a metre on a short run)."""
+    spec = {'schema': ex.SCHEMA, 'world': 'coco_depot_v1', 'family': 'localisation', 'seed': 1,
+            'algorithms': [{'name': 'ekf_scanmatch'}],
+            'scenarios': {'kind': 'suite', 'id': 'loc-track-30', 'version': 1},
+            'limits': {'max_ticks': 300}}
+    p = ex.plan(spec)
+    r = ex.run_all(dict(p, runs=p['runs'][:1]))[0]
+    assert r['deterministic'] and r['status'] != 'error'
+    assert r['metrics']['mean_err_xy_m'] < 0.5

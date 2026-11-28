@@ -67,15 +67,20 @@ FAMILIES = ('planning', 'control', 'localisation', 'fulltask')
 #: rules, ctx.rng for any randomness), but a spec names them like any built-in; the run records
 #: which code ran
 #: (its sha256).
-API_BUILTINS = {'planning': ('theta_star', 'rrt', 'rrt_star', 'prm', 'hybrid_astar')}
+API_BUILTINS = {'planning': ('theta_star', 'rrt', 'rrt_star', 'prm', 'hybrid_astar'),
+                'localisation': ('ekf_scanmatch',)}
 API_BUILTIN_LABELS = {'theta_star': 'Lazy Theta* (G. Anil)', 'rrt': 'RRT', 'rrt_star': 'RRT*',
-                      'prm': 'PRM', 'hybrid_astar': 'Hybrid-A* (Dubins)'}
+                      'prm': 'PRM', 'hybrid_astar': 'Hybrid-A* (Dubins)',
+                      'ekf_scanmatch': 'EKF + scan matching'}
 
 
 def api_builtin_source(name: str) -> str:
     """Return the shipped source of an API built-in (coco_lab/algorithms/planner_<name>.py)."""
-    path = Path(__file__).parent / 'algorithms' / f'planner_{name}.py'
-    return path.read_text(encoding='utf-8')
+    for prefix in ('planner', 'localiser'):
+        path = Path(__file__).parent / 'algorithms' / f'{prefix}_{name}.py'
+        if path.is_file():
+            return path.read_text(encoding='utf-8')
+    raise SpecError(f'no API built-in {name!r}')
 
 
 def runs_code(name: str) -> bool:
@@ -86,7 +91,7 @@ def runs_code(name: str) -> bool:
 ALGORITHMS = {
     'planning': tuple(COMPARE_PLANNERS) + API_BUILTINS['planning'],
     'control': tuple(move_arena.CONTROLLERS),
-    'localisation': ('mcl', 'mcl_augmented', 'ekf'),
+    'localisation': ('mcl', 'mcl_augmented', 'ekf') + API_BUILTINS['localisation'],
     'fulltask': tuple(PLANNERS),
 }
 #: R2: an algorithm file (coco_lab.api, ``coco.algorithm.v1``): ``{"name": "user", "api": 1,
@@ -180,7 +185,7 @@ def _applies(family: str, algo: str, key: str) -> bool:
         head = key.split('.')[0]
         return head in ('planner', 'window') or head == algo
     if family == 'localisation':
-        if algo == USER:
+        if runs_code(algo):   # a file's parameters are user.<name> only
             return False
         return key.startswith(('mcl.' if algo.startswith('mcl') else 'ekf.'))
     return False
