@@ -288,6 +288,8 @@ def generate(suite_id: str, seed: Optional[int] = None, n: Optional[int] = None)
             if d.get('kidnap_at_s'):
                 s['kidnap_at_s'] = d['kidnap_at_s']
                 s['kidnap'] = _kidnap_point(w, rng, s, g['kidnap_min_m'])
+            if d.get('active'):   # R6.A6
+                s['active'] = dict(d['active'])
             s['features'] = features(w, s)
         return scen
     raise ValueError(f'no generator {kind!r}')
@@ -404,6 +406,27 @@ SUITES: Dict[str, Dict] = {
                       'kidnap_min_m': 5.0},
         'heldout_n': 6, 'tier_features': ['kidnap_m', 'path_length_m', 'turns'],
         'title': 'Localisation: the kidnapped robot (carried >= 5 m at 12 s, odometry untold)'},
+    # R6.A6 (localisation v1.1, Gautham 2026-11-24/28): the same scenarios as loc-global-20 and
+    # loc-kidnap-20
+    # (same generators and seeds), but the robot may turn in place until its filter REPORTS
+    # "localised"
+    # (exp_families._Active; localise.reports_localised), and time to a correct report is scored.
+    'loc-global-active-20': {
+        'world': 'coco_depot_v1', 'n': 20, 'families': ['localisation'], 'prefix': 'ga',
+        'init': 'global', 'active': {'explore': 'rotate', 'angular': 0.5, 'max_s': 60.0},
+        'generator': {'kind': 'localisation', 'seed': 7601, 'min_separation_m': 6.0},
+        'heldout_n': 6, 'tier_features': ['path_length_m', 'turns', 'min_clearance_m'],
+        'algorithms': ['mcl', 'mcl_augmented', 'user'],
+        'title': ('Localisation v1.1: global, the robot turns in place until its filter '
+                  'reports localised')},
+    'loc-kidnap-active-20': {
+        'world': 'coco_depot_v1', 'n': 20, 'families': ['localisation'], 'prefix': 'qa',
+        'kidnap_at_s': 12.0, 'active': {'explore': 'rotate', 'angular': 0.5, 'max_s': 60.0},
+        'generator': {'kind': 'localisation', 'seed': 7701, 'min_separation_m': 6.0,
+                      'kidnap_min_m': 5.0},
+        'heldout_n': 6, 'tier_features': ['kidnap_m', 'path_length_m', 'turns'],
+        'title': ('Localisation v1.1: kidnapped, the robot re-localises (turning in place) '
+                  'when its report is lost')},
 }
 
 #: the full task: committed rounds only (R1 rule), so neither tiers by generator nor held-out

@@ -52,7 +52,7 @@ def nav(sid):
     gen = dict(d['generator'], tool=B.TOOL, module='coco_lab.bench_v1')
     out = {'schema': B.SCHEMA, 'id': sid, 'version': 1, 'title': d['title'],
            'world': d['world'], 'world_sha256': ex.world_sha256(d['world']), 'families': fams,
-           'metrics': {f: [m['id'] for m in ex.METRICS[f]] for f in fams},
+           'metrics': {f: [m['id'] for m in ex.metric_defs(f, scen)] for f in fams},
            'generator': gen, 'tiers': tiers,
            'held_out': {'n': d['heldout_n'], 'scheme': 'ADR 0014 (secret salt, per head) in CI; '
                         'R2 public salt locally', 'generator': 'the same, another seed'},

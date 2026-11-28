@@ -8,10 +8,11 @@ REFERENCE (never ranked): MCL with augmented injection, 2,000 particles, 24 beam
 built-ins' 0/40 and 0/60 stay as the negative baselines). Same scenarios as the R3.2 baselines:
 the public suite and the reference held-out draw.
 
-    python tools/r3/mcl_reference.py [--workers N] [--only SUITE]
+    python tools/r3/mcl_reference.py [--workers N] [--only SUITE] [--suites ID ...] [--out DIR]
 
 Writes docs/v2/r4/data/mcl_reference/<suite>/{public,held_out}/ (the export set of
-`coco experiment run`). Every number is reported whatever it is.
+`coco experiment run`). Every number is reported whatever it is. R6.A6: ``--suites`` runs the same reference
+on other suites (the v1.1 active ones: loc-global-active-20, loc-kidnap-active-20) into ``--out``.
 """
 import argparse
 import json
@@ -38,14 +39,16 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--workers', type=int, default=8)
     ap.add_argument('--only', nargs='*')
+    ap.add_argument('--suites', nargs='*', default=list(SUITES))
+    ap.add_argument('--out', default=str(OUT))
     a = ap.parse_args()
     lb = mb._leaderboard()
-    for sid in SUITES:
+    for sid in a.suites:
         if a.only and sid not in a.only:
             continue
         held, _ = mb.held_out(sid, lb)
         for which in ('public', 'held_out'):
-            d = OUT / sid / which
+            d = Path(a.out) / sid / which
             if (d / 'manifest.json').exists():
                 print(f'{d}: done, skipped', flush=True)
                 continue

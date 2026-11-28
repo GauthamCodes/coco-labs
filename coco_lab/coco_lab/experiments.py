@@ -285,6 +285,30 @@ METRICS['localisation'] = METRICS['control'][:-1] + [
     _m('recovery_s', 'Recovery time after kidnap', 's', 'lower'),
     _m('compute_ms', 'Compute time', 'ms', 'lower', timing=True),
 ]
+#: R6.A6 (localisation v1.1): the active suites' own metrics (exp_families._Active). Only runs
+#: whose
+#: scenario is active carry them, and only those experiments list them (metric_defs), so every
+#: earlier
+#: localisation record, summary and CSV is unchanged.
+ACTIVE_LOC_METRICS = [
+    _m('time_to_localise_s', 'Time to a correct "localised" report', 's', 'lower'),
+    _m('time_to_relocalise_s', 'Time to re-localise after the kidnap', 's', 'lower'),
+    _m('false_reports', 'False "localised" reports', '', 'lower'),
+    _m('reports', '"Localised" reports', '', 'lower', test=False),
+    _m('first_report_s', 'First report (right or wrong)', 's', 'lower', test=False),
+    _m('explore_s', 'Time spent localising in place', 's', 'lower', test=False),
+    _m('gave_up', 'Localising phases that ran out of time', '', 'lower', test=False),
+]
+
+
+def metric_defs(family: str, scenarios=()) -> List[Dict]:
+    """Return ``family``'s metric definitions, plus the active suites' if a scenario is active."""
+    if family == 'localisation' and any(isinstance(s, dict) and s.get('active')
+                                        for s in scenarios):
+        return METRICS[family] + ACTIVE_LOC_METRICS
+    return METRICS[family]
+
+
 STATUSES = {
     'planning': ('found', 'no_path', 'start_blocked', 'goal_blocked', 'collision',
                  'invalid_output', 'budget_exceeded', 'error'),
@@ -559,7 +583,7 @@ def plan(spec: Dict) -> Dict:
     n_runs = len(points) * len(resolved_algos) * len(scenarios)
     if n_runs > LIMITS['runs']:
         raise SpecError(f'{n_runs} runs: at most {LIMITS["runs"]}')
-    metric_ids = [m['id'] for m in METRICS[family]]
+    metric_ids = [m['id'] for m in metric_defs(family, scenarios)]
     shown = spec.get('metrics') or metric_ids
     if any(m not in metric_ids for m in shown):
         raise SpecError(f'{family} metrics: {metric_ids}')
@@ -640,7 +664,7 @@ def run_one(desc: Dict, sink=None, on_tick=None, on_event=None, twice: bool = Tr
         h.update(canonical(desc))
         h.update(f'error: {e}'.encode())
         r = {'status': 'error', 'success': False,
-             'metrics': {m['id']: None for m in METRICS[fam]}, 'chain': h.hexdigest(),
+             'metrics': {m['id']: None for m in metric_defs(fam, [sc])}, 'chain': h.hexdigest(),
              'fail_tick': None, 'error': str(e)}
     out = {'index': desc['index'], 'sweep_index': desc['sweep_index'], 'sweep': desc['sweep'],
            'algorithm': desc['algorithm'], 'name': name, 'scenario': sc['id'],
@@ -685,7 +709,7 @@ def summarise(p: Dict, records: List[Dict]) -> Dict:
     of one metric at one sweep point.
     """
     fam = p['spec']['family']
-    mdefs = METRICS[fam]
+    mdefs = metric_defs(fam, p.get('scenarios') or ())
     algos = [a['id'] for a in p['spec']['algorithms']]
     by = {}
     for r in records:
@@ -785,7 +809,7 @@ def results_csv(p: Dict, records: List[Dict]) -> str:
     """Return results.csv: one row per run (failures and timeouts included), every metric."""
     fam = p['spec']['family']
     sweep_names = [x['name'] for x in p['spec']['sweep']['params']]
-    mids = [m['id'] for m in METRICS[fam]]
+    mids = [m['id'] for m in metric_defs(fam, p.get('scenarios') or ())]
     head = (['run', 'sweep_index'] + sweep_names + ['algorithm', 'name', 'scenario'])
     if fam == 'fulltask':
         head += ['game', 'round']

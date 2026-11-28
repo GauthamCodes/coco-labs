@@ -1,44 +1,91 @@
-# R2.6 · every leaderboard entry re-verified when anything it depends on changes (the model,
-# the API, a suite, the verifier) -- "a version bump re-verifies all entries automatically".
-# Merged entries were reviewed, but they still run in the same sandbox as leaderboard-verify.
-# The job fails, naming each entry, when a recomputed result differs from the committed one
-# (leaderboard/results/), so a change that moves a number is seen before it ships.
+# R2.6, R6.A7 · leaderboard entries re-verified: ONE JOB PER SUITE x ENTRY (a matrix), each within 1 hour.
+#
+# The single job this replaces ran every entry in turn and was cancelled at GitHub's 6 h limit on main
+# (2026-11-22: 62096d1, 5a9f54d). Now `plan` (tools/r2/reverify_plan.py) lists only the entries whose recorded
+# versions changed, or whose own inputs (suite file, world, submission) changed since they were verified
+# (Gautham, 2026-11-28); each becomes its own job, in the same sandbox as leaderboard-verify. A job fails,
+# naming its entry, when a recomputed result differs from the committed one (leaderboard/results/).
+# Weekly, and on request (workflow_dispatch, all: true), every entry is re-verified, so a model change that kept
+# every version is still caught.
 name: Leaderboard re-verify
 
 on:
   push:
     branches: [ main ]
-    paths: [ 'coco_lab/**', 'worlds/**', 'tools/r2/leaderboard.py', 'tools/r2/verifier.Dockerfile', 'leaderboard/**' ]
+    paths: [ 'coco_lab/**', 'worlds/**', 'tools/r2/leaderboard.py', 'tools/r2/reverify_plan.py',
+             'tools/r2/verifier.Dockerfile', 'leaderboard/**', '.github/workflows/leaderboard-reverify.yml' ]
+  schedule:
+    - cron: '17 3 * * 0'      # Sundays 03:17 UTC: everything
   workflow_dispatch:
+    inputs:
+      all:
+        description: 'Re-verify every entry (not only those whose versions or inputs changed)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 jobs:
-  reverify:
+  plan:
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 15
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0          # the commits entries were verified at
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - id: plan
+        name: Which entries (versions or their own inputs changed; all, weekly or on request)
+        run: |
+          set -euo pipefail
+          all=""
+          if [ "${{ github.event_name }}" = schedule ] || [ "${{ inputs.all }}" = true ]; then all=--all; fi
+          python3 tools/r2/reverify_plan.py $all --out plan.json --github-output "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reverify-plan
+          path: plan.json
+
+  reverify:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    name: ${{ matrix.suite }} / ${{ matrix.name }}
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: The sandbox image
         run: docker build -q -t coco-verifier -f tools/r2/verifier.Dockerfile .
-      - name: Re-verify every committed entry
+      - name: Re-verify ${{ matrix.suite }}/${{ matrix.name }}
         run: |
           set -uo pipefail
-          status=0
-          for res in leaderboard/results/*/*/result.json; do
-            suite=$(basename "$(dirname "$(dirname "$res")")"); name=$(basename "$(dirname "$res")")
-            out="$RUNNER_TEMP/re/$suite/$name"; mkdir -p "$out" && chmod 0777 "$out"
-            kind=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['entry']['kind'])" "$res")
-            mb=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['held_out']['merge_base'])" "$res")
-            sandbox="docker run --rm --network none --read-only --tmpfs /tmp:size=256m --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 -v $out:/out"
-            if [ "$kind" = builtin ]; then
-              $sandbox coco-verifier builtin "$suite" "$name" --out /out --workers 2 || true
-            else
-              $sandbox -v "$PWD/leaderboard/submissions/$suite/$name:/submissions/$suite/$name:ro" coco-verifier verify "/submissions/$suite/$name" --out /out --merge-base "$mb" --workers 2 || true
-            fi
-            python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/result.json" || status=1
-          done
-          exit $status
+          suite='${{ matrix.suite }}'; name='${{ matrix.name }}'; mb='${{ matrix.merge_base }}'
+          res="leaderboard/results/$suite/$name/result.json"
+          out="$RUNNER_TEMP/re/$suite/$name"; mkdir -p "$out" && chmod 0777 "$out"
+          start=$(date +%s)
+          sandbox="docker run --rm --network none --read-only --tmpfs /tmp:size=256m --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 -v $out:/out"
+          if [ '${{ matrix.kind }}' = builtin ]; then
+            $sandbox coco-verifier builtin "$suite" "$name" --out /out --workers 2 || true
+          else
+            $sandbox -v "$PWD/leaderboard/submissions/$suite/$name:/submissions/$suite/$name:ro" coco-verifier verify "/submissions/$suite/$name" --out /out --merge-base "$mb" --workers 2 || true
+          fi
+          echo "verify_seconds=$(( $(date +%s) - start ))" | tee "$out/timing.txt"
+          python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/result.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reverify-${{ matrix.suite }}-${{ matrix.name }}
+          path: ${{ runner.temp }}/re/

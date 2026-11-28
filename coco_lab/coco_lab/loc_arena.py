@@ -34,6 +34,7 @@ pose (and dead reckoning's), and the errors as metrics.
 
 import struct
 from typing import Dict, Optional, Tuple
+import weakref
 
 from .arena import ArenaError, Q_STATE, SUBSYSTEMS
 from .columns import Batch
@@ -144,6 +145,7 @@ class ArenaLocaliser:
         self.last_odom = None
         self._est: Dict[str, Tuple[float, float, float]] = {}
         self._cov: Dict[str, Tuple[float, float]] = {}
+        _REPORTS[self] = {}
 
     def on_reset(self, arena) -> None:
         """Restart the filters at the start pose (a reset is a new run)."""
@@ -170,6 +172,20 @@ class ArenaLocaliser:
                 xx, yy = cov[who]
                 return {'sigma_xy': math.sqrt(max(0.0, xx + yy)),
                         'filter': who}
+        return None
+
+    def report(self) -> Optional[Tuple[str, float, float, Optional[float]]]:
+        """
+        R6.A6: what the filter the belief comes from says of itself after its last update.
+
+        ``(filter, sigma_xy, sigma_yaw, cluster_weight)`` (cluster weight: MCL only), or None
+        before the first update. ``localise.reports_localised`` turns it into the robot's
+        "localised".
+        """
+        rep = _REPORTS.get(self, {})
+        for who in ('mcl', 'ekf', USER):
+            if who in rep:
+                return (who,) + rep[who]
         return None
 
     def belief(self) -> Optional[Tuple[float, float, float]]:
@@ -200,6 +216,8 @@ class ArenaLocaliser:
             est, cov = u['est'], u['cov']
             self._est['mcl'] = est
             self._cov['mcl'] = (cov[0], cov[2])
+            _REPORTS[self]['mcl'] = (math.sqrt(max(0.0, cov[0] + cov[2])),
+                                     math.sqrt(max(0.0, cov[3])), u['cluster_weight'])
             P, w = u['particles']
             ps = Batch('coco.localise.v1.ParticleSetBatch',
                        update=self.mcl.updates - 1, filter_id='mcl')
@@ -225,6 +243,8 @@ class ArenaLocaliser:
             est, P = u['est'], u['P']
             self._est['ekf'] = est
             self._cov['ekf'] = (P[0][0], P[1][1])
+            _REPORTS[self]['ekf'] = (math.sqrt(max(0.0, P[0][0] + P[1][1])),
+                                     math.sqrt(max(0.0, P[2][2])), None)
             pm, pP = u['pred_mu'], u['pred_P']
             kb = Batch('coco.localise.v1.EkfUpdateBatch', filter_id='ekf')
             kb.add(tick, t, update=self.ekf.updates - 1,
@@ -264,9 +284,11 @@ class ArenaLocaliser:
         got = USER_HOOKS['localise_tick'](arena, self.rng)
         if got is None:
             return
-        est, cov = got
+        est, cov, cov_yaw = got
         self._est[USER] = est
         self._cov[USER] = cov
+        _REPORTS[self][USER] = (math.sqrt(max(0.0, cov[0] + cov[1])),
+                                math.sqrt(max(0.0, cov_yaw)), None)
         if arena.on_family is not None:
             tick, t = arena.tick, arena.t_world
             eb = Batch('coco.estimate.v1.EstimateBatch', estimator='user')
@@ -309,3 +331,14 @@ class ArenaLocaliser:
 
 
 SUBSYSTEMS['localise'] = ArenaLocaliser
+
+#: R6.A6: what each filter's last update says of itself -- ``{filter: (sigma_xy, sigma_yaw, cluster
+#: weight or
+#: None)}`` per localiser, for ``localise.reports_localised``. Kept OUT of the localiser's own
+#: fields on purpose:
+#: state_v2.snapshot hashes every field (hash versions 2 and 3), and this is an observation for the
+#: experiment
+#: runner, derived from each update, that the Arena's next step never reads. As a field it moved
+#: the
+#: arena_localise_mcl v3 golden (caught by test_numerics_v3); here no hash moves.
+_REPORTS: 'weakref.WeakKeyDictionary' = weakref.WeakKeyDictionary()

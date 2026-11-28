@@ -521,6 +521,80 @@ def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict
         return out
 
 
+class _Active:
+    """
+    R6.A6 (localisation v1.1): the robot may stop or explore until its filter REPORTS "localised".
+
+    ``scenario['active']`` = ``{'explore': 'rotate' | 'stop', 'angular': rad/s, 'max_s': s}``. At
+    the start, and whenever the report is lost for REPORT_HOLD updates while driving (a kidnap the
+    robot is not told of), it holds the goal back and turns in place (or stands) until
+    ``localise.reports_localised`` holds for REPORT_HOLD consecutive updates, or ``max_s`` passes;
+    then it drives to the goal. Every report is judged against the truth when it is made (OK_XY,
+    OK_YAW): right, or a false report.
+    """
+
+    def __init__(self, spec: Dict, goal):
+        explore = spec.get('explore', 'rotate')
+        if explore not in ('rotate', 'stop'):
+            raise ValueError("active.explore is 'rotate' or 'stop'")
+        self.explore = explore
+        self.angular = float(spec.get('angular', 0.5))
+        self.max_s = float(spec.get('max_s', 60.0))
+        self.goal = goal
+        self.phase, self.since, self.reason = 'localising', 0.0, 'start'
+        self.seen, self.ok_run, self.bad_run = -1, 0, 0
+        self.reports: List[Dict] = []
+        self.explore_s, self.gave_up = 0.0, 0
+
+    def hold(self, tick: int) -> List[InputEvent]:
+        """Return the inputs that start a localising phase."""
+        return [InputEvent(tick, 'teleop', angular=self.angular)] if self.explore == 'rotate' \
+            else [InputEvent(tick, 'stop')]
+
+    def after(self, a: Arena, t_now: float) -> List[InputEvent]:
+        """Read the filter's report after a tick; return the next tick's inputs."""
+        from .localise import OK_XY, OK_YAW, REPORT_HOLD, reports_localised
+        loc = a.subsystems.get('localise')
+        rep = loc.report() if loc is not None else None
+        if rep is not None and loc.updates != self.seen:
+            self.seen = loc.updates
+            ok = reports_localised(rep[1], rep[2], rep[3])
+            self.ok_run = self.ok_run + 1 if ok else 0
+            self.bad_run = 0 if ok else self.bad_run + 1
+        if self.phase == 'localising':
+            reported = self.ok_run >= REPORT_HOLD
+            if not reported and t_now - self.since < self.max_s:
+                return []
+            if reported:
+                b = a.belief()
+                correct = math.hypot(b[0] - a.pose[0], b[1] - a.pose[1]) < OK_XY and \
+                    abs(wrap(b[2] - a.pose[2])) < OK_YAW
+                self.reports.append({'t': t_now, 'correct': correct, 'after': self.reason})
+            else:
+                self.gave_up += 1
+            self.explore_s += t_now - self.since
+            self.phase, self.bad_run = 'driving', 0
+            return [InputEvent(a.tick, 'goal', x=self.goal[0], y=self.goal[1])]
+        if self.bad_run >= REPORT_HOLD:
+            self.phase, self.since, self.reason, self.ok_run = 'localising', t_now, 'lost', 0
+            return self.hold(a.tick)
+        return []
+
+    def metrics(self, kid: Optional[float], t_end: float) -> Dict:
+        """Return what the active suites measure; only their runs carry it (v1: unchanged)."""
+        if self.phase == 'localising':
+            self.explore_s += t_end - self.since
+        first = self.reports[0] if self.reports else None
+        after_kid = [r for r in self.reports if kid is not None and r['t'] >= kid and r['correct']]
+        return {'reports': len(self.reports),
+                'false_reports': sum(1 for r in self.reports if not r['correct']),
+                'first_report_s': None if first is None else first['t'],
+                'time_to_localise_s': (first['t'] if first is not None and first['correct']
+                                       else None),
+                'time_to_relocalise_s': None if not after_kid else after_kid[0]['t'] - kid,
+                'explore_s': self.explore_s, 'gave_up': self.gave_up}
+
+
 def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor: Dict,
                      max_ticks: int, kidnap_at_s: Optional[float] = None, on_tick=None,
                      on_event=None) -> Dict:
@@ -543,7 +617,11 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
         cfg.append('localise.filter=' + kind)
         goal = tuple(scenario['goal'][:2])
         events = [InputEvent(0, 'config', choice=c) for c in cfg]
-        events.append(InputEvent(0, 'goal', x=goal[0], y=goal[1]))
+        act = None if scenario.get('active') is None else _Active(scenario['active'], goal)
+        if act is None:
+            events.append(InputEvent(0, 'goal', x=goal[0], y=goal[1]))
+        else:   # R6.A6: no goal until the filter reports "localised"
+            events += act.hold(0)
         d = _Drive(a, h, on_tick)
         kidnap_tick = None if kidnap_at_s is None else max(1, round(kidnap_at_s / a.dt))
         series = []
@@ -561,11 +639,13 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
                 break
             if d.ticks >= max_ticks or (user is not None and user.fatal(a)):
                 break
-            ev = []
+            ev = [] if act is None else act.after(a, (d.ticks - 1) * a.dt)
             if kidnap_tick is not None and d.ticks == kidnap_tick:
                 k = scenario.get('kidnap') or scenario['start']
                 ev.append(InputEvent(a.tick, 'kidnap', x=k[0], y=k[1]))
-                ev.append(InputEvent(a.tick, 'goal', x=goal[0], y=goal[1]))
+                # R6.A6: an active robot is not told; it notices from its own report
+                if act is None:
+                    ev.append(InputEvent(a.tick, 'goal', x=goal[0], y=goal[1]))
             elif a.mode == 'idle' and not t.arrived:
                 if d.plan_failed:
                     break
@@ -594,6 +674,8 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
                         'max_err_xy_m': max(errs) if errs else None,
                         'converged_s': conv, 'recovery_s': None if rec is None else rec - kid,
                         'reached_goal': arrived})
+        if act is not None:
+            metrics.update(act.metrics(kid, (d.ticks - 1) * a.dt))
         localised = err_xy < OK_XY and err_yaw < OK_YAW
         status = ('localised' if localised else 'not_localised') if arrived else \
             ('timeout' if d.ticks >= max_ticks else 'no_path')

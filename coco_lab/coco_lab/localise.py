@@ -98,6 +98,30 @@ OK_XY = 0.5
 OK_YAW = 0.3
 OK_HOLD = 5
 
+#: R6.A6 (localisation v1.1, the active suites): when a filter REPORTS "localised", in its own
+#: words and
+#: never from the truth. Its reported spread at two sigma inside the truth thresholds above
+#: (2 x 0.25 m = OK_XY, 2 x 0.15 rad = OK_YAW), for OK_HOLD consecutive updates. MCL reports its
+#: heaviest
+#: cluster's covariance (as AMCL does), which is tight inside ONE cluster however many there are,
+#: so MCL also
+#: needs that cluster to hold REPORT_CLUSTER_W of the particle weight (a design choice, stated; a
+#: user's
+#: localiser reports through its covariance alone). Whether a report was RIGHT is judged against
+#: the truth.
+REPORT_SIGMA_XY = OK_XY / 2
+REPORT_SIGMA_YAW = OK_YAW / 2
+REPORT_CLUSTER_W = 0.9
+REPORT_HOLD = OK_HOLD
+
+
+def reports_localised(sigma_xy: float, sigma_yaw: float,
+                      cluster_weight: Optional[float] = None) -> bool:
+    """Return whether one filter update says "localised" (R6.A6; REPORT_* above)."""
+    if not (sigma_xy <= REPORT_SIGMA_XY and sigma_yaw <= REPORT_SIGMA_YAW):
+        return False
+    return cluster_weight is None or cluster_weight >= REPORT_CLUSTER_W
+
 
 class LocError(ValueError):
     """Bad parameters, or a trace that does not conform to the schema."""

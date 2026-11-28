@@ -27,6 +27,8 @@ those **STACK** results beside them, labelled.
    | `loc-track-30` | — | — | yes |
    | `loc-global-20` | — | — | yes |
    | `loc-kidnap-20` | — | — | yes |
+   | `loc-global-active-20` | — | — | yes |
+   | `loc-kidnap-active-20` | — | — | yes |
 
 3. Make a directory `leaderboard/submissions/<suite>/<name>/` (`<name>`: lower-case letters,
    digits, `_` and `-`; 2–40 characters) holding exactly three files:

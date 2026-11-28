@@ -452,7 +452,7 @@ def localise_start(arena, start, rng) -> None:
 
 
 def localise_tick(arena, rng):
-    """One localiser call: return ``(est, (cov_xx, cov_yy))`` or None (nothing to say)."""
+    """One localiser call: return ``(est, (cov_xx, cov_yy), cov_yaw)`` or None (nothing to say)."""
     rt = runtime(arena, 'localiser', rng)
     if rt.fatal:
         return None
@@ -503,7 +503,9 @@ def _pose_cov(rt: Runtime, out, tick):
         rt.fatal = f'the covariance is not positive semi-definite ({why})'
         return None
     th = api.yaw_of(q)
-    return (x, y, th), (cov[0], cov[7])
+    # R6.A6: the yaw variance too (cov[35]), for the robot's own "localised"
+    # (localise.reports_localised)
+    return (x, y, th), (cov[0], cov[7]), cov[35]
 
 
 def psd_problem(cov: List[float], n: int = 6) -> Optional[str]:
