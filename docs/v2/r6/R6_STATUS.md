@@ -38,6 +38,7 @@ Resume: *Continue COCO Lab R6: read docs/v2/r6/R6_PROMPT.md and R6_STATUS.md, th
 | A3 2 m offset | **fixed** (ours): truth = Gazebo within 0.00004 m on a test route; LIVE shows truth↔AMCL only for `level_map` | [truth_route.json](data/a_image_run_46109174443/truth_route.json) |
 | A4 moving actors | **done** in the image (CI) and in level packages (laptop) | [image](data/a_image_run_46109174443/actors_round.json), [package](data/a4_package_laptop/judged.json) |
 | A5 OVERVIEW.md | **done**; `~/Downloads/COCO_Lab_STATUS.md` rewritten from it | [OVERVIEW.md](../../OVERVIEW.md) |
+| **Part A (1/2) shipped** | PR #47 merged `f440e7e` (exact head `6498caf`: CI green on rerun — attempt 1's only failure the known live-graph timing flake in gazebo_models, 9 < 10 messages; local suites all green, 12/12 packages); deploy run 46142265207; live smoke **PASS 9/9** | [data/a_smoke/](data/a_smoke/) |
 | A6 loc v1.1 suites | in progress: suites frozen, runner + report rule written, baselines to run | below |
 | A7 re-verify matrix | pending | — |
 | B1 fidelity knobs | pending | — |
