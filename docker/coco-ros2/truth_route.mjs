@@ -12,7 +12,8 @@
  * (`gz model -m coco -p`) and put in the map frame with the level's world_to_map (map = world + w2m).
  * Moving samples are recorded too, but only stops are judged (the three reads are ~0.1-1 s apart).
  *
- * Pass: at every stop |truth - Gazebo| <= 0.05 m. The truth-vs-estimate distance at each stop is reported
+ * Pass: every stop (start + 3 legs) has a stationary sample (Gazebo's pose moved < 1 cm since the previous
+ * sample of that stop), and at every stationary sample |truth - Gazebo| <= 0.05 m. The truth-vs-estimate distance at each stop is reported
  * as measured (it is what the site would show), not judged. Evidence class: LIVE (a Gazebo simulation).
  */
 import { execFile, execFileSync } from 'node:child_process';
@@ -73,7 +74,19 @@ try {
       truth_vs_gazebo_m: d(truth, g.map), truth_vs_estimate_m: d(truth, est), speed: last?.robot?.velocity?.linear ?? null,
       gz_error: g.error, gz_raw: rec.stops.length === 0 && label === 'start' ? g.raw : undefined };
   };
-  const stop = async (label) => { await sleep(1500); for (let k = 0; k < 3; k++) { rec.stops.push(await snap(`${label}#${k}`)); await sleep(300); } };
+  // a sample is judged only if COCO is standing still: Gazebo's pose moved < 1 cm since the previous sample of
+  // the same stop (CI run 46108505274: the first 'start' sample was taken while COCO still rolled 0.08 m)
+  const stop = async (label) => {
+    await sleep(1500);
+    let prev = null;
+    for (let k = 0; k < 4; k++) {
+      const x = await snap(`${label}#${k}`);
+      x.stationary = prev !== null && d(prev, x.gazebo_map) !== null && d(prev, x.gazebo_map) < 0.01;
+      prev = x.gazebo_map;
+      rec.stops.push(x);
+      await sleep(300);
+    }
+  };
 
   await stop('start');
   const p0 = last?.robot?.pose;
@@ -96,12 +109,14 @@ try {
   await answered(send({ type: 'stop' }));
   ws.close();
 
-  const judged = rec.stops.filter((x) => x.truth_vs_gazebo_m !== null);
+  const judged = rec.stops.filter((x) => x.stationary && x.truth_vs_gazebo_m !== null);
+  rec.judged_samples = judged.length;
+  rec.stops_with_a_judged_sample = new Set(judged.map((x) => x.label.split('#')[0])).size;
   rec.max_stop_truth_vs_gazebo_m = judged.length ? Math.max(...judged.map((x) => x.truth_vs_gazebo_m)) : null;
   rec.max_stop_truth_vs_estimate_m = judged.length ? Math.max(...judged.map((x) => x.truth_vs_estimate_m ?? 0)) : null;
   rec.max_moving_truth_vs_gazebo_m = Math.max(...rec.moving.filter((x) => x.truth_vs_gazebo_m !== null).map((x) => x.truth_vs_gazebo_m), 0);
   rec.legs_succeeded = rec.goals.filter((g) => g.status === 'succeeded').length;
-  rec.pass = judged.length === rec.stops.length && judged.length >= 6 && rec.max_stop_truth_vs_gazebo_m <= TOL;
+  rec.pass = rec.stops_with_a_judged_sample === 4 && rec.max_stop_truth_vs_gazebo_m <= TOL;
   code = rec.pass ? 0 : 1;
 } catch (e) {
   rec.errors.push(String(e?.message ?? e));
