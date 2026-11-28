@@ -33,7 +33,7 @@ Resume: *Continue COCO Lab R6: read docs/v2/r6/R6_PROMPT.md and R6_STATUS.md, th
 | step | state | evidence |
 | --- | --- | --- |
 | R6.0 prompt, status, worktree | done | this file |
-| A1 image trim | **done**: 3.80 → 2.68 GB, every check passing | CI 46108505274, 46109174443; [data](data/a_image_run_46109174443/) |
+| A1 image trim | **done**: 3.80 → 2.68 GB, every check passing | CI 46108505274, 46109174443, 46113778162; [data](data/a_image_run_46113778162/) |
 | A2 foxglove issue draft | **done**: reproduced on 3.6.3 in a clean container; upstream draft PR exists | [UPSTREAM_foxglove_issue.md](UPSTREAM_foxglove_issue.md), CI 46108355151 |
 | A3 2 m offset | **fixed** (ours): truth = Gazebo within 0.00004 m on a test route; LIVE shows truth↔AMCL only for `level_map` | [truth_route.json](data/a_image_run_46109174443/truth_route.json) |
 | A4 moving actors | **done** in the image (CI) and in level packages (laptop) | [image](data/a_image_run_46109174443/actors_round.json), [package](data/a4_package_laptop/judged.json) |
