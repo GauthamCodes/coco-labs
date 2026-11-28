@@ -389,7 +389,17 @@ def spec_id(spec: Dict) -> str:
 
 
 #: what an inline scenario may hold (ADR 0014; COCO-Bench v1's conditions included)
-INLINE_KEYS = {'id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap'}
+INLINE_KEYS = {'id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap', 'active'}
+
+
+def _active_ok(a) -> bool:
+    """R6.A6: an active scenario's localising phase, as exp_families._Active reads it."""
+    def num(v, lo, hi):
+        return (isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+                and lo <= v <= hi)
+    return (isinstance(a, dict) and not set(a) - {'explore', 'angular', 'max_s'}
+            and a.get('explore', 'rotate') in ('rotate', 'stop')
+            and num(a.get('angular', 0.5), 0.0, 1.2) and num(a.get('max_s', 60.0), 1.0, 600.0))
 
 
 def _inline(w, scen) -> List[Dict]:
@@ -419,6 +429,9 @@ def _inline(w, scen) -> List[Dict]:
                 raise SpecError(f'inline scenario {sid}: {name} is off the map')
         if 'kidnap' in s and not point(s['kidnap'], 2):
             raise SpecError(f'inline scenario {sid}: kidnap [x, y]')
+        if 'active' in s and not _active_ok(s['active']):   # R6.A6 (localisation v1.1)
+            raise SpecError(f'inline scenario {sid}: active is {{"explore": "rotate" or "stop", '
+                            '"angular": 0 to 1.2 rad/s, "max_s": 1 to 600 s}')
         if 'kidnap_at_s' in s and not (point([s['kidnap_at_s']], 1)
                                        and 0.1 <= s['kidnap_at_s'] <= 1000):
             raise SpecError(f'inline scenario {sid}: kidnap_at_s is 0.1 to 1000 s')

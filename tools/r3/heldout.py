@@ -33,7 +33,7 @@ os.environ.setdefault('COCO_WORLDS', str(REPO / 'worlds'))
 
 SCHEMA = 'coco.bench.heldout.v1'
 TAG = 'coco-bench.held-out.v1'
-KEEP = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap')
+KEEP = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap', 'active')
 #: per family, the metrics whose medians may leave
 HEADLINE = {'planning': ('path_ratio', 'min_clearance_m'),
             'control': ('time_s', 'min_clearance_m'),

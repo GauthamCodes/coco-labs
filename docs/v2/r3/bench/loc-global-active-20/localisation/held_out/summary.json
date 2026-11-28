@@ -1,0 +1,1073 @@
+{
+ "alpha": 0.05,
+ "complete": true,
+ "digest": "32b7777ff56805fd0321e103cb9eb4e17b626d59b39c3c4de878cf4e375110d8",
+ "experiment": "87b3a1f21494d0b6",
+ "family": "localisation",
+ "groups": [
+  {
+   "algorithm": "mcl",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 23954.894307273207,
+     "max": 1018695.6831229909,
+     "median": 986395.4038040101,
+     "min": 886289.6616419894,
+     "n": 6,
+     "q1": 971549.404228499,
+     "q3": 995504.2985357723,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "converged_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 7824.75,
+     "max": 35143,
+     "median": 5540,
+     "min": 839,
+     "n": 6,
+     "q1": 4685.75,
+     "q3": 12510.5,
+     "timing": false
+    },
+    "explore_s": {
+     "iqr": 6.449999999999932,
+     "max": 294.6,
+     "median": 292.55000000000007,
+     "min": 17.6,
+     "n": 6,
+     "q1": 286.92500000000007,
+     "q3": 293.375,
+     "timing": false
+    },
+    "false_reports": {
+     "iqr": 0.75,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0.75,
+     "timing": false
+    },
+    "final_err_xy_m": {
+     "iqr": 3.488881592646532,
+     "max": 41.265595496401325,
+     "median": 18.506188168033923,
+     "min": 9.265909130710833,
+     "n": 6,
+     "q1": 16.822399475941186,
+     "q3": 20.311281068587718,
+     "timing": false
+    },
+    "final_err_yaw_rad": {
+     "iqr": 2.188196544576595,
+     "max": 2.991971438161161,
+     "median": 2.3142785366359053,
+     "min": 0.09464992394185323,
+     "n": 6,
+     "q1": 0.7519157152363115,
+     "q3": 2.9401122598129064,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 9.480732786942188,
+     "max": 28.257811572837582,
+     "median": 21.769672371873845,
+     "min": 11.002272492535349,
+     "n": 6,
+     "q1": 17.267002518948736,
+     "q3": 26.747735305890924,
+     "timing": false
+    },
+    "first_report_s": {
+     "iqr": 34.65000000000001,
+     "max": 86.9,
+     "median": 52.25000000000001,
+     "min": 17.6,
+     "n": 2,
+     "q1": 34.925000000000004,
+     "q3": 69.57500000000002,
+     "timing": false
+    },
+    "gave_up": {
+     "iqr": 0,
+     "max": 4,
+     "median": 4,
+     "min": 0,
+     "n": 6,
+     "q1": 4,
+     "q3": 4,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 2.25297130556973,
+     "max": 152.40000000000052,
+     "median": 150.87950902385836,
+     "min": 9.821584232285202,
+     "n": 6,
+     "q1": 149.2473312876005,
+     "q3": 151.50030259317023,
+     "timing": false
+    },
+    "max_err_xy_m": {
+     "iqr": 11.535124615383026,
+     "max": 41.273184032996866,
+     "median": 24.50783880446354,
+     "min": 16.768404896145213,
+     "n": 6,
+     "q1": 19.397454911513847,
+     "q3": 30.932579526896873,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 1.3803016399495418,
+     "max": 2.1690948597525286,
+     "median": 1.176529313286021,
+     "min": 0.025466666666666683,
+     "n": 6,
+     "q1": 0.5306500000000001,
+     "q3": 1.9109516399495419,
+     "timing": false
+    },
+    "mean_err_xy_m": {
+     "iqr": 3.7705044723513765,
+     "max": 40.49342600842657,
+     "median": 18.742587851572676,
+     "min": 9.500092072733707,
+     "n": 6,
+     "q1": 16.020647701049057,
+     "q3": 19.791152173400434,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0.9779386365926404,
+     "max": 1.9200934559032696,
+     "median": 1.0314693182963204,
+     "min": -0.01999999999999999,
+     "n": 6,
+     "q1": 0.5050000000000001,
+     "q3": 1.4829386365926405,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 0.9317338385237695,
+     "max": 3.4654153625435464,
+     "median": 0.9458338564928579,
+     "min": 0,
+     "n": 6,
+     "q1": 0.7079090333819522,
+     "q3": 1.6396428719057217,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 0,
+     "max": 5,
+     "median": 4,
+     "min": 1,
+     "n": 6,
+     "q1": 4,
+     "q3": 4,
+     "timing": false
+    },
+    "recovery_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "reports": {
+     "iqr": 0.75,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0.75,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 0,
+     "max": 3000,
+     "median": 3000,
+     "min": 3000,
+     "n": 6,
+     "q1": 3000,
+     "q3": 3000,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 0,
+     "max": 300,
+     "median": 300,
+     "min": 300,
+     "n": 6,
+     "q1": 300,
+     "q3": 300,
+     "timing": false
+    },
+    "time_to_localise_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "time_to_relocalise_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    }
+   },
+   "n": 6,
+   "status": {
+    "timeout": 6
+   },
+   "success": {
+    "high": 0.3903342879021653,
+    "low": 0,
+    "rate": 0
+   },
+   "successes": 0,
+   "sweep": {},
+   "sweep_index": 0
+  },
+  {
+   "algorithm": "mcl_augmented",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 399365.8539632306,
+     "max": 1029807.1152820194,
+     "median": 968674.5855510089,
+     "min": 471213.54330997565,
+     "n": 6,
+     "q1": 613814.8398797639,
+     "q3": 1013180.6938429945,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "converged_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 18182.5,
+     "max": 35143,
+     "median": 4951.5,
+     "min": 839,
+     "n": 6,
+     "q1": 2589.25,
+     "q3": 20771.75,
+     "timing": false
+    },
+    "explore_s": {
+     "iqr": 0.8499999999999659,
+     "max": 294.6,
+     "median": 293.55,
+     "min": 17.6,
+     "n": 6,
+     "q1": 292.90000000000003,
+     "q3": 293.75,
+     "timing": false
+    },
+    "false_reports": {
+     "iqr": 0,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "final_err_xy_m": {
+     "iqr": 7.965894982785953,
+     "max": 41.265595496401325,
+     "median": 17.09323671882534,
+     "min": 5.214440768392141,
+     "n": 6,
+     "q1": 11.198713145626657,
+     "q3": 19.16460812841261,
+     "timing": false
+    },
+    "final_err_yaw_rad": {
+     "iqr": 2.3918186225545104,
+     "max": 3.125467680224393,
+     "median": 1.1076556776488908,
+     "min": 0.04379818366941013,
+     "n": 6,
+     "q1": 0.17003138116232297,
+     "q3": 2.5618500037168332,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 8.543314639424764,
+     "max": 28.257811572837582,
+     "median": 21.082047427122745,
+     "min": 11.002272492535349,
+     "n": 6,
+     "q1": 16.809362337887947,
+     "q3": 25.35267697731271,
+     "timing": false
+    },
+    "first_report_s": {
+     "iqr": 0,
+     "max": 17.6,
+     "median": 17.6,
+     "min": 17.6,
+     "n": 1,
+     "q1": 17.6,
+     "q3": 17.6,
+     "timing": false
+    },
+    "gave_up": {
+     "iqr": 0,
+     "max": 4,
+     "median": 4,
+     "min": 0,
+     "n": 6,
+     "q1": 4,
+     "q3": 4,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 0.6084955247156927,
+     "max": 152.40000000000052,
+     "median": 151.48580699785947,
+     "min": 9.821584232285202,
+     "n": 6,
+     "q1": 151.06281398820073,
+     "q3": 151.67130951291642,
+     "timing": false
+    },
+    "max_err_xy_m": {
+     "iqr": 9.559208445071345,
+     "max": 41.273184032996866,
+     "median": 24.80595068753113,
+     "min": 18.798414186400137,
+     "n": 6,
+     "q1": 21.37337108182553,
+     "q3": 30.932579526896873,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 1.656017074478187,
+     "max": 2.6379638987447422,
+     "median": 1.176529313286021,
+     "min": 0.025466666666666683,
+     "n": 6,
+     "q1": 0.5306500000000001,
+     "q3": 2.186667074478187,
+     "timing": false
+    },
+    "mean_err_xy_m": {
+     "iqr": 8.194689216373556,
+     "max": 40.49342600842657,
+     "median": 17.464487369760207,
+     "min": 5.722519832970767,
+     "n": 6,
+     "q1": 11.313264836700435,
+     "q3": 19.50795405307399,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 1.445190161590111,
+     "max": 2.5259060435491962,
+     "median": 1.0314693182963204,
+     "min": -0.01999999999999999,
+     "n": 6,
+     "q1": 0.5050000000000001,
+     "q3": 1.9501901615901112,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 0.3110322950326485,
+     "max": 1.8417487952634641,
+     "median": 0.79890437207803,
+     "min": 0,
+     "n": 6,
+     "q1": 0.6781899138443562,
+     "q3": 0.9892222088770047,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 0,
+     "max": 4,
+     "median": 4,
+     "min": 1,
+     "n": 6,
+     "q1": 4,
+     "q3": 4,
+     "timing": false
+    },
+    "recovery_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "reports": {
+     "iqr": 0,
+     "max": 1,
+     "median": 0,
+     "min": 0,
+     "n": 6,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 0,
+     "max": 3000,
+     "median": 3000,
+     "min": 3000,
+     "n": 6,
+     "q1": 3000,
+     "q3": 3000,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 0,
+     "max": 300,
+     "median": 300,
+     "min": 300,
+     "n": 6,
+     "q1": 300,
+     "q3": 300,
+     "timing": false
+    },
+    "time_to_localise_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    },
+    "time_to_relocalise_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    }
+   },
+   "n": 6,
+   "status": {
+    "timeout": 6
+   },
+   "success": {
+    "high": 0.3903342879021653,
+    "low": 0,
+    "rate": 0
+   },
+   "successes": 0,
+   "sweep": {},
+   "sweep_index": 0
+  }
+ ],
+ "metrics": [
+  {
+   "better": "lower",
+   "id": "time_s",
+   "label": "Time to goal or end",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "ticks",
+   "label": "Ticks",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "path_length_m",
+   "label": "Distance driven",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "min_clearance_m",
+   "label": "Minimum clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "mean_clearance_m",
+   "label": "Mean clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "heading_change_rad",
+   "label": "Total heading change",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "contacts",
+   "label": "Contacts",
+   "test": true,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "expansions",
+   "label": "Global planner expansions",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "plans",
+   "label": "Plans made",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "final_goal_distance_m",
+   "label": "Final distance to goal",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_xy_m",
+   "label": "Final position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_yaw_rad",
+   "label": "Final heading error",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "mean_err_xy_m",
+   "label": "Mean position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "max_err_xy_m",
+   "label": "Maximum position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "converged_s",
+   "label": "Convergence time",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "recovery_s",
+   "label": "Recovery time after kidnap",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "compute_ms",
+   "label": "Compute time",
+   "test": true,
+   "timing": true,
+   "unit": "ms"
+  },
+  {
+   "better": "lower",
+   "id": "time_to_localise_s",
+   "label": "Time to a correct \"localised\" report",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "time_to_relocalise_s",
+   "label": "Time to re-localise after the kidnap",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "false_reports",
+   "label": "False \"localised\" reports",
+   "test": true,
+   "timing": false,
+   "unit": ""
+  },
+  {
+   "better": "lower",
+   "id": "reports",
+   "label": "\"Localised\" reports",
+   "test": false,
+   "timing": false,
+   "unit": ""
+  },
+  {
+   "better": "lower",
+   "id": "first_report_s",
+   "label": "First report (right or wrong)",
+   "test": false,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "explore_s",
+   "label": "Time spent localising in place",
+   "test": false,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "gave_up",
+   "label": "Localising phases that ran out of time",
+   "test": false,
+   "timing": false,
+   "unit": ""
+  }
+ ],
+ "n_planned": 12,
+ "n_runs": 12,
+ "notes": [
+  "Counts are model outputs and need no device; compute_ms is wall time on the device named in the manifest.",
+  "Success rates: Wilson 95% intervals. Metrics: median and IQR (type-7 quantiles) over the runs where the metric is defined.",
+  "Paired tests on shared scenarios: Wilcoxon signed-rank (exact up to 50 non-zero pairs) with rank-biserial r and Hodges-Lehmann shift; McNemar exact for success; Holm-adjusted across algorithm pairs."
+ ],
+ "paired": [
+  {
+   "a": "mcl",
+   "b": "mcl_augmented",
+   "metrics": {
+    "compute_ms": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 195090.90243949322,
+     "median_diff": 9525.691001996165,
+     "method": "exact",
+     "n_excluded": 0,
+     "n_nonzero": 6,
+     "n_pairs": 6,
+     "n_zero": 0,
+     "p": 0.6875,
+     "p_holm": 0.6875,
+     "rank_biserial": 0.23809523809523808,
+     "reason": null,
+     "test": "wilcoxon_signed_rank",
+     "timing": true,
+     "verdict": "no significant difference",
+     "w_minus": 8,
+     "w_plus": 13
+    },
+    "contacts": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 0,
+     "n_pairs": 6,
+     "n_zero": 6,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "all paired differences are 0: no difference, test undefined",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "converged_s": {
+     "hl_method": null,
+     "hodges_lehmann": null,
+     "median_diff": null,
+     "method": null,
+     "n_excluded": 6,
+     "n_nonzero": 0,
+     "n_pairs": 0,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "no pairs",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "false_reports": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 1,
+     "n_pairs": 6,
+     "n_zero": 5,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (1 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 1
+    },
+    "final_err_xy_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 0.3333333333333333,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 1,
+     "w_plus": 2
+    },
+    "final_err_yaw_rad": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 0.3333333333333333,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 1,
+     "w_plus": 2
+    },
+    "final_goal_distance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0.6889953041143215,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 3
+    },
+    "heading_change_rad": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.4443396336684913,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 3,
+     "w_plus": 0
+    },
+    "max_err_xy_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.01982536895783582,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 3,
+     "w_plus": 0
+    },
+    "mean_clearance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.1838102896857634,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 3,
+     "w_plus": 0
+    },
+    "mean_err_xy_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 0.3333333333333333,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 1,
+     "w_plus": 2
+    },
+    "min_clearance_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": -0.3029062938229633,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": -1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 3,
+     "w_plus": 0
+    },
+    "path_length_m": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0.14692948441482784,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 2,
+     "n_pairs": 6,
+     "n_zero": 4,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": 1,
+     "reason": "too few non-zero pairs for a test (2 < 6)",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": 0,
+     "w_plus": 3
+    },
+    "recovery_s": {
+     "hl_method": null,
+     "hodges_lehmann": null,
+     "median_diff": null,
+     "method": null,
+     "n_excluded": 6,
+     "n_nonzero": 0,
+     "n_pairs": 0,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "no pairs",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "time_s": {
+     "hl_method": "walsh_averages",
+     "hodges_lehmann": 0,
+     "median_diff": 0,
+     "method": null,
+     "n_excluded": 0,
+     "n_nonzero": 0,
+     "n_pairs": 6,
+     "n_zero": 6,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "all paired differences are 0: no difference, test undefined",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "time_to_localise_s": {
+     "hl_method": null,
+     "hodges_lehmann": null,
+     "median_diff": null,
+     "method": null,
+     "n_excluded": 6,
+     "n_nonzero": 0,
+     "n_pairs": 0,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "no pairs",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    },
+    "time_to_relocalise_s": {
+     "hl_method": null,
+     "hodges_lehmann": null,
+     "median_diff": null,
+     "method": null,
+     "n_excluded": 6,
+     "n_nonzero": 0,
+     "n_pairs": 0,
+     "n_zero": 0,
+     "p": null,
+     "p_holm": null,
+     "rank_biserial": null,
+     "reason": "no pairs",
+     "test": "wilcoxon_signed_rank",
+     "timing": false,
+     "verdict": "no test",
+     "w_minus": null,
+     "w_plus": null
+    }
+   },
+   "n_shared": 6,
+   "success": {
+    "a_only": 0,
+    "b_only": 0,
+    "n_excluded": 0,
+    "n_pairs": 6,
+    "p": null,
+    "p_holm": null,
+    "reason": "no discordant pairs: identical outcomes, test undefined",
+    "risk_difference": 0,
+    "test": "mcnemar_exact",
+    "verdict": "no test"
+   },
+   "sweep_index": 0
+  }
+ ],
+ "scenario_info": {
+  "kind": "inline"
+ },
+ "schema": "coco.experiment.summary.v1"
+}

@@ -1,0 +1,251 @@
+{
+ "algorithms": [
+  {
+   "id": "mcl",
+   "label": "MCL",
+   "name": "mcl",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "mcl_augmented",
+   "label": "MCL + augmented injection",
+   "name": "mcl_augmented",
+   "params": {
+    "mcl.aggregate": "amcl",
+    "mcl.alpha_fast": 0.1,
+    "mcl.alpha_slow": 0.001,
+    "mcl.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "mcl.beams": 12,
+    "mcl.init": "tracking",
+    "mcl.inject_fraction": 0.05,
+    "mcl.particles": 60,
+    "mcl.resample": "always",
+    "mcl.sigma_hit": 0.2
+   }
+  },
+  {
+   "id": "ekf",
+   "label": "EKF",
+   "name": "ekf",
+   "params": {
+    "ekf.alphas": [
+     0.02,
+     0.02,
+     0.02,
+     0.02
+    ],
+    "ekf.beams": 12,
+    "ekf.gate": 9,
+    "ekf.init": "tracking",
+    "ekf.sigma_hit": 0.2
+   }
+  }
+ ],
+ "family": "localisation",
+ "limits": {
+  "max_ticks": 3000
+ },
+ "metrics": [
+  "time_s",
+  "ticks",
+  "path_length_m",
+  "min_clearance_m",
+  "mean_clearance_m",
+  "heading_change_rad",
+  "contacts",
+  "expansions",
+  "plans",
+  "final_goal_distance_m",
+  "final_err_xy_m",
+  "final_err_yaw_rad",
+  "mean_err_xy_m",
+  "max_err_xy_m",
+  "converged_s",
+  "recovery_s",
+  "compute_ms",
+  "time_to_localise_s",
+  "time_to_relocalise_s",
+  "false_reports",
+  "reports",
+  "first_report_s",
+  "explore_s",
+  "gave_up"
+ ],
+ "model": {
+  "experiment": 1,
+  "hash_version": 3
+ },
+ "options": {},
+ "scenarios": {
+  "kind": "inline",
+  "scenarios": [
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     26.05,
+     26.150000000000002
+    ],
+    "id": "qa001",
+    "kidnap": [
+     40.85,
+     25.85
+    ],
+    "kidnap_at_s": 12,
+    "seed": 4038656238306711,
+    "start": [
+     42.25,
+     10.350000000000001,
+     -1.7809830076940314
+    ]
+   },
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     20.450000000000003,
+     13.25
+    ],
+    "id": "qa002",
+    "kidnap": [
+     33.550000000000004,
+     3.25
+    ],
+    "kidnap_at_s": 12,
+    "seed": 311385640157805,
+    "start": [
+     36.95,
+     19.75,
+     -1.2897024318897203
+    ]
+   },
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     7.3500000000000005,
+     5.65
+    ],
+    "id": "qa003",
+    "kidnap": [
+     46.85,
+     21.55
+    ],
+    "kidnap_at_s": 12,
+    "seed": 6043216242749220,
+    "start": [
+     36.75,
+     27.55,
+     -3.0442335144234227
+    ]
+   },
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     40.75,
+     3.25
+    ],
+    "id": "qa004",
+    "kidnap": [
+     4.3500000000000005,
+     1.35
+    ],
+    "kidnap_at_s": 12,
+    "seed": 2715411211651335,
+    "start": [
+     3.45,
+     12.65,
+     -2.9390551259910414
+    ]
+   },
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     38.85,
+     23.450000000000003
+    ],
+    "id": "qa005",
+    "kidnap": [
+     3.0500000000000003,
+     3.95
+    ],
+    "kidnap_at_s": 12,
+    "seed": 7552217633155455,
+    "start": [
+     12.55,
+     11.75,
+     2.33440280649992
+    ]
+   },
+   {
+    "active": {
+     "angular": 0.5,
+     "explore": "rotate",
+     "max_s": 60
+    },
+    "goal": [
+     5.75,
+     2.85
+    ],
+    "id": "qa006",
+    "kidnap": [
+     34.550000000000004,
+     15.650000000000002
+    ],
+    "kidnap_at_s": 12,
+    "seed": 5702069756318547,
+    "start": [
+     8.55,
+     19.35,
+     1.0691680389067688
+    ]
+   }
+  ]
+ },
+ "schema": "coco.experiment.v1",
+ "seed": 1,
+ "sweep": {
+  "params": []
+ },
+ "title": "COCO-Bench v1 baseline: loc-kidnap-active-20, localisation, held_out",
+ "world": "coco_depot_v1",
+ "world_sha256": "1f912fcd8bb4055a411c97bb00b7472a727740ba671074978968bcb177b74841"
+}

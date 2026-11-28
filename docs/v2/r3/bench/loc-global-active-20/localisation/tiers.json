@@ -1,0 +1,88 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "localisation",
+ "held_out": {
+  "n": 6,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 45085411612507
+ },
+ "suite": "loc-global-active-20",
+ "tiers": {
+  "mcl": {
+   "easy": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 23.526646716778515,
+    "mean_err_xy_m_median": 23.413140220796258,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 21.246336929101567,
+    "mean_err_xy_m_median": 21.285597345255603,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 18.229766274709075,
+    "mean_err_xy_m_median": 18.46838976368315,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  },
+  "mcl_augmented": {
+   "easy": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 22.94904330767499,
+    "mean_err_xy_m_median": 23.26793501687069,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 21.246336929101567,
+    "mean_err_xy_m_median": 21.285597345255603,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": null,
+    "final_err_xy_m_median": 18.525558107783375,
+    "mean_err_xy_m_median": 18.72518140361834,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  }
+ }
+}

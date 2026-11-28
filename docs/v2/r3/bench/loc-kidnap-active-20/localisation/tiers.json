@@ -1,0 +1,126 @@
+{
+ "about": "R3.2 tools/r3/make_baselines.py: per tier (the suite file's tiers), public scenarios",
+ "family": "localisation",
+ "held_out": {
+  "n": 6,
+  "note": "a reference draw from a public seed (not an ADR 0014 secret)",
+  "seed": 1496186238095803
+ },
+ "suite": "loc-kidnap-active-20",
+ "tiers": {
+  "ekf": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 16.62594966796757,
+    "mean_err_xy_m_median": 12.054477770585255,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 30.067896204698027,
+    "mean_err_xy_m_median": 28.836125841749755,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 29.577048084398353,
+    "mean_err_xy_m_median": 28.476403528525722,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  },
+  "mcl": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 15.502665975403467,
+    "mean_err_xy_m_median": 14.68493876892827,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 28.42778141354534,
+    "mean_err_xy_m_median": 28.105234507147074,
+    "n": 6,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 29.992546923086497,
+    "mean_err_xy_m_median": 29.16261093426784,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  },
+  "mcl_augmented": {
+   "easy": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 19.860782928864595,
+    "mean_err_xy_m_median": 18.606583566465506,
+    "n": 7,
+    "recovery_s_median": null,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   },
+   "hard": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 14.443707956212933,
+    "mean_err_xy_m_median": 16.37175930804175,
+    "n": 6,
+    "recovery_s_median": 193,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.3903342879021653
+    ]
+   },
+   "medium": {
+    "converged_s_median": 0,
+    "final_err_xy_m_median": 28.023353191408688,
+    "mean_err_xy_m_median": 24.644246860081314,
+    "n": 7,
+    "recovery_s_median": 37,
+    "successes": 0,
+    "wilson95": [
+     0,
+     0.35433043506668743
+    ]
+   }
+  }
+ }
+}

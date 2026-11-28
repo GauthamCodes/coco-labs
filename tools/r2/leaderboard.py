@@ -49,7 +49,7 @@ FAMILY_SUITES = {fam: tuple(sid for sid, d in B.SUITES.items() if fam in d['fami
                  for fam in ('planning', 'control', 'localisation')}
 #: the reference entries' held-out label: the same draw as the R3.2 baselines (make_baselines.py)
 REFERENCE = 'reference-v1'
-INLINE = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap')
+INLINE = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap', 'active')
 NAME = re.compile(r'^[a-z0-9][a-z0-9_-]{1,39}$')
 WALL = ('call_ms_max', 'call_ms_total', 'max_call_index')
 

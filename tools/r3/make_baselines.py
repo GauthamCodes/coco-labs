@@ -90,12 +90,15 @@ def task_specs():
 
 
 def held_out(sid, lb):
-    keep = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap')
+    keep = ('id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap', 'active')
     scen = B.generate(sid, seed=lb.held_out_seed(sid, 'reference-v1'), n=B.SUITES[sid]['heldout_n'])
     return [{k: s[k] for k in keep if k in s} for s in scen], scen
 
 
 def run(spec_doc, d, workers):
+    if (d / 'manifest.json').exists():   # R6: a finished part is kept (rerun one by deleting it)
+        print(f'{d}: done, kept', flush=True)
+        return
     d.mkdir(parents=True, exist_ok=True)
     (d / 'spec.input.json').write_text(json.dumps(spec_doc, indent=1) + '\n')
     rc = ex.main(['run', str(d / 'spec.input.json'), '--out', str(d), '--workers', str(workers)])
