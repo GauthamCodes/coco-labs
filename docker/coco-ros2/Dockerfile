@@ -95,6 +95,13 @@ RUN apt-get update \
       opencv-python-headless==4.10.0.84 tornado==6.5.7 \
  && python3 -c "import cv2, numpy, tornado; print('cv2', cv2.__version__, 'numpy', numpy.__version__, 'tornado', tornado.version)" \
  && apt-get purge -y python3-pip && apt-get autoremove -y \
+ && apt-get install -y --no-install-recommends ca-certificates curl \
+ && curl -fsSL https://packages.osrfoundation.org/gazebo.gpg -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
+ && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable noble main" \
+      > /etc/apt/sources.list.d/gazebo-stable.list \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends python3-gz-transport13 \
+ && python3 -c "from gz.transport13 import Node; from gz.msgs10.odometry_pb2 import Odometry; from gz.msgs10.pose_v_pb2 import Pose_V; print('gz-transport python ok')" \
  && rm -rf /var/lib/apt/lists/* \
  && rm -rf /usr/include/* /opt/ros/jazzy/include/* /usr/share/doc/* /usr/share/man/* /usr/share/info/* \
  && find / -xdev \( -path /proc -o -path /sys \) -prune -o -type f -name '*.a' -print0 | xargs -0 -r rm -f
@@ -105,6 +112,12 @@ RUN apt-get update \
 
 COPY --from=overlay /opt/coco_ws/install /opt/coco_ws/install
 COPY --from=levels /opt/coco/levels /opt/coco/levels
+# R6.A4: the actors' driver (G2.9's scenario rule, unchanged: tools/g2/actor_scenario.py) and the coco_lab it
+# imports (games.box_distance, worldspec_v3.actor_pose; pure Python). Its gz-transport binding is OSRF's
+# python3-gz-transport13 (installed above): ROS's vendored Gazebo ships the message bindings but not
+# transport's. `gz` is a namespace package, so both import together (as on the R3 gate's laptop).
+COPY coco_lab/coco_lab /opt/coco/lib/coco_lab
+COPY tools/g2/actor_scenario.py /opt/coco/bin/actor_scenario.py
 COPY docker/coco-ros2/entrypoint.sh /opt/coco/bin/coco-ros2
 COPY docker/coco-ros2/level_env.py docker/coco-ros2/check.py docker/coco-ros2/odom_relay.py /opt/coco/bin/
 COPY docker/coco-ros2/foxglove_bridge.yaml /opt/coco/config/foxglove_bridge.yaml

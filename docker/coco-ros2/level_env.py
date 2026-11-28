@@ -42,6 +42,8 @@ def main(argv):
         'START_THETA': repr(theta),
         # R6.A3: where the level's map is (map = world + world_to_map), for the gateway's truth display
         'LEVEL_W2M_X': repr(float((e.get('world_to_map') or [0.0, 0.0])[0])),
+        # R6.A4: the level's actor schedules and scenario rule (gazebo/actors.json), '' if it has none
+        'LEVEL_ACTORS': e.get('actors') or '',
         'LEVEL_W2M_Y': repr(float((e.get('world_to_map') or [0.0, 0.0])[1])),
         'START_QZ': repr(math.sin(theta / 2)), 'START_QW': repr(math.cos(theta / 2)),
     }

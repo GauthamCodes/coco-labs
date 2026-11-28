@@ -24,6 +24,7 @@ on:
       - 'coco_web/**'
       - 'coco_lab/coco_lab/**'
       - 'tools/m6/gen_level.py'
+      - 'tools/g2/actor_scenario.py'
       - 'worlds/**'
   workflow_dispatch:
     inputs:
@@ -139,6 +140,9 @@ jobs:
         run: |
           w2m=$(python3 -c "import json; e = json.load(open('out/levels_index.json'))['levels']['depot']; print(','.join(str(v) for v in e['world_to_map']))")
           node docker/coco-ros2/truth_route.mjs ws://127.0.0.1:8766/ws out/truth_route.json --container coco --w2m "$w2m"
+
+      - name: R6.A4 one Depot round with the actors (they move, and stop for COCO parked in a lane)
+        run: node docker/coco-ros2/actors_round.mjs ws://127.0.0.1:8766/ws out/actors_round.json --container coco
 
       - name: After the probe, the stack still passes (the arbiter still the only wheel publisher)
         run: |
