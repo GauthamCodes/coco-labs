@@ -446,6 +446,20 @@ def map_origin(spawn_xy, offset_x=float('nan'), offset_y=float('nan')):
     return spawn_xy
 
 
+def truth_frame(offset_x=float('nan'), offset_y=float('nan')):
+    """
+    Return which frame robot.truth is in, for welcome.config (R6.A3).
+
+    ``'level_map'``: the gateway was told the level's world_to_map, so the
+    truth is in the level's own map frame (the coco-ros2 image, checked on a
+    test route against Gazebo's own model pose). ``'arena_spawn'``: COCO's
+    arena convention (SPAWN_XY), right only on the arena. A browser shows a
+    truth-vs-estimate distance only for ``'level_map'``.
+    """
+    ox, oy = _as_float(offset_x), _as_float(offset_y)
+    return 'level_map' if math.isfinite(ox) and math.isfinite(oy) else 'arena_spawn'
+
+
 #: action_msgs/GoalStatus codes, in words.
 GOAL_STATUS = {0: 'unknown', 1: 'accepted', 2: 'executing', 3: 'canceling',
                4: 'succeeded', 5: 'canceled', 6: 'aborted'}

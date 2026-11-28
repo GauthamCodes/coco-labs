@@ -23,6 +23,7 @@ import { readPref, isBool } from '../prefs';
 import { GameRenderer, type Led, type View } from './render/GameRenderer';
 import { ViewSwitch } from './hud/ViewSwitch';
 import { GazeboBar, RosoutConsole, TelemetryStrip } from './hud/RosHud';
+import { truthGap } from '../ros/telemetry';
 import { Rosout, type LogLine } from '../ros/rosout';
 import { SimClock, strip } from '../ros/telemetry';
 import { Recorder, TopicStats, topicsOf } from '../ros/recorder';
@@ -797,7 +798,8 @@ export function PlayGame(p: PlayProps) {
       <section className="g1-gauge" data-testid="speed"><svg viewBox="0 0 150 66" aria-hidden><path d="M20 62 A55 55 0 0 1 130 62" stroke="#2A3344" strokeWidth="7" fill="none" strokeLinecap="round" />
         {Math.abs(v) > 0.002 && <path d={`M20 62 A55 55 0 0 1 ${(75 - 55 * Math.cos(angle)).toFixed(2)} ${(62 - 55 * Math.sin(angle)).toFixed(2)}`} stroke={v < 0 ? '#22D3EE' : '#FF7A1A'} strokeWidth="7" fill="none" strokeLinecap="round" />}</svg>
         <div className="v num">{Math.abs(v).toFixed(2)}<small>m/s{v < -0.002 ? ' ◂' : ''}</small></div><span className={`g1-mode ${mode}`} data-testid="mode-chip">{mode.toUpperCase()}</span></section>
-      <TelemetryStrip s={tick ? strip(tick) : null} live={liveOn} />
+      <TelemetryStrip s={tick ? strip(tick) : null} live={liveOn}
+        gap={liveOn ? truthGap(liveSrc.current?.welcome?.config?.truth_frame, tick?.truth, tick?.pose) : null} />
       {panels && <Panels tab={panelTab} onTab={setPanelTab} onClose={() => setPanels(false)} displays={displays} onDisplays={changeDisplays}
         info={world?.game.ros ?? null} stats={stats.current} recorder={recorder.current} frame={recorder.current.frames[recorder.current.frames.length - 1] ?? null}
         map={world ? { width: world.width, height: world.height, resolution: world.resolution, origin: world.origin } : null} occupancy={occ.current} goal={planGoal.current}

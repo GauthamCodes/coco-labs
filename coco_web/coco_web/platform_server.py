@@ -336,6 +336,11 @@ class CocoWebNode(Node):
             self._load_spawn(),
             self.get_parameter('map_offset_x').value,
             self.get_parameter('map_offset_y').value)
+        # R6.A3, additive to welcome.config: which frame robot.truth is in (built here, where the
+        # truth display is set up; config_doc only reports it)
+        self._config_frames = {'truth_frame': tele.truth_frame(
+            self.get_parameter('map_offset_x').value,
+            self.get_parameter('map_offset_y').value)}
         # The browser's last Nav2 goal, and the action's status entries
         # as (accepted_stamp_s, code), for nav.goal.
         self._goal_entries = []
@@ -497,7 +502,8 @@ class CocoWebNode(Node):
         """Return welcome.config: where the configuration came from."""
         return {'source': 'fallback' if self.config_fallbacks
                 else 'coco_config',
-                'fallbacks': list(self.config_fallbacks)}
+                'fallbacks': list(self.config_fallbacks),
+                **self._config_frames}
 
     def _load_joint_limits(self):
         """

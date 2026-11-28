@@ -92,3 +92,10 @@ def test_the_arena_world_to_map_equals_its_spawn_convention():
     """Worlds/coco_arena_v1.yaml world_to_map [2, 0] == -SPAWN_XY."""
     assert tele.map_origin(SPAWN_XY, 2.0, 0.0) == (
         pytest.approx(SPAWN_XY[0]), pytest.approx(SPAWN_XY[1]))
+
+
+def test_truth_frame_names_the_level_map_only_when_given_its_offset():
+    """R6.A3: welcome.config.truth_frame; a browser shows truth-vs-estimate only for level_map."""
+    assert tele.truth_frame(0.0, 0.0) == 'level_map'
+    assert tele.truth_frame() == 'arena_spawn'
+    assert tele.truth_frame(float('nan'), 0.0) == 'arena_spawn'

@@ -44,6 +44,23 @@ export function stripText(s: Strip): string {
   return `/cmd_vel v ${pad(signed(s.v), 5)} ω ${pad(signed(s.w), 5)} · /odom x ${pad(signed(s.x), 6)} y ${pad(signed(s.y), 6)} θ ${pad(String(Math.round(s.thetaDeg) % 360), 3)}° · sim ${pad(s.sim.toFixed(1), 6)} s`;
 }
 
+/**
+ * R6.A3: LIVE only -- how far Nav2's estimate (AMCL) is from Gazebo's truth, appended to the telemetry strip.
+ * Shown only when the gateway says its truth is in the level's own map frame (welcome.config.truth_frame
+ * 'level_map', checked against Gazebo's model pose on a test route in CI); never for an image that predates
+ * that (its truth was 2.0 m off on the Depot). '' when there is nothing to show.
+ */
+export function truthGapText(gap: number | null | undefined): string {
+  return gap === null || gap === undefined || !Number.isFinite(gap) ? '' : ` · truth↔AMCL ${gap.toFixed(2)} m`;
+}
+
+/** The truth-vs-estimate distance, or null unless the truth's frame is the level's map (see truthGapText). */
+export function truthGap(truthFrame: string | undefined, truth: readonly number[] | undefined,
+  pose: readonly number[] | undefined): number | null {
+  if (truthFrame !== 'level_map' || !truth || !pose) return null;
+  return Math.hypot(truth[0] - pose[0], truth[1] - pose[1]);
+}
+
 export const RTF_WINDOW_S = 2;
 
 /** The Gazebo-style clock: fed every presented tick, paused with the game. */

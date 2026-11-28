@@ -58,6 +58,7 @@ try {
     if (typeof ev.data !== 'string') return;
     let m; try { m = JSON.parse(ev.data); } catch { return; }
     if (m.type === 'telemetry') last = m;
+    else if (m.type === 'welcome') rec.welcome_config = m.config ?? null;
     else if (m.type === 'ack' || m.type === 'error') acks.set(m.id, m);
   };
   send({ type: 'hello', client: 'coco-ros2 truth_route', binary: false });
@@ -116,13 +117,16 @@ try {
   rec.max_stop_truth_vs_estimate_m = judged.length ? Math.max(...judged.map((x) => x.truth_vs_estimate_m ?? 0)) : null;
   rec.max_moving_truth_vs_gazebo_m = Math.max(...rec.moving.filter((x) => x.truth_vs_gazebo_m !== null).map((x) => x.truth_vs_gazebo_m), 0);
   rec.legs_succeeded = rec.goals.filter((g) => g.status === 'succeeded').length;
-  rec.pass = rec.stops_with_a_judged_sample === 4 && rec.max_stop_truth_vs_gazebo_m <= TOL;
+  // the gateway must say so too: the site shows truth-vs-estimate only for truth_frame 'level_map'
+  rec.truth_frame = rec.welcome_config?.truth_frame ?? null;
+  rec.pass = rec.stops_with_a_judged_sample === 4 && rec.max_stop_truth_vs_gazebo_m <= TOL
+    && rec.truth_frame === 'level_map';
   code = rec.pass ? 0 : 1;
 } catch (e) {
   rec.errors.push(String(e?.message ?? e));
   rec.pass = false;
 }
 writeFileSync(out, JSON.stringify(rec, null, 1) + '\n');
-console.log(JSON.stringify({ pass: rec.pass, max_stop_truth_vs_gazebo_m: rec.max_stop_truth_vs_gazebo_m,
+console.log(JSON.stringify({ pass: rec.pass, truth_frame: rec.truth_frame, max_stop_truth_vs_gazebo_m: rec.max_stop_truth_vs_gazebo_m,
   max_stop_truth_vs_estimate_m: rec.max_stop_truth_vs_estimate_m, legs_succeeded: rec.legs_succeeded, errors: rec.errors }));
 process.exit(code);

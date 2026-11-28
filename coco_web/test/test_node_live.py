@@ -136,7 +136,8 @@ def test_the_real_node_reports_its_config_came_from_coco_config(context):
     """With coco_config importable, nothing fell back."""
     node = ps.CocoWebNode()
     try:
-        assert node.config_doc() == {'source': 'coco_config',
-                                     'fallbacks': []}
+        # R6.A3: truth_frame is additive; a node given no map offset is COCO's arena
+        assert node.config_doc() == {'source': 'coco_config', 'fallbacks': [],
+                                     'truth_frame': 'arena_spawn'}
     finally:
         node.destroy_node()
