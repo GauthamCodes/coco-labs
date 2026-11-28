@@ -30,7 +30,8 @@ const rec = { schema: 'coco_ros2.truth_route', version: 1, url, utc: new Date().
 function gzPose() {
   return new Promise((resolve) => {
     const t0 = Date.now();
-    execFile('docker', ['exec', container, 'gz', 'model', '-m', 'coco', '-p'], { timeout: 8000 }, (err, stdout) => {
+    // gz is ROS's vendored Gazebo: on PATH only after sourcing setup.bash (as the entrypoint does)
+    execFile('docker', ['exec', container, 'bash', '-c', 'source /opt/ros/jazzy/setup.bash >/dev/null 2>&1; gz model -m coco -p'], { timeout: 8000 }, (err, stdout) => {
       const raw = String(stdout ?? '');
       // `gz model -p`: the XYZ triple is the first bracketed group of three numbers after "XYZ"
       const after = raw.slice(Math.max(0, raw.indexOf('XYZ')));
