@@ -64,7 +64,8 @@ try {
   const lines = dex('cat', '/tmp/coco/actors.jsonl').split('\n').filter(Boolean).map((l) => JSON.parse(l));
   let summary = null; try { summary = JSON.parse(dex('cat', '/tmp/coco/actor_scenario.json')); } catch { /* none */ }
   writeFileSync(out.replace(/\.json$/, '_actors.jsonl'), lines.map((l) => JSON.stringify(l)).join('\n') + '\n');
-  const steps = lines.filter((l) => l.actors);
+  // per-second pose lines (the start event also has an `actors` field: the list of ids)
+  const steps = lines.filter((l) => l.actors && !Array.isArray(l.actors));
   const moved = {};
   for (let k = 1; k < steps.length; k++) {
     for (const [id, p] of Object.entries(steps[k].actors)) {
@@ -73,7 +74,7 @@ try {
     }
   }
   const holds = lines.filter((l) => l.event === 'hold');
-  rec.actors = Object.keys(steps[0]?.actors ?? {});
+  rec.actors = lines.find((l) => l.event === 'start')?.actors ?? Object.keys(steps[0]?.actors ?? {});
   rec.moved_m = Object.fromEntries(Object.entries(moved).map(([k, v]) => [k, Math.round(v * 100) / 100]));
   rec.hold_events = holds.length;
   rec.holds_by_actor = holds.reduce((a, h) => { const id = h.actor ?? h.id ?? '?'; a[id] = (a[id] ?? 0) + 1; return a; }, {});

@@ -1,0 +1,111 @@
+{
+ "schema": "coco_ros2.actors_round",
+ "version": 1,
+ "url": "ws://127.0.0.1:8766/ws",
+ "utc": "2026-11-28T04:55:39.305Z",
+ "goal": [
+  40,
+  12
+ ],
+ "park_s": 40,
+ "errors": [],
+ "driver_running_at_start": "yes",
+ "claim": "ack",
+ "set_mode": "ack",
+ "goal_ack": "ack",
+ "goal_status": "succeeded",
+ "goal_seconds": 122.174,
+ "truth_at_goal": {
+  "x": 39.68579262413821,
+  "y": 12.136191337927732,
+  "yaw": 0.19352689896385883
+ },
+ "truth_after_park": {
+  "x": 39.68581142626877,
+  "y": 12.132852690370314,
+  "yaw": 0.15144482113751898
+ },
+ "actors": [
+  "0",
+  "1",
+  "2",
+  "3"
+ ],
+ "moved_m": {
+  "forklift_east_west": 230.55,
+  "forklift_north_south": 237.5,
+  "walker_aisle_gap": 207.6,
+  "walker_dock": 181.44
+ },
+ "hold_events": 96,
+ "holds_by_actor": {
+  "forklift_east_west": 95,
+  "walker_dock": 1
+ },
+ "first_hold": {
+  "event": "hold",
+  "actor": "forklift_east_west",
+  "sim_t": 148.16,
+  "coco": [
+   33.012,
+   10.706
+  ],
+  "box_to_coco_centre_m": 0.587
+ },
+ "summary": {
+  "evidence_class": "STACK (Gazebo + Nav2, headless); the actors follow a SCENARIO RULE, not physics",
+  "world": "coco_depot_v1",
+  "rule": {
+   "driver": "tools/g2/actor_scenario.py",
+   "id": "actors_yield_to_coco",
+   "kind": "SCENARIO RULE (not physics)",
+   "label": "Scenario rule (G2.9): the actors stop for COCO, as Fetch Rush rules 5 in the model",
+   "model_rule": "coco_lab.games.DepotActors.world_step (actors.yield=1)",
+   "robot_radius_m": 0.22,
+   "rule": "each actor keeps its own clock; it holds a step when its box at the next pose would be within robot_radius_m + stop_margin_m of COCO's centre (Gazebo truth) and closer than now",
+   "step_s": 0.05,
+   "stop_margin_m": 0.3
+  },
+  "sim_t0": 17.94,
+  "steps": 3488,
+  "simulated_s": 174.4,
+  "actors": {
+   "forklift_east_west": {
+    "holds": 95,
+    "held_steps": 374,
+    "held_s": 18.7,
+    "min_clearance_m": 0.301
+   },
+   "forklift_north_south": {
+    "holds": 0,
+    "held_steps": 0,
+    "held_s": 0,
+    "min_clearance_m": 1.89
+   },
+   "walker_aisle_gap": {
+    "holds": 0,
+    "held_steps": 0,
+    "held_s": 0,
+    "min_clearance_m": 1.659
+   },
+   "walker_dock": {
+    "holds": 1,
+    "held_steps": 444,
+    "held_s": 22.2,
+    "min_clearance_m": 0.263
+   }
+  },
+  "overlap_steps": 0,
+  "set_pose_vector_calls": 3488,
+  "set_pose_vector_failed": 0,
+  "last_step_sent": 3488,
+  "max_steps_behind": 0
+ },
+ "checks": {
+  "goal_reached": true,
+  "every_actor_moved": false,
+  "actors_yielded": true,
+  "no_overlap": true
+ },
+ "pass": false
+}
