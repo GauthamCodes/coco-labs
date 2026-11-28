@@ -138,7 +138,7 @@ COSTMAPS = CostmapCache()
 def run_planning(world, scenario: Dict, name: str, params: Dict, descriptor: Dict,
                  sink=None, on_event=None) -> Dict:
     """Plan once on the static costmap; return the run record (``sink`` also sees each row)."""
-    if name == 'user':
+    if descriptor.get('code_sha256'):   # a user's file, or an API built-in (R6.B2)
         from . import exp_user
         return run_user_planning(world, scenario, exp_user.load(descriptor['code_sha256']),
                                  params, descriptor, sink, on_event)

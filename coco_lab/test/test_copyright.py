@@ -30,6 +30,8 @@ def test_copyright():
     pats = ('coco_lab/course/files/*.py', 'test/course_wrong/*.py',
             'test/course_wrong_uncaught/*.py')
     templates += [str(p) for pat in pats for p in sorted(root.glob(pat))]
+    # R6.B2: the built-in Lazy Theta* is Gautham Anil's leaderboard entry, MIT, kept exactly
+    templates += [str(root / 'coco_lab/algorithms/planner_theta_star.py')]
     rc = main(argv=['--exclude', *templates, *[os.path.relpath(t) for t in templates], '--',
                     '.', 'test'])
     assert rc == 0, 'Found errors'

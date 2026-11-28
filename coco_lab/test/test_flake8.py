@@ -25,7 +25,10 @@ def test_flake8():
     # restyled.
     # R4: the course's starter/solution files (coco_lab/course/files) and the wrong solutions
     # (test/course_wrong*) are user algorithm files too, kept exactly as a learner would write them
-    excluded = 'upstream_v3_6.py,templates,files,course_wrong,course_wrong_uncaught'
+    # R6.B2: coco_lab/algorithms holds the API built-ins -- algorithm files too (every run names
+    # their bytes by sha256; one is Gautham Anil's leaderboard entry, kept exactly)
+    excluded = ('upstream_v3_6.py,templates,files,course_wrong,course_wrong_uncaught,'
+                'algorithms')
     rc, errors = main_with_errors(argv=['--exclude', excluded])
     assert rc == 0, \
         'Found %d code style errors / warnings:\n' % len(errors) + \

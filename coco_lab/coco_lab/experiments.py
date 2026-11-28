@@ -61,8 +61,30 @@ SCHEMA = 'coco.experiment.v1'
 MODEL = {'hash_version': 3, 'experiment': 1}
 DIGEST_TAG = b'coco.experiment.digest.v1'
 FAMILIES = ('planning', 'control', 'localisation', 'fulltask')
+#: R6.B2: built-in planners written through the algorithm API (coco.algorithm.v1), shipped as
+#: coco_lab/algorithms/planner_<name>.py. They run exactly as an algorithm file would (same API,
+#: same sandbox
+#: rules, ctx.rng for any randomness), but a spec names them like any built-in; the run records
+#: which code ran
+#: (its sha256).
+API_BUILTINS = {'planning': ('theta_star', 'rrt', 'rrt_star', 'prm', 'hybrid_astar')}
+API_BUILTIN_LABELS = {'theta_star': 'Lazy Theta* (G. Anil)', 'rrt': 'RRT', 'rrt_star': 'RRT*',
+                      'prm': 'PRM', 'hybrid_astar': 'Hybrid-A* (Dubins)'}
+
+
+def api_builtin_source(name: str) -> str:
+    """Return the shipped source of an API built-in (coco_lab/algorithms/planner_<name>.py)."""
+    path = Path(__file__).parent / 'algorithms' / f'planner_{name}.py'
+    return path.read_text(encoding='utf-8')
+
+
+def runs_code(name: str) -> bool:
+    """Whether ``name`` runs through the algorithm API (a user's file, or an API built-in)."""
+    return name == USER or any(name in v for v in API_BUILTINS.values())
+
+
 ALGORITHMS = {
-    'planning': tuple(COMPARE_PLANNERS),
+    'planning': tuple(COMPARE_PLANNERS) + API_BUILTINS['planning'],
     'control': tuple(move_arena.CONTROLLERS),
     'localisation': ('mcl', 'mcl_augmented', 'ekf'),
     'fulltask': tuple(PLANNERS),
@@ -151,7 +173,7 @@ for _k, _v in PARAMS['localisation'].items():
 def _applies(family: str, algo: str, key: str) -> bool:
     """Whether parameter ``key`` does anything for ``algo`` (others are refused)."""
     if key.startswith('user.'):
-        return algo == USER
+        return runs_code(algo)   # an algorithm file's own parameters (ctx.params); built-ins too
     if family == 'planning':
         return key != 'heuristic_weight' or algo == 'weighted_astar'
     if family == 'control':
@@ -533,6 +555,14 @@ def plan(spec: Dict) -> Dict:
                 raise SpecError(f'this build runs algorithm API {API_VERSION}, '
                                 f'not {a.get("api")}')
             user = {'api': API_VERSION, 'code_sha256': sha}
+        elif name in API_BUILTINS.get(family, ()):
+            from . import exp_user
+            sha = exp_user.register(api_builtin_source(name))
+            if a.get('code_sha256') not in (None, sha):
+                given = str(a.get('code_sha256'))[:12]
+                raise SpecError(f"{name}: this build's code differs from the spec's "
+                                f'({sha[:12]}, not {given})')
+            user = {'api': API_VERSION, 'code_sha256': sha}
         elif name not in ALGORITHMS[family]:
             raise SpecError(f'{family} algorithms: {list(ALGORITHMS[family])}')
         aid = a.get('id') or name
@@ -550,7 +580,8 @@ def plan(spec: Dict) -> Dict:
                     raise SpecError(f'{family} has no parameter {k!r} to sweep')
             per_point.append(resolved_params(family, name, merged))
         resolved_algos.append(dict({'id': aid, 'name': name,
-                                    'label': a.get('label') or LABELS[name],
+                                    'label': (a.get('label') or LABELS.get(name)
+                                              or API_BUILTIN_LABELS[name]),
                                     'params': per_point[0] if not sp else given,
                                     '_per_point': per_point}, **user))
     seed = spec.get('seed', 1)
@@ -640,8 +671,9 @@ def plan(spec: Dict) -> Dict:
                      'sweep': pt, 'algorithm': a['id'], 'name': a['name'],
                      'params': a['_per_point'][pi], 'scenario_index': si,
                      'scenario': s, 'max_ticks': max_ticks, 'options': options}
-                if a['name'] == USER:
-                    # only a user's descriptor carries these: every built-in's chain is unchanged
+                if runs_code(a['name']):
+                    # only code's descriptor carries these: every other built-in's chain is
+                    # unchanged
                     d['api'], d['code_sha256'] = a['api'], a['code_sha256']
                 if fid_cfg:
                     # R6.B1: in the descriptor (and so the chain) only when set
@@ -682,7 +714,7 @@ def run_one(desc: Dict, sink=None, on_tick=None, on_event=None, twice: bool = Tr
     fam, name, sc = desc['family'], desc['name'], desc['scenario']
     try:
         r = _run(desc, sink, on_tick, on_event)
-        if name == USER and twice:
+        if runs_code(name) and twice:
             again = _run(desc)
             r['deterministic'] = again['chain'] == r['chain'] and \
                 again['status'] == r['status']

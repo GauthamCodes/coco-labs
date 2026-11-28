@@ -29,7 +29,9 @@ def test_pep257():
     # R4: the course's user algorithm files and the wrong solutions, likewise
     root = Path(__file__).resolve().parents[1]
     pats = ('coco_lab/course/files/*.py', 'test/course_wrong/*.py',
-            'test/course_wrong_uncaught/*.py')
+            'test/course_wrong_uncaught/*.py',
+            # R6.B2: the API built-ins, algorithm files too (see test_flake8.py)
+            'coco_lab/algorithms/*.py')
     templates += [str(p) for pat in pats for p in sorted(root.glob(pat))]
     rc = main(argv=['--exclude', 'coco_lab/isro/upstream_v3_6.py', *templates,
                     *[os.path.relpath(t) for t in templates], '--', '.', 'test'])
