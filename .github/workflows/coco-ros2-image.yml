@@ -135,6 +135,11 @@ jobs:
       - name: The control gateway from outside the container (ws://127.0.0.1:8766/ws, coco.v1)
         run: node docker/coco-ros2/gw_probe.mjs ws://127.0.0.1:8766/ws out/gw_probe.json --container coco
 
+      - name: R6.A3 truth in the level's map frame, on a test route (robot.truth vs Gazebo's own pose)
+        run: |
+          w2m=$(python3 -c "import json; e = json.load(open('out/levels_index.json'))['levels']['depot']; print(','.join(str(v) for v in e['world_to_map']))")
+          node docker/coco-ros2/truth_route.mjs ws://127.0.0.1:8766/ws out/truth_route.json --container coco --w2m "$w2m"
+
       - name: After the probe, the stack still passes (the arbiter still the only wheel publisher)
         run: |
           set -o pipefail

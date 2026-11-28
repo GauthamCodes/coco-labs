@@ -11,7 +11,7 @@ set -u
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq >/dev/null
 apt-get install -y -qq --no-install-recommends ros-jazzy-foxglove-bridge python3-websockets >/dev/null
-source /opt/ros/jazzy/setup.bash
+set +u; source /opt/ros/jazzy/setup.bash; set -u
 VERSION=$(dpkg-query -W -f '${Version}' ros-jazzy-foxglove-bridge)
 echo "ros-jazzy-foxglove-bridge $VERSION"
 DIR=$(cd "$(dirname "$0")" && pwd)
