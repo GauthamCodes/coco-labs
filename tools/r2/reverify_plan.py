@@ -20,6 +20,7 @@ Writes the plan (every entry with its decision and reason) to ``--out``, and ``m
 """
 import argparse
 import json
+import math
 from pathlib import Path
 import subprocess
 import sys
@@ -49,6 +50,31 @@ def deps(suite, name, kind):
     return out
 
 
+#: R6.A7: one job per entry must finish within 1 hour. A job re-runs its entry's baseline runs on the runner's
+#: CPUs (4 on GitHub's public-repo runners) for at most this many CPU-minutes (45 min x 4), plus the image build.
+JOB_CPU_MIN = 180.0
+
+
+def cost_cpu_min(doc):
+    """The entry's runs' CPU time (min) from its own recorded compute_ms: mean ~ 1.5 x median (checked by the run)."""
+    total = 0.0
+    for part in ('public', 'held_out'):
+        s = (doc.get(part) or {}).get('score', {}).get('compute_ms') or {}
+        if s.get('median') is not None and s.get('n'):
+            total += 1.5 * s['median'] * s['n'] / 60000.0
+    return total
+
+
+def how(doc):
+    """How this entry is re-verified: the procedure that made it, sampled to fit one job if it must."""
+    if doc['entry']['kind'] != 'builtin' or not doc.get('baseline'):
+        return {'mode': 'verify', 'baseline': '', 'family': doc['entry']['family'], 'sample': 1.0, 'cpu_min': 0.0}
+    cost = cost_cpu_min(doc)
+    sample = 1.0 if cost <= JOB_CPU_MIN else max(0.01, math.floor(JOB_CPU_MIN / cost * 100) / 100)
+    return {'mode': 'bench', 'baseline': doc['baseline'].rstrip('/'), 'family': doc['entry']['family'],
+            'sample': sample, 'cpu_min': round(cost, 1)}
+
+
 def plan(force_all=False):
     import leaderboard as lb
     rows = []
@@ -57,7 +83,7 @@ def plan(force_all=False):
         suite, name = res.parent.parent.name, res.parent.name
         doc = json.loads(res.read_text())
         kind = doc['entry']['kind']
-        row = {'suite': suite, 'name': name, 'kind': kind, 'merge_base': doc['held_out']['merge_base']}
+        row = {'suite': suite, 'name': name, 'kind': kind, 'merge_base': doc['held_out']['merge_base'], **how(doc)}
         reasons = []
         if force_all:
             reasons.append('all (requested)')
@@ -92,12 +118,15 @@ def main(argv=None):
     p = plan(a.all)
     if a.out:
         Path(a.out).write_text(json.dumps(p, indent=1) + '\n')
-    todo = [{k: r[k] for k in ('suite', 'name', 'kind', 'merge_base')} for r in p['entries'] if r['reverify']]
+    keys = ('suite', 'name', 'kind', 'merge_base', 'mode', 'baseline', 'family', 'sample')
+    todo = [{k: r[k] for k in keys} for r in p['entries'] if r['reverify']]
     if a.github_output:
         with open(a.github_output, 'a', encoding='utf-8') as f:
             f.write(f'count={len(todo)}\n')
             f.write('matrix=' + json.dumps({'include': todo}, separators=(',', ':')) + '\n')
-    print(f'{p["count"]} of {p["total"]} entries to re-verify (HEAD {p["head"][:12]})')
+    sampled = [r for r in p['entries'] if r['reverify'] and r['sample'] < 1.0]
+    print(f'{p["count"]} of {p["total"]} entries to re-verify (HEAD {p["head"][:12]}); '
+          f'{len(sampled)} sampled to fit one job each')
     for r in p['entries']:
         if r['reverify']:
             print(f'  {r["suite"]}/{r["name"]}: {"; ".join(r["reasons"])[:200]}')

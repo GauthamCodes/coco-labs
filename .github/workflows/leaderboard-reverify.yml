@@ -69,21 +69,41 @@ jobs:
           persist-credentials: false
       - name: The sandbox image
         run: docker build -q -t coco-verifier -f tools/r2/verifier.Dockerfile .
-      - name: Re-verify ${{ matrix.suite }}/${{ matrix.name }}
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: PyYAML for the trusted regeneration (as the verifier image pins it)
+        run: python3 -m pip install --quiet PyYAML==6.0.1
+      - name: Re-verify ${{ matrix.suite }}/${{ matrix.name }} (${{ matrix.mode }}, sample ${{ matrix.sample }})
         run: |
           set -uo pipefail
           suite='${{ matrix.suite }}'; name='${{ matrix.name }}'; mb='${{ matrix.merge_base }}'
+          mode='${{ matrix.mode }}'; base='${{ matrix.baseline }}'; fam='${{ matrix.family }}'; sample='${{ matrix.sample }}'
           res="leaderboard/results/$suite/$name/result.json"
           out="$RUNNER_TEMP/re/$suite/$name"; mkdir -p "$out" && chmod 0777 "$out"
-          start=$(date +%s)
-          sandbox="docker run --rm --network none --read-only --tmpfs /tmp:size=256m --cpus 2 --memory 4g --memory-swap 4g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 -v $out:/out"
-          if [ '${{ matrix.kind }}' = builtin ]; then
-            $sandbox coco-verifier builtin "$suite" "$name" --out /out --workers 2 || true
+          cpus=$(nproc); echo "runner CPUs: $cpus" | tee "$out/timing.txt"
+          start=$(date +%s); status=0
+          sandbox="docker run --rm --network none --read-only --tmpfs /tmp:size=256m --cpus $cpus --memory 8g --memory-swap 8g --pids-limit 256 --cap-drop ALL --security-opt no-new-privileges --user 65534:65534 -v $out:/out"
+          if [ "$mode" = bench ]; then
+            # the procedure that made the entry: its baseline export's own runs, re-run in the sandbox (chains and
+            # counts must match), then the entry rewritten from those records by the command that wrote it
+            for part in public held_out; do
+              $sandbox -v "$PWD/$base:/bench:ro" -e PYTHONPATH=/coco/coco_lab:/coco/coco_schemas:/coco/coco_config \
+                --entrypoint python coco-verifier -P -m coco_lab.experiments verify "/bench/$part" \
+                --algorithm "$name" --sample "$sample" --workers "$cpus" 2>&1 | tee -a "$out/verify.txt" || status=1
+            done
+            if [ "$name" = mcl_reference ]; then
+              python3 tools/r2/leaderboard.py mcl-reference --root "$out/regen" > "$out/regen.log" 2>&1 || status=1
+            else
+              python3 tools/r2/leaderboard.py builtin-bench "$suite" "$fam" --root "$out/regen" > "$out/regen.log" 2>&1 || status=1
+            fi
+            python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/regen/$suite/$name/result.json" || status=1
           else
-            $sandbox -v "$PWD/leaderboard/submissions/$suite/$name:/submissions/$suite/$name:ro" coco-verifier verify "/submissions/$suite/$name" --out /out --merge-base "$mb" --workers 2 || true
+            $sandbox -v "$PWD/leaderboard/submissions/$suite/$name:/submissions/$suite/$name:ro" coco-verifier verify "/submissions/$suite/$name" --out /out --merge-base "$mb" --workers "$cpus" || true
+            python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/result.json" || status=1
           fi
-          echo "verify_seconds=$(( $(date +%s) - start ))" | tee "$out/timing.txt"
-          python3 tools/r2/leaderboard_writer.py --compare "$res" "$out/result.json"
+          echo "verify_seconds=$(( $(date +%s) - start )) sample=$sample mode=$mode" | tee -a "$out/timing.txt"
+          exit $status
       - uses: actions/upload-artifact@v4
         if: always()
         with:

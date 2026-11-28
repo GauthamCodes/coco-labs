@@ -34,7 +34,9 @@ def test_the_matrix_names_one_job_per_suite_and_entry(tmp_path):
     assert int(lines['count']) == len(m['include'])
     keys = [(j['suite'], j['name']) for j in m['include']]
     assert len(keys) == len(set(keys))                       # one job per suite x entry
-    assert all(set(j) == {'suite', 'name', 'kind', 'merge_base'} for j in m['include'])
+    assert all(set(j) == {'suite', 'name', 'kind', 'merge_base', 'mode', 'baseline', 'family', 'sample'}
+               for j in m['include'])
+    assert all(0 < j['sample'] <= 1 and (j['mode'] == 'bench') == bool(j['baseline']) for j in m['include'])
 
 
 def test_a_changed_version_or_input_is_the_reason_and_nothing_else_is():

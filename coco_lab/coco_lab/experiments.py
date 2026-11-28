@@ -994,6 +994,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     v = sub.add_parser('verify', help="re-run an export's runs and compare chains and counts")
     v.add_argument('dir')
     v.add_argument('--sample', type=float, default=1.0, help='fraction of runs (default all)')
+    v.add_argument('--algorithm', help="only this algorithm id's runs (R6.A7: one leaderboard entry)")
     v.add_argument('--workers', type=int, default=max(1, (os.cpu_count() or 2) - 1))
     v.add_argument('--worlds')
     s = sub.add_parser('summarise', help="print an export's summary")
@@ -1041,6 +1042,11 @@ def main(argv: Optional[List[str]] = None) -> int:
         rec = json.loads(ln)
         want[rec['index']] = rec
     idx = sorted(want)
+    if getattr(a, 'algorithm', None):   # R6.A7: one entry's runs only
+        idx = [i for i in idx if want[i]['algorithm'] == a.algorithm]
+        if not idx:
+            print(f'no runs of algorithm {a.algorithm!r} in {d}')
+            return 1
     if a.sample < 1.0:
         from .rng import Rng
         rng = Rng(int(spec.get('seed', 1)))
