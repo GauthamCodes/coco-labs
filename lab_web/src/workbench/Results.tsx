@@ -11,6 +11,7 @@
 import { useMemo, useState } from 'react';
 import { BoxPlot, fmt, Heatmap, Legend, Scatter, seriesColour, seriesShape, Mark, SuccessBars, SweepLine, type Series } from './charts';
 import type { PlanInfo, Progress, RunRecord } from './pool';
+import { fidelityText } from './Fidelity';
 import { FAMILY_LABEL, label, META, SUCCESS_MEANS, type ExperimentSpec, type MetricDef } from './spec';
 
 interface Describe { n: number; median: number | null; q1: number | null; q3: number | null; iqr: number | null; min: number | null; max: number | null; timing: boolean }
@@ -72,6 +73,7 @@ export function Results({ spec, plan, records, summary, compareHref, onPick }: {
     <h2>{spec.title || 'Experiment'} <small className="wb-muted">· {FAMILY_LABEL[family]} · {records.length} of {plan.n_runs} runs</small></h2>
     <p className="wb-muted">Success means {SUCCESS_MEANS[family]}. Counts are model outputs (MODEL · kinematic) and need no device; compute time is wall time on this device.
       {plan.scenario_info.kind === 'sampled' && ` Scenario draws rejected: ${plan.scenario_info.rejected_unreachable} unreachable, ${plan.scenario_info.rejected_separation} too close (reported, not hidden).`}</p>
+    {spec.fidelity && <p className="wb-fidelity-chip" data-testid="wb-fidelity-chip" role="note"><b>Fidelity knobs on:</b> {fidelityText(spec.fidelity)} (MODEL; these runs are not comparable with runs without them)</p>}
 
     {!summary && records.length > 0 && <table className="wb-table"><caption>So far (statistics follow when the runs finish or are cancelled)</caption>
       <thead><tr><th scope="col">Algorithm</th><th scope="col">Runs</th><th scope="col">Succeeded</th></tr></thead>

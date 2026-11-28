@@ -485,6 +485,7 @@ def run_control(world, scenario: Dict, name: str, params: Dict, descriptor: Dict
                 cfg.append(f'move.{key}={v}')
         cfg.append(f'move.controller={name}')
         cfg += _conditions(scenario)
+        cfg += descriptor.get('fidelity') or []   # R6.B1: the experiment's fidelity knobs
         goal = tuple(scenario['goal'][:2])
         events = [InputEvent(0, 'config', choice=c) for c in cfg]
         events.append(InputEvent(0, 'goal', x=goal[0], y=goal[1]))
@@ -540,6 +541,7 @@ def run_localisation(world, scenario: Dict, name: str, params: Dict, descriptor:
             cfg.append('localise.mcl.injection=' +
                        ('augmented' if name == 'mcl_augmented' else 'none'))
         cfg += _conditions(scenario)   # before the filter is made (localise.mcl.init)
+        cfg += descriptor.get('fidelity') or []   # R6.B1: the experiment's fidelity knobs
         cfg.append('localise.filter=' + kind)
         goal = tuple(scenario['goal'][:2])
         events = [InputEvent(0, 'config', choice=c) for c in cfg]

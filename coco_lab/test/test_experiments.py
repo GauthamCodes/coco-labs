@@ -194,3 +194,44 @@ def test_cli_reproduces_the_golden_planning_digest(tmp_path):
     assert summary['digest'] == case['digest']
     assert ex.main(['verify', str(tmp_path / 'out'), '--sample', '0.5', '--workers', '1',
                     '--worlds', str(WORLDS)]) == 0
+
+
+def _control(**kw):
+    s = {'schema': ex.SCHEMA, 'world': 'coco_arena_v1', 'family': 'control',
+         'algorithms': [{'name': 'builtin'}],
+         'scenarios': {'kind': 'sampled', 'n': 2, 'seed': 4, 'min_separation_m': 4.0},
+         'limits': {'max_ticks': 120}, 'seed': 1}
+    s.update(kw)
+    return s
+
+
+def test_a_fidelity_knob_changes_the_spec_and_shows_on_every_result():
+    """R6.B1: knobs belong to the experiment (its id, every chain) and are named in its outputs."""
+    off = ex.plan(_control())
+    on = ex.plan(_control(fidelity={'cmd_latency': 5, 'lidar_dropout': 0.1}))
+    assert 'fidelity' not in off['spec'] and 'fidelity' not in off['runs'][0]   # off: as it was
+    assert on['id'] != off['id']
+    assert on['spec']['fidelity'] == {'cmd_latency': 5, 'lidar_dropout': 0.1}
+    assert on['runs'][0]['fidelity'] == ['arena.cmd_latency=5', 'arena.lidar_dropout=0.1']
+    r_off, r_on = ex.run_all(off), ex.run_all(on)
+    assert [a['chain'] for a in r_off] != [b['chain'] for b in r_on]
+    assert ex.summarise(on, r_on)['fidelity'] == on['spec']['fidelity']
+    assert 'fidelity' not in ex.summarise(off, r_off)
+    csv = ex.results_csv(on, r_on).splitlines()
+    assert csv[0].endswith(',fidelity')
+    assert all(x.endswith('cmd_latency=5;lidar_dropout=0.1') for x in csv[1:])
+    assert ex.plan(on['spec'])['id'] == on['id']             # the filled spec is a fixed point
+
+
+@pytest.mark.parametrize('fid, why', [
+    ({'lidar_dropout': 1.5}, 'lidar_dropout'), ({'warp': 1}, 'unknown knob'),
+    ({'odom_preset': 'perfect'}, 'odom_preset'), ({'cmd_latency': 2.5}, 'cmd_latency'),
+    ({}, 'object')])
+def test_bad_fidelity_is_refused_in_words(fid, why):
+    with pytest.raises(ex.SpecError, match=why):
+        ex.plan(_control(fidelity=fid))
+
+
+def test_planning_has_no_knobs_to_turn():
+    with pytest.raises(ex.SpecError, match='motion and sensing'):
+        ex.plan(_spec(fidelity={'lidar_dropout': 0.1}))

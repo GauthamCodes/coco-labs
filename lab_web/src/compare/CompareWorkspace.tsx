@@ -1,5 +1,6 @@
 // Copyright 2026 Gautham Anil
 // SPDX-License-Identifier: Apache-2.0
+import { fidelityText } from '../workbench/Fidelity';
 import { useEffect, useRef, useState } from 'react';
 import { ArenaClient } from '../arena/client';
 import { PlanStore } from '../arena/render/planStore';
@@ -252,6 +253,7 @@ export function CompareWorkspace() {
         {(source.kind === 'random' || source.kind === 'suite') && <div className="compare-steps"><button type="button" onClick={() => stepSource(-1)}>Previous</button><button type="button" onClick={() => stepSource(1)}>Next</button>{source.kind === 'suite' && <output>{source.index + 1} / {META.suites.find((st) => st.id === source.id)?.n}</output>}</div>}
         {scenarioNote && <p data-testid="compare-scenario-note">{scenarioNote}</p>}
         {source.kind !== 'live' && <p>Each pane replays an experiment run (coco_lab.experiments), so its numbers are the Workbench's for the same spec.</p>}
+        {opened.current?.spec.fidelity && <p className="wb-fidelity-chip" data-testid="compare-fidelity" role="note"><b>Fidelity knobs on:</b> {fidelityText(opened.current.spec.fidelity)} (the run replays with them)</p>}
         <button type="button" onClick={toExperiment} data-testid="compare-to-experiment">Turn this into an experiment</button>
       </fieldset>
       <form onSubmit={event => { event.preventDefault(); if (!busy && goal.every(Number.isFinite)) run(); }}>

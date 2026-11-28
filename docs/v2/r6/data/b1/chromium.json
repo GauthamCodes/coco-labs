@@ -1,0 +1,24 @@
+{
+ "browser": "chromium",
+ "steps": {
+  "learn": {
+   "note": true,
+   "link": true
+  },
+  "builder": {
+   "cmd_latency_field": "5"
+  },
+  "results": {
+   "chip": "Fidelity knobs on: command latency 5 ticks (MODEL; these runs are not comparable with runs without them)",
+   "finished": true
+  },
+  "compare": {
+   "note": "Fidelity knobs on: command latency 5 ticks (the run replays with them)"
+  },
+  "by_hand": {
+   "builder_shown_for_planning": 0
+  }
+ },
+ "page_errors": [],
+ "pass": true
+}

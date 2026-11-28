@@ -364,6 +364,49 @@ def spec_id(spec: Dict) -> str:
     return hashlib.sha256(canonical(spec)).hexdigest()[:16]
 
 
+#: R6.B1: the fidelity knobs an experiment may set (spec ``fidelity``), as the Arena's config keys.
+#: Every one is
+#: off unless given; a spec without ``fidelity`` (every earlier one) is unchanged, and so is every
+#: run of it.
+FIDELITY_FAMILIES = ('control', 'localisation')
+
+
+def fidelity_config(fid, family: str) -> List[str]:
+    """Check a spec's ``fidelity``; return it as tick-0 ``arena.*`` config inputs, by key."""
+    from .arena import ACCEL_RANGE, CMD_LATENCY_MAX, ODOM_PRESETS
+
+    def num(v, lo, hi, what):
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) \
+                or not lo <= v <= hi:
+            raise SpecError(f'fidelity.{what} is {lo} to {hi}')
+        return v
+    if not isinstance(fid, dict) or not fid:
+        raise SpecError('fidelity is an object of knobs')
+    if family not in FIDELITY_FAMILIES:
+        raise SpecError('fidelity knobs act on motion and sensing: families '
+                        f'{list(FIDELITY_FAMILIES)} only')
+    out = []
+    for k in sorted(fid):
+        v = fid[k]
+        if k == 'lidar_dropout':
+            num(v, 0.0, 0.99, k)
+        elif k == 'range_sigma':
+            num(v, 0.0, 1.0, k)
+        elif k == 'cmd_latency':
+            if isinstance(v, bool) or not isinstance(v, int) or not 0 <= v <= CMD_LATENCY_MAX:
+                raise SpecError(f'fidelity.cmd_latency is 0 to {CMD_LATENCY_MAX} ticks')
+        elif k in ('linear_accel', 'angular_accel'):
+            num(v, ACCEL_RANGE[0], ACCEL_RANGE[1], k)
+        elif k == 'odom_preset':
+            if v not in sorted(ODOM_PRESETS) + ['lab2_fit']:
+                names = sorted(ODOM_PRESETS) + ['lab2_fit']
+                raise SpecError(f'fidelity.odom_preset is one of {names}')
+        else:
+            raise SpecError(f'fidelity: unknown knob {k!r}')
+        out.append(f'arena.{k}={v}')
+    return out
+
+
 #: what an inline scenario may hold (ADR 0014; COCO-Bench v1's conditions included)
 INLINE_KEYS = {'id', 'start', 'goal', 'seed', 'config', 'kidnap_at_s', 'kidnap'}
 
@@ -576,6 +619,11 @@ def plan(spec: Dict) -> Dict:
                            for a in resolved_algos],
             'scenarios': sc_full, 'sweep': {'params': sp},
             'limits': {'max_ticks': max_ticks}, 'options': options, 'metrics': shown}
+    fid_cfg = None
+    # R6.B1: only when given, so every earlier spec id is unchanged
+    if spec.get('fidelity') is not None:
+        fid_cfg = fidelity_config(spec['fidelity'], family)
+        full['fidelity'] = {k: spec['fidelity'][k] for k in sorted(spec['fidelity'])}
     if spec.get('notes'):
         full['notes'] = spec['notes']
     wsha = world_sha256(world_id)
@@ -595,6 +643,9 @@ def plan(spec: Dict) -> Dict:
                 if a['name'] == USER:
                     # only a user's descriptor carries these: every built-in's chain is unchanged
                     d['api'], d['code_sha256'] = a['api'], a['code_sha256']
+                if fid_cfg:
+                    # R6.B1: in the descriptor (and so the chain) only when set
+                    d['fidelity'] = fid_cfg
                 runs.append(d)
     return {'spec': full, 'id': eid, 'world_sha256': wsha, 'scenarios': scenarios,
             'scenario_info': info, 'sweep_points': points, 'runs': runs}
@@ -737,7 +788,9 @@ def summarise(p: Dict, records: List[Dict]) -> Dict:
                     t['verdict'] = exp_stats.verdict(t['p_holm'])
             paired.extend(block)
     complete = len(records) == len(p['runs'])
-    return {'schema': 'coco.experiment.summary.v1', 'experiment': p['id'],
+    # R6.B1, when set
+    fid = {'fidelity': p['spec']['fidelity']} if p['spec'].get('fidelity') else {}
+    return {'schema': 'coco.experiment.summary.v1', 'experiment': p['id'], **fid,
             'family': fam, 'n_runs': len(records), 'n_planned': len(p['runs']),
             'complete': complete, 'digest': digest(records), 'alpha': exp_stats.ALPHA,
             'metrics': mdefs, 'groups': groups, 'paired': paired,
@@ -793,6 +846,10 @@ def results_csv(p: Dict, records: List[Dict]) -> str:
         head += ['start_x', 'start_y', 'start_theta', 'goal_x', 'goal_y', 'start_zone',
                  'goal_zone', 'seed']
     head += ['status', 'success'] + mids + ['fail_tick', 'chain']
+    fid = p['spec'].get('fidelity')
+    # R6.B1: every row names the knobs it ran with (only when set: earlier CSVs are unchanged)
+    if fid:
+        head += ['fidelity']
     rows = [','.join(head)]
     for r in sorted(records, key=lambda r: r['index']):
         sc = p['scenarios'][r['scenario_index']]
@@ -807,6 +864,8 @@ def results_csv(p: Dict, records: List[Dict]) -> str:
                     sc.get('start_zone'), sc.get('goal_zone'), sc['seed']]
         row += [r['status'], r['success']] + [r['metrics'].get(m) for m in mids]
         row += [r.get('fail_tick'), r['chain']]
+        if fid:
+            row += [';'.join(f'{k}={fid[k]}' for k in sorted(fid))]
         rows.append(','.join(_cell(v) for v in row))
     return '\n'.join(rows) + '\n'
 

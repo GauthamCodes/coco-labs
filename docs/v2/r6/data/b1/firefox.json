@@ -1,0 +1,18 @@
+{
+ "browser": "firefox",
+ "steps": {
+  "learn": {
+   "note": true,
+   "link": true
+  },
+  "builder": {
+   "cmd_latency_field": "5"
+  },
+  "results": {
+   "chip": "Fidelity knobs on: command latency 5 ticks (MODEL; these runs are not comparable with runs without them)"
+  }
+ },
+ "page_errors": [],
+ "error": "page.waitForFunction: Timeout 600000ms exceeded.",
+ "pass": false
+}

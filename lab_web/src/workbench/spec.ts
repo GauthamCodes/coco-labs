@@ -18,12 +18,19 @@ export type Scenarios =
   | { kind: 'suite'; id: string; version?: number }
   | { kind: 'pairs'; pairs: { id?: string; start: number[]; goal: number[] }[]; seed?: number }
   | { kind: 'rounds'; game: 'fetch_rush' | 'fetch_colour'; rounds?: { seed: number; mode: string }[]; colours?: string[] };
+/** R6.B1: the Arena's fidelity knobs (coco_lab.experiments.fidelity_config). Every one off unless set. */
+export interface Fidelity {
+  lidar_dropout?: number; range_sigma?: number; odom_preset?: string; cmd_latency?: number;
+  linear_accel?: number; angular_accel?: number;
+}
 export interface ExperimentSpec {
   schema: 'coco.experiment.v1'; title?: string; world?: string; family: Family; seed?: number;
   model?: { hash_version: number; experiment: number };
   algorithms: AlgorithmSpec[]; scenarios: Scenarios;
   sweep?: { params: { name: string; values: (number | string)[] }[] };
   limits?: { max_ticks: number }; options?: { kidnap_at_s?: number | null }; metrics?: string[];
+  /** R6.B1: fidelity knobs (control, localisation); absent = all off */
+  fidelity?: Fidelity;
   notes?: string; world_sha256?: string;
 }
 

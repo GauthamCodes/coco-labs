@@ -104,3 +104,7 @@
 .r5-ed-list { max-height: 160px; overflow: auto; padding-left: 0; list-style: none; }
 .r5-ed-actions { display: grid; gap: 6px; margin-top: 8px; }
 .r5-ed-actions button { padding: 6px 10px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+
+/* R6.B1: the fidelity knobs (builder) and their note on every result */
+.wb-fidelity small { display: block; opacity: 0.75; font-size: 0.8em; }
+.wb-fidelity-chip { border-left: 3px solid var(--warn, #f59e0b); padding: 0.3em 0.6em; background: rgba(245, 158, 11, 0.08); }

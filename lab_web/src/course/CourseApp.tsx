@@ -151,6 +151,19 @@ function Home({ course, track, go }: { course: Course; track: Track | null; go: 
         </li>;
       })}</ol>
     </section>
+    <section className="wb-section" data-testid="learn-fidelity">
+      <h2>Note: how much does the model's world matter? (fidelity knobs)</h2>
+      <p>The model is kinematic: perfect wheels, a clean LiDAR, commands that land at once. Real robots are not, and nor
+        is COCO's Gazebo stack. In the Workbench you can turn on four knobs, each seeded and off unless set: <b>LiDAR
+        dropout</b> (a beam returns no echo), <b>odometry presets</b> measured on COCO's own Gazebo runs (uncalibrated,
+        the wheels report 1.2029x every turn, from 40 recorded runs; calibrated, 0.9986x), <b>command latency</b> and
+        {' '}<b>acceleration limits</b>. A run with a knob on names it on every result and is a different experiment:
+        compare it with the same spec without the knob.</p>
+      <p><a data-testid="learn-fidelity-experiment" href={experimentLink({ schema: 'coco.experiment.v1', title: 'Command latency: 0.5 s',
+        world: 'coco_depot_v1', family: 'control', seed: 1, algorithms: [{ name: 'rpp' }, { name: 'dwa' }],
+        scenarios: { kind: 'sampled', n: 10, seed: 1, min_separation_m: 3 }, limits: { max_ticks: 1500 },
+        fidelity: { cmd_latency: 5 } }, SITE())}>Run it: two controllers with commands 0.5 s late</a> (MODEL)</p>
+    </section>
   </>;
 }
 

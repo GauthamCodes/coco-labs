@@ -6,6 +6,7 @@
  * shapes: the worker's coco_lab.experiments.plan is the authority, and its refusal
  * (with the reason) is shown as is.
  */
+import { FidelityEditor } from './Fidelity';
 import { useEffect, useMemo, useState } from 'react';
 import {
   applies, COMMON_PARAMS, defaultSpec, FAMILY_LABEL, heavy, label, META, runCount, worldId, worldOf,
@@ -166,6 +167,7 @@ export function Builder({ spec, onSpec, onRun, running, error }: { spec: Experim
         <label>Time limit (ticks of 0.1 s)<input inputMode="numeric" value={spec.limits?.max_ticks ?? 3000} onChange={(e) => onSpec({ ...spec, limits: { max_ticks: num(e.target.value) } })} /></label>
         {family === 'localisation' && <label>Kidnap at (s; empty = none)<input inputMode="decimal" value={spec.options?.kidnap_at_s ?? ''} onChange={(e) => onSpec({ ...spec, options: e.target.value.trim() ? { kidnap_at_s: num(e.target.value) } : {} })} /></label>}
       </div>}
+      {(family === 'control' || family === 'localisation') && <FidelityEditor spec={spec} onSpec={onSpec} />}
       <div className="wb-runbar">
         <button type="submit" className="wb-primary" disabled={running}>{running ? 'Running…' : `Run ${runCount(spec)} runs`}</button>
         {load.warn && <p className="wb-warn" role="note">{load.reason}</p>}

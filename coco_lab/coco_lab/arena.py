@@ -110,6 +110,23 @@ LOOP_LAYOUT = b'coco.arena.loop.v1\x00'
 #: recorded tour where the gyro and the truth gave 56.3 / 56.2 rad
 #: (docs/labs/LAB2_LOCALISE.md section 4.1; STACK), so 56.2 / 72.5.
 SLIP_TURN = 56.2 / 72.5
+
+#: R6.B1 odometry presets: wheel odometry over/under-reports the body's motion by MEASURED factors,
+#: each cited.
+#: (distance scale, turn scale): what the wheels report per metre / radian the body really moved.
+ODOM_PRESETS = {
+    # G2.9's derivation-4 gate, 40 recorded Gazebo + Nav2 runs, the installed
+    # wheel_separation_multiplier 1.10
+    # (docs/v2/g2/data/g29/odom/turn_scale_d4_gate.json: pooled_turn_scale 1.2029,
+    # pooled_dist_scale 0.9909)
+    'stack_uncalibrated': (0.9909, 1.2029),
+    # derivation 5, after the calibration (multiplier 1.323): turn_scale_d5_gate.json (0.9986,
+    # 0.9913)
+    'stack_calibrated': (0.9913, 0.9986),
+}
+#: R6.B1: the knobs' ranges (validated when set)
+CMD_LATENCY_MAX = 50          # ticks (5 s at dt 0.1)
+ACCEL_RANGE = (0.05, 20.0)    # m/s^2 or rad/s^2
 #: Sketch's default odometry noise (coco_lab.sketch.Noise)
 ODOM_ALPHAS = (0.02, 0.02, 0.02, 0.02)
 MODES = ('idle', 'teleop', 'goal')
@@ -392,6 +409,8 @@ class Arena:
             self.mode = 'idle'
             self.teleop = (0.0, 0.0)
             self.v = self.w = 0.0          # STOP is immediate in the model
+            if getattr(self, 'cmd_latency', 0):
+                self.cmd_queue = []        # R6.B1: and no delayed command survives it
             self.user_teleop = False
             if self.grasp is not None and self.grasp.phase == 'approach':
                 self.grasp.phase, self.grasp.target = 'idle', None
@@ -629,9 +648,12 @@ class Arena:
             true = _with_discs(true, self.pose, self.lidar, self.angles, discs, dirs)
         lo, hi = self.lidar.range_min, self.lidar.range_max
         out = []
+        dropout = getattr(self, 'lidar_dropout', 0.0)   # R6.B1; absent until set (no hash moves)
         for z in true:
             if self.range_sigma > 0:
                 z = z + self.noise_rng.gauss(0.0, self.range_sigma)
+            if dropout and self.dropout_rng.random() < dropout:
+                z = math.inf                                # no echo
             out.append(z if lo <= z <= hi else math.inf)
         return out
 
@@ -720,6 +742,32 @@ class Arena:
                                   for x in a):
                 raise ArenaError('arena.odom_alphas must be four values >= 0')
             self.odom_alphas = a
+        elif key == 'lidar_dropout':   # R6.B1
+            v = float(value)
+            if not (math.isfinite(v) and 0.0 <= v < 1.0):
+                raise ArenaError('arena.lidar_dropout is a probability in [0, 1)')
+            if not hasattr(self, 'dropout_rng'):
+                self.dropout_rng = self.rng.split()
+            self.lidar_dropout = v
+        elif key == 'odom_preset':
+            if value == 'lab2_fit':          # the existing slip model (SLIP_TURN, Lab 2's fit)
+                self.slip = True
+            elif value in ODOM_PRESETS:
+                self.odom_scale = ODOM_PRESETS[value]
+            else:
+                names = sorted(ODOM_PRESETS) + ['lab2_fit']
+                raise ArenaError(f'arena.odom_preset is one of {names}')
+        elif key == 'cmd_latency':
+            k = int(value)
+            if not 0 <= k <= CMD_LATENCY_MAX:
+                raise ArenaError(f'arena.cmd_latency is 0 to {CMD_LATENCY_MAX} ticks')
+            self.cmd_latency = k
+            self.cmd_queue = []
+        elif key in ('linear_accel', 'angular_accel'):
+            v = float(value)
+            if not (math.isfinite(v) and ACCEL_RANGE[0] <= v <= ACCEL_RANGE[1]):
+                raise ArenaError(f'arena.{key} is {ACCEL_RANGE[0]} to {ACCEL_RANGE[1]}')
+            setattr(self, 'accel_' + key.split('_')[0], v)
         else:
             raise ArenaError(f'unknown arena setting {key!r}')
 
@@ -832,8 +880,12 @@ class Arena:
         self._in_step = False
         tv, tw, arrived = self._command()
         lim, dt = self.limits, self.dt
-        dv = lim['linear_accel'] * dt
-        dw = lim['angular_accel'] * dt
+        if getattr(self, 'cmd_latency', 0):   # R6.B1: the command reaches the wheels k ticks late
+            self.cmd_queue.append((tv, tw))
+            tv, tw = (self.cmd_queue.pop(0) if len(self.cmd_queue) > self.cmd_latency
+                      else (0.0, 0.0))
+        dv = getattr(self, 'accel_linear', lim['linear_accel']) * dt
+        dw = getattr(self, 'accel_angular', lim['angular_accel']) * dt
         self.v += max(-dv, min(dv, tv - self.v))
         self.w += max(-dw, min(dw, tw - self.w))
         before = self.pose
@@ -855,6 +907,9 @@ class Arena:
             self.grasp.step(self)
         if self.loop:
             r1, tr, r2 = odom_delta(before, wheels)
+            scale = getattr(self, 'odom_scale', None)   # R6.B1: measured over/under-reporting
+            if scale is not None:
+                r1, tr, r2 = r1 * scale[1], tr * scale[0], r2 * scale[1]
             n1, nt, n2 = sample_delta(r1, tr, r2, self.odom_alphas,
                                       self.odom_rng)
             self.odom = apply_delta(self.odom, n1, nt, n2)
@@ -926,6 +981,12 @@ class Arena:
                 # only when set (M2.6), so earlier loop hashes are unchanged
                 parts.append(b'clearance' + struct.pack(
                     '<q', _q(self.plan_clearance, Q_STATE)))
+            names = ('lidar_dropout', 'odom_scale', 'cmd_latency', 'accel_linear', 'accel_angular')
+            knobs = [getattr(self, k, None) for k in names]
+            if any(k is not None for k in knobs):
+                # R6.B1: only when a knob is set, so every earlier hash is unchanged
+                parts.append(b'fidelity' + repr(knobs).encode() + repr(
+                    list(getattr(self, 'cmd_queue', []))).encode())
             for name in sorted(self.subsystems):
                 nb = name.encode('utf-8')
                 sb = self.subsystems[name].state_bytes()
