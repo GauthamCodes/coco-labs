@@ -17,7 +17,8 @@
   "localisation": [
    "mcl",
    "mcl_augmented",
-   "ekf"
+   "ekf",
+   "ekf_scanmatch"
   ],
   "planning": [
    "bfs",
@@ -25,7 +26,12 @@
    "astar",
    "greedy",
    "weighted_astar",
-   "dstar_lite"
+   "dstar_lite",
+   "theta_star",
+   "rrt",
+   "rrt_star",
+   "prm",
+   "hybrid_astar"
   ]
  },
  "families": [
@@ -70,11 +76,17 @@
   "dstar_lite": "D* Lite",
   "dwa": "DWA",
   "ekf": "EKF",
+  "ekf_scanmatch": "EKF + scan matching",
   "greedy": "Greedy best-first",
+  "hybrid_astar": "Hybrid-A* (Dubins)",
   "mcl": "MCL",
   "mcl_augmented": "MCL + augmented injection",
   "mppi": "MPPI",
+  "prm": "PRM",
   "rpp": "Regulated Pure Pursuit",
+  "rrt": "RRT",
+  "rrt_star": "RRT*",
+  "theta_star": "Lazy Theta* (G. Anil)",
   "user": "Your algorithm",
   "weighted_astar": "Weighted A*"
  },

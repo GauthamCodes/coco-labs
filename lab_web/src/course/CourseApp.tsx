@@ -164,6 +164,20 @@ function Home({ course, track, go }: { course: Course; track: Track | null; go: 
         scenarios: { kind: 'sampled', n: 10, seed: 1, min_separation_m: 3 }, limits: { max_ticks: 1500 },
         fidelity: { cmd_latency: 5 } }, SITE())}>Run it: two controllers with commands 0.5 s late</a> (MODEL)</p>
     </section>
+    <section className="wb-section" data-testid="learn-planners">
+      <h2>Note: five more planners, written in the same API you use</h2>
+      <p>Grid search (A*, Dijkstra) is not the only way to plan. COCO Lab's built-ins now include <b>Lazy Theta*</b>
+        (any-angle: Gautham Anil's leaderboard entry), <b>RRT</b> and <b>RRT*</b> (random trees; RRT* keeps improving
+        its path), <b>PRM</b> (a random roadmap, searched with Dijkstra) and a simple <b>Hybrid-A*</b> (car-like arcs:
+        forward only, a minimum turning radius, no reversing). Each is an algorithm file in coco_lab/algorithms,
+        written through the same API as the Studio, and the random ones draw only from ctx.rng, so a seed gives the
+        same tree every time. Hybrid-A* models a car's turning limit that COCO does not have (COCO turns in place):
+        expect it to fail where a wall leaves no room to turn.</p>
+      <p><a data-testid="learn-planners-experiment" href={experimentLink({ schema: 'coco.experiment.v1', title: 'Six planners in the Depot',
+        world: 'coco_depot_v1', family: 'planning', seed: 1,
+        algorithms: [{ name: 'astar' }, { name: 'theta_star' }, { name: 'rrt' }, { name: 'rrt_star' }, { name: 'prm' }, { name: 'hybrid_astar' }],
+        scenarios: { kind: 'sampled', n: 5, seed: 1, min_separation_m: 5 } }, SITE())}>Run it: six planners, five Depot routes</a> (MODEL)</p>
+    </section>
   </>;
 }
 

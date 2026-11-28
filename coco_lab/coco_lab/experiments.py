@@ -104,6 +104,7 @@ LABELS = {'user': 'Your algorithm',
           'weighted_astar': 'Weighted A*', 'dstar_lite': 'D* Lite', 'builtin': 'Waypoint driver',
           'dwa': 'DWA', 'rpp': 'Regulated Pure Pursuit', 'mppi': 'MPPI', 'mcl': 'MCL',
           'mcl_augmented': 'MCL + augmented injection', 'ekf': 'EKF'}
+LABELS.update(API_BUILTIN_LABELS)   # R6.B2
 #: the worlds the browser ships; the CLI also accepts any World Spec in worlds/
 WORLDS = ('coco_arena_v1', 'coco_arena_v2', 'coco_depot_v1', 'coco_depot_colours_v1',
           'coco_depot_clutter_v1')
