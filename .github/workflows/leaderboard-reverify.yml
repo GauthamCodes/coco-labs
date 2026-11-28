@@ -22,6 +22,10 @@ on:
         description: 'Re-verify every entry (not only those whose versions or inputs changed)'
         type: boolean
         default: false
+      only:
+        description: 'Only these entries (suite/name, comma-separated); empty = all of them'
+        type: string
+        default: ''
 
 permissions:
   contents: read
@@ -47,7 +51,7 @@ jobs:
           set -euo pipefail
           all=""
           if [ "${{ github.event_name }}" = schedule ] || [ "${{ inputs.all }}" = true ]; then all=--all; fi
-          python3 tools/r2/reverify_plan.py $all --out plan.json --github-output "$GITHUB_OUTPUT"
+          python3 tools/r2/reverify_plan.py $all --only "${{ inputs.only }}" --out plan.json --github-output "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
           name: reverify-plan

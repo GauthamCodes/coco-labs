@@ -51,8 +51,11 @@ def deps(suite, name, kind):
 
 
 #: R6.A7: one job per entry must finish within 1 hour. A job re-runs its entry's baseline runs on the runner's
-#: CPUs (4 on GitHub's public-repo runners) for at most this many CPU-minutes (45 min x 4), plus the image build.
-JOB_CPU_MIN = 180.0
+#: CPUs (4 on GitHub's public-repo runners) for at most this many CPU-minutes of the laptop's recorded time.
+#: 180 was the first budget: the full matrix (run 46152197199) passed 83 of 84 entries, the longest successful job
+#: 45.7 min, but arena-nav-50/mcl_augmented ran past the 60-minute limit (cancelled) -- the runner is slower than
+#: the recorded compute times suggest for that entry. 100 leaves the margin.
+JOB_CPU_MIN = 100.0
 
 
 def cost_cpu_min(doc):
@@ -75,12 +78,14 @@ def how(doc):
             'sample': sample, 'cpu_min': round(cost, 1)}
 
 
-def plan(force_all=False):
+def plan(force_all=False, only=()):
     import leaderboard as lb
     rows = []
     head = _git('rev-parse', 'HEAD')
     for res in sorted(REPO.glob('leaderboard/results/*/*/result.json')):
         suite, name = res.parent.parent.name, res.parent.name
+        if only and f'{suite}/{name}' not in only:
+            continue
         doc = json.loads(res.read_text())
         kind = doc['entry']['kind']
         row = {'suite': suite, 'name': name, 'kind': kind, 'merge_base': doc['held_out']['merge_base'], **how(doc)}
@@ -112,10 +117,11 @@ def plan(force_all=False):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
     ap.add_argument('--all', action='store_true')
+    ap.add_argument('--only', default='', help='suite/name,... : just these entries (with --all: re-verify them)')
     ap.add_argument('--out')
     ap.add_argument('--github-output')
     a = ap.parse_args(argv)
-    p = plan(a.all)
+    p = plan(a.all, tuple(x for x in a.only.split(',') if x))
     if a.out:
         Path(a.out).write_text(json.dumps(p, indent=1) + '\n')
     keys = ('suite', 'name', 'kind', 'merge_base', 'mode', 'baseline', 'family', 'sample')
