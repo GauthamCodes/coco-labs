@@ -51,6 +51,7 @@ Nav2 component; the wheels still go through `cmd_vel_arbiter`.
 - `level/gazebo/diff_drive_calibration.yaml` — the odometry calibration `bringup` loads;
 - `scenario.json` — the goals; `launch/level.launch.py`; `@@PKG@@/bringup.py`, `@@PKG@@/run_goals.py`.
 
-Limits, stated: the Depot's forklifts and walkers stand still here (COCO Lab's recordings drove them with
-a scenario script that is not part of this package); `run_goals` reports Nav2's verdict and AMCL's
-distance to each goal, not Gazebo's ground truth. Files: sha256 in `level/checksums.json`.
+@@ACTORS_NOTE@@
+
+Limits, stated: `run_goals` reports Nav2's verdict and AMCL's distance to each goal, not Gazebo's ground
+truth. Files: sha256 in `level/checksums.json`.

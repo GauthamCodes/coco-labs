@@ -27,6 +27,7 @@ the coco-ros2 image does (``bringup``: the start pose and the odometry calibrati
 goal runner, and a README with the exact commands. Nothing here imports ROS (invariant 1): the
 files are text until they are built.
 """
+import ast
 import json
 from pathlib import Path
 import re
@@ -38,6 +39,60 @@ from coco_lab.worldspec import to_map_frame
 TEMPLATES = Path(__file__).parent / 'level_package'
 DERIVATION = 5
 NAME = re.compile(r'^[a-z][a-z0-9_]{0,39}$')
+
+
+#: R6.A4: what G2.9's actor driver (tools/g2/actor_scenario.py) imports from coco_lab:
+#: games.box_distance and worldspec_v3.actor_pose. A package carries these modules and
+#: everything they import (pure Python).
+ACTOR_IMPORTS = ('games', 'worldspec_v3')
+
+
+def coco_lab_closure(roots=ACTOR_IMPORTS, root: Optional[Path] = None) -> List[str]:
+    """Return the coco_lab modules ``roots`` import, transitively (every import, any scope)."""
+    root = root or Path(__file__).parent
+    seen, todo = set(), list(roots)
+    while todo:
+        mod = todo.pop()
+        if mod in seen:
+            continue
+        seen.add(mod)
+        for node in ast.walk(ast.parse((root / f'{mod}.py').read_text(encoding='utf-8'))):
+            names = []
+            if isinstance(node, ast.ImportFrom):
+                if node.level == 1:
+                    names = (
+                        [node.module.split('.')[0]]
+                        if node.module
+                        else [a.name for a in node.names]
+                    )
+                elif node.module == 'coco_lab':
+                    names = [a.name for a in node.names]
+                elif node.module and node.module.startswith('coco_lab.'):
+                    names = [node.module.split('.')[1]]
+            elif isinstance(node, ast.Import):
+                names = [
+                    a.name.split('.')[1] for a in node.names if a.name.startswith('coco_lab.')
+                ]
+            todo.extend(n for n in names if (root / f'{n}.py').exists() and n not in seen)
+    return sorted(seen)
+
+
+def actor_files(driver: str, root: Optional[Path] = None) -> Dict[str, bytes]:
+    """R6.A4: the actors' driver and the coco_lab it imports, as ``{actors/...: bytes}``."""
+    root = root or Path(__file__).parent
+    out = {
+        'actors/actor_scenario.py': driver.encode('utf-8'),
+        'actors/coco_lab/__init__.py': (root / '__init__.py').read_bytes(),
+    }
+    for mod in coco_lab_closure(root=root):
+        text = (root / f'{mod}.py').read_bytes()
+        out[f'actors/coco_lab/{mod}.py'] = text
+        # the data files a module reads beside itself (link_bounds: link_limits.json, at import)
+        for name in re.findall(rb"with_name\(['\"]([\w.]+)['\"]\)", text):
+            data = root / name.decode()
+            if data.is_file():
+                out[f'actors/coco_lab/{name.decode()}'] = data.read_bytes()
+    return out
 
 
 class PackageError(ValueError):
@@ -84,6 +139,7 @@ def package(
     dump=lf.json_dump,
     templates: Optional[Dict[str, str]] = None,
     author: str = 'COCO Lab user',
+    actor_driver: Optional[str] = None,
 ) -> Dict[str, bytes]:
     """
     Return the package ``coco_level_<id>`` as ``{relative path: bytes}``.
@@ -91,7 +147,9 @@ def package(
     ``spec`` is a World Spec dict; ``goals`` the scenario's goals in the World Spec's frame (as
     COCO Lab shows them); ``world_template``, ``nav2_params``, ``controllers`` and ``dump`` as
     :func:`coco_lab.level_files.level_files`; ``templates`` the six ``*.tmpl`` texts (default: this
-    package's own files; the browser passes the ones it fetched).
+    package's own files; the browser passes the ones it fetched). ``actor_driver``: the text of
+    ``tools/g2/actor_scenario.py`` (R6.A4): given, and the level has actors with a scenario rule,
+    the package carries it and the coco_lab modules it imports, and its launch file starts it.
     """
     if not NAME.match(scenario):
         raise PackageError('the scenario name: a lower-case letter, then letters, digits or _')
@@ -131,7 +189,31 @@ def package(
         'TELEPORT': 'True',
         'MULTIPLIER': multiplier if multiplier else 'None',
         'DERIVATION': str(DERIVATION),
+        'ACTORS': 'False',
+        'ACTORS_NOTE': 'Actors: this level has none that move.',
     }
+    actors = None
+    if (
+        actor_driver is not None
+        and 'gazebo/actors.json' in files
+        and b'"scenario_rule"' in files['gazebo/actors.json']
+    ):
+        actors = actor_files(actor_driver)
+        sub['ACTORS'] = 'True'
+        sub['ACTORS_NOTE'] = (
+            "Actors: the forklifts and people move by G2.9's scenario rule (they stop for COCO; "
+            "not physics), driven by `actors/actor_scenario.py` (COCO Lab's "
+            '`tools/g2/actor_scenario.py`, unchanged, with the `coco_lab` modules it imports '
+            'beside '
+            "it) once Nav2 starts. It needs gz-transport's Python binding: `sudo apt install "
+            "python3-gz-transport13` (OSRF's Gazebo apt repository). Its log: "
+            f'`~/.ros/{pkg}/actors.jsonl`. `actors:=false` keeps them still.'
+        )
+    elif 'gazebo/actors.json' in files:
+        sub['ACTORS_NOTE'] = (
+            'Actors: this level has actors, but this package was made without their driver, '
+            'so they stand still.'
+        )
     t = templates or {p.name: p.read_text(encoding='utf-8') for p in TEMPLATES.glob('*.tmpl')}
     out: Dict[str, bytes] = {}
 
@@ -166,6 +248,8 @@ def package(
         )
         + '\n',
     )
+    for rel, data in sorted((actors or {}).items()):
+        put(rel, data)
     for rel, data in sorted(files.items()):
         if rel.startswith('arena/'):
             continue  # the browser model's files: not needed in ROS 2

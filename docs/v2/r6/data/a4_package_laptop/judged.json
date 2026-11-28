@@ -1,0 +1,1 @@
+{"moved_m": {"forklift_east_west": 115.13, "forklift_north_south": 127.5, "walker_aisle_gap": 111.6, "walker_dock": 99.6}, "holds": 63, "holds_by_actor": {"forklift_east_west": 48, "walker_dock": 15}, "overlap_steps": 0, "set_pose_vector_failed": 1, "steps": 1899, "checks": {"every_actor_moved": true, "actors_yielded": true, "no_overlap": true}, "pass": true}

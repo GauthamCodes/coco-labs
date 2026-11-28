@@ -1,0 +1,1 @@
+{"package": "coco_level_coco_depot_v1", "made_by": "python3 tools/r5/level_package.py worlds/coco_depot_v1.yaml --goals 40,12 39,12.5 40,12", "run_by": "bash tools/r5/run_level_package_laptop.sh (laptop ROS 2 Jazzy, overlay ~/coco_lab_r3_ws)", "date": "2026-11-28", "evidence_class": "STACK (Gazebo + Nav2 on the laptop); the actors follow a SCENARIO RULE, not physics"}

@@ -511,13 +511,15 @@ def level_templates(path):
     import yaml
     files = {'world_template': 'gazebo_models/worlds/coco_navigation.world',
              'nav2_params': 'gazebo_models/config/nav2_params.yaml',
-             'controllers': 'gazebo_models/urdf/coco_controllers.yaml'}
+             'controllers': 'gazebo_models/urdf/coco_controllers.yaml',
+             # R6.A4: the actors' driver a level package carries (G2.9's scenario rule; text, unchanged)
+             'actor_driver': 'tools/g2/actor_scenario.py'}
     doc = {'schema': 'coco_lab.level_templates', 'version': 1, 'sources': {}}
     for key, rel in files.items():
         with open(os.path.join(common.REPO, rel), 'rb') as f:
             raw = f.read()
         doc['sources'][key] = {'path': rel, 'sha256': hashlib.sha256(raw).hexdigest()}
-        doc[key] = raw.decode('utf-8') if key == 'world_template' else yaml.safe_load(raw)
+        doc[key] = raw.decode('utf-8') if key in ('world_template', 'actor_driver') else yaml.safe_load(raw)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     # the YAML files' own key order (not sorted): coco_lab.level_files dumps the parameters in it
     with open(path, 'w') as f:

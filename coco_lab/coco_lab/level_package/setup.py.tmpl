@@ -21,7 +21,7 @@ setup(
     packages=[PKG],
     data_files=[('share/ament_index/resource_index/packages', ['resource/' + PKG]),
                 ('share/' + PKG, ['package.xml', 'scenario.json', 'README.md'])]
-    + tree('launch') + tree('level'),
+    + tree('launch') + tree('level') + tree('actors'),
     install_requires=['setuptools'],
     zip_safe=True,
     description='COCO Lab level @@LEVEL_ID@@: Gazebo world, Nav2 map and parameters, goals',
