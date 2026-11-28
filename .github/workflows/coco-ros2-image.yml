@@ -13,7 +13,7 @@ name: coco-ros2 image
 
 on:
   push:
-    branches: [ main, 'v2/r5-*' ]
+    branches: [ main, 'v2/r5-*', 'v2/r6*' ]
     paths:
       - 'docker/coco-ros2/**'
       - '.github/workflows/coco-ros2-image.yml'
@@ -83,6 +83,9 @@ jobs:
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/levels/index.json > out/levels_index.json
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/packages.txt > out/packages.txt
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/image.json > out/image.json
+          # R6.A1: where the bytes are (packages by family, headers/docs/static libs), from inside the image
+          docker run --rm -v "$PWD/docker/coco-ros2/size_breakdown.sh:/tmp/size_breakdown.sh:ro" --entrypoint sh coco-ros2:ci /tmp/size_breakdown.sh > out/size_breakdown.json
+          python3 -c "import json; d = json.load(open('out/size_breakdown.json')); print(json.dumps({k: d[k] for k in ('du_root_bytes', 'dpkg_total_bytes', 'families_bytes', 'dirs_bytes', 'static_libs_bytes')}, indent=1))"
           python3 - <<'PY'
           import json, os
           inspect = int(open('out/inspect_size_bytes.txt').read().strip())
