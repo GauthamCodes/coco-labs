@@ -1,0 +1,1005 @@
+{
+ "schema": "coco_ros2.ws_probe",
+ "version": 1,
+ "url": "ws://127.0.0.1:8765",
+ "utc": "2026-11-28T05:55:00.344Z",
+ "evidence_class": "LIVE (COCO's ROS 2 stack running now: a Gazebo simulation, never hardware)",
+ "node": "v24.21.0",
+ "protocol": "foxglove.sdk.v1",
+ "server_info": {
+  "op": "serverInfo",
+  "name": "",
+  "capabilities": [
+   "connectionGraph",
+   "time"
+  ],
+  "supportedEncodings": [
+   "cdr",
+   "json"
+  ],
+  "metadata": {
+   "ROS_DISTRO": "jazzy",
+   "fg-library": "foxglove-bridge/3.6.3 foxglove-sdk-cpp/0.30.2"
+  },
+  "sessionId": "1795845238788"
+ },
+ "channels": [
+  {
+   "id": 71,
+   "topic": "/amcl_pose",
+   "schemaName": "geometry_msgs/msg/PoseWithCovarianceStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 73,
+   "topic": "/amcl/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 48,
+   "topic": "/arm_controller/controller_state",
+   "schemaName": "control_msgs/msg/JointTrajectoryControllerState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 47,
+   "topic": "/arm_controller/joint_trajectory",
+   "schemaName": "trajectory_msgs/msg/JointTrajectory",
+   "encoding": "cdr"
+  },
+  {
+   "id": 45,
+   "topic": "/arm_controller/speed_scaling_input",
+   "schemaName": "control_msgs/msg/SpeedScalingFactor",
+   "encoding": "cdr"
+  },
+  {
+   "id": 44,
+   "topic": "/arm_controller/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 145,
+   "topic": "/battery_state",
+   "schemaName": "sensor_msgs/msg/BatteryState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 126,
+   "topic": "/behavior_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 149,
+   "topic": "/behavior_tree_log",
+   "schemaName": "nav2_msgs/msg/BehaviorTreeLog",
+   "encoding": "cdr"
+  },
+  {
+   "id": 124,
+   "topic": "/bond",
+   "schemaName": "bond/msg/Status",
+   "encoding": "cdr"
+  },
+  {
+   "id": 122,
+   "topic": "/bt_navigator/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 43,
+   "topic": "/camera/camera_info",
+   "schemaName": "sensor_msgs/msg/CameraInfo",
+   "encoding": "cdr"
+  },
+  {
+   "id": 42,
+   "topic": "/camera/depth/image_raw",
+   "schemaName": "sensor_msgs/msg/Image",
+   "encoding": "cdr"
+  },
+  {
+   "id": 40,
+   "topic": "/camera/image_raw",
+   "schemaName": "sensor_msgs/msg/Image",
+   "encoding": "cdr"
+  },
+  {
+   "id": 41,
+   "topic": "/camera/points",
+   "schemaName": "sensor_msgs/msg/PointCloud2",
+   "encoding": "cdr"
+  },
+  {
+   "id": 37,
+   "topic": "/clock",
+   "schemaName": "rosgraph_msgs/msg/Clock",
+   "encoding": "cdr"
+  },
+  {
+   "id": 119,
+   "topic": "/cmd_vel",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 69,
+   "topic": "/cmd_vel_approach",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 70,
+   "topic": "/cmd_vel_arbiter/status",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 68,
+   "topic": "/cmd_vel_gated",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 117,
+   "topic": "/cmd_vel_nav",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 67,
+   "topic": "/cmd_vel_rl",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 143,
+   "topic": "/cmd_vel_smoothed",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 66,
+   "topic": "/cmd_vel_teleop",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 141,
+   "topic": "/collision_monitor_state",
+   "schemaName": "nav2_msgs/msg/CollisionMonitorState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 142,
+   "topic": "/collision_monitor/collision_points_marker",
+   "schemaName": "visualization_msgs/msg/MarkerArray",
+   "encoding": "cdr"
+  },
+  {
+   "id": 112,
+   "topic": "/collision_monitor/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 34,
+   "topic": "/controller_manager/activity",
+   "schemaName": "controller_manager_msgs/msg/ControllerManagerActivity",
+   "encoding": "cdr"
+  },
+  {
+   "id": 32,
+   "topic": "/controller_manager/introspection_data/full",
+   "schemaName": "pal_statistics_msgs/msg/Statistics",
+   "encoding": "cdr"
+  },
+  {
+   "id": 31,
+   "topic": "/controller_manager/introspection_data/names",
+   "schemaName": "pal_statistics_msgs/msg/StatisticsNames",
+   "encoding": "cdr"
+  },
+  {
+   "id": 30,
+   "topic": "/controller_manager/introspection_data/values",
+   "schemaName": "pal_statistics_msgs/msg/StatisticsValues",
+   "encoding": "cdr"
+  },
+  {
+   "id": 28,
+   "topic": "/controller_manager/statistics/full",
+   "schemaName": "pal_statistics_msgs/msg/Statistics",
+   "encoding": "cdr"
+  },
+  {
+   "id": 27,
+   "topic": "/controller_manager/statistics/names",
+   "schemaName": "pal_statistics_msgs/msg/StatisticsNames",
+   "encoding": "cdr"
+  },
+  {
+   "id": 24,
+   "topic": "/controller_manager/statistics/values",
+   "schemaName": "pal_statistics_msgs/msg/StatisticsValues",
+   "encoding": "cdr"
+  },
+  {
+   "id": 148,
+   "topic": "/controller_selector",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 111,
+   "topic": "/controller_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 116,
+   "topic": "/curvature_lookahead_point",
+   "schemaName": "geometry_msgs/msg/PointStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 39,
+   "topic": "/diagnostics",
+   "schemaName": "diagnostic_msgs/msg/DiagnosticArray",
+   "encoding": "cdr"
+  },
+  {
+   "id": 54,
+   "topic": "/diff_drive_controller/cmd_vel",
+   "schemaName": "geometry_msgs/msg/TwistStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 36,
+   "topic": "/diff_drive_controller/odom",
+   "schemaName": "nav_msgs/msg/Odometry",
+   "encoding": "cdr"
+  },
+  {
+   "id": 53,
+   "topic": "/diff_drive_controller/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 140,
+   "topic": "/dock_pose",
+   "schemaName": "geometry_msgs/msg/PoseStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 110,
+   "topic": "/docking_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 139,
+   "topic": "/docking_trajectory",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 50,
+   "topic": "/dynamic_joint_states",
+   "schemaName": "control_msgs/msg/DynamicJointState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 138,
+   "topic": "/filtered_dock_pose",
+   "schemaName": "geometry_msgs/msg/PoseStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 1,
+   "topic": "/foxglove_bridge/sysinfo",
+   "schemaName": "foxglove.SystemInfo",
+   "encoding": "json"
+  },
+  {
+   "id": 109,
+   "topic": "/global_costmap/clearing_endpoints",
+   "schemaName": "sensor_msgs/msg/PointCloud2",
+   "encoding": "cdr"
+  },
+  {
+   "id": 108,
+   "topic": "/global_costmap/costmap",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 106,
+   "topic": "/global_costmap/costmap_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 105,
+   "topic": "/global_costmap/costmap_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 123,
+   "topic": "/global_costmap/costmap_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 104,
+   "topic": "/global_costmap/footprint",
+   "schemaName": "geometry_msgs/msg/Polygon",
+   "encoding": "cdr"
+  },
+  {
+   "id": 107,
+   "topic": "/global_costmap/global_costmap/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 121,
+   "topic": "/global_costmap/obstacle_layer",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 102,
+   "topic": "/global_costmap/obstacle_layer_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 136,
+   "topic": "/global_costmap/obstacle_layer_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 125,
+   "topic": "/global_costmap/obstacle_layer_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 114,
+   "topic": "/global_costmap/published_footprint",
+   "schemaName": "geometry_msgs/msg/PolygonStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 113,
+   "topic": "/global_costmap/static_layer",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 101,
+   "topic": "/global_costmap/static_layer_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 100,
+   "topic": "/global_costmap/static_layer_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 103,
+   "topic": "/global_costmap/static_layer_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 99,
+   "topic": "/global_costmap/voxel_grid",
+   "schemaName": "nav2_msgs/msg/VoxelGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 135,
+   "topic": "/global_costmap/voxel_layer",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 134,
+   "topic": "/global_costmap/voxel_layer_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 132,
+   "topic": "/global_costmap/voxel_layer_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 144,
+   "topic": "/global_costmap/voxel_layer_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 62,
+   "topic": "/goal_pose",
+   "schemaName": "geometry_msgs/msg/PoseStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 61,
+   "topic": "/grasp/status",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 23,
+   "topic": "/gripper_controller/controller_state",
+   "schemaName": "control_msgs/msg/JointTrajectoryControllerState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 26,
+   "topic": "/gripper_controller/joint_trajectory",
+   "schemaName": "trajectory_msgs/msg/JointTrajectory",
+   "encoding": "cdr"
+  },
+  {
+   "id": 35,
+   "topic": "/gripper_controller/speed_scaling_input",
+   "schemaName": "control_msgs/msg/SpeedScalingFactor",
+   "encoding": "cdr"
+  },
+  {
+   "id": 21,
+   "topic": "/gripper_controller/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 20,
+   "topic": "/imu",
+   "schemaName": "sensor_msgs/msg/Imu",
+   "encoding": "cdr"
+  },
+  {
+   "id": 96,
+   "topic": "/initialpose",
+   "schemaName": "geometry_msgs/msg/PoseWithCovarianceStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 98,
+   "topic": "/is_rotating_to_heading",
+   "schemaName": "std_msgs/msg/Bool",
+   "encoding": "cdr"
+  },
+  {
+   "id": 49,
+   "topic": "/joint_state_broadcaster/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 22,
+   "topic": "/joint_states",
+   "schemaName": "sensor_msgs/msg/JointState",
+   "encoding": "cdr"
+  },
+  {
+   "id": 97,
+   "topic": "/local_costmap/clearing_endpoints",
+   "schemaName": "sensor_msgs/msg/PointCloud2",
+   "encoding": "cdr"
+  },
+  {
+   "id": 65,
+   "topic": "/local_costmap/costmap",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 94,
+   "topic": "/local_costmap/costmap_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 92,
+   "topic": "/local_costmap/costmap_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 91,
+   "topic": "/local_costmap/costmap_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 89,
+   "topic": "/local_costmap/footprint",
+   "schemaName": "geometry_msgs/msg/Polygon",
+   "encoding": "cdr"
+  },
+  {
+   "id": 88,
+   "topic": "/local_costmap/local_costmap/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 87,
+   "topic": "/local_costmap/obstacle_layer",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 127,
+   "topic": "/local_costmap/obstacle_layer_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 86,
+   "topic": "/local_costmap/obstacle_layer_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 93,
+   "topic": "/local_costmap/obstacle_layer_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 85,
+   "topic": "/local_costmap/published_footprint",
+   "schemaName": "geometry_msgs/msg/PolygonStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 84,
+   "topic": "/local_costmap/voxel_grid",
+   "schemaName": "nav2_msgs/msg/VoxelGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 83,
+   "topic": "/local_costmap/voxel_layer",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 95,
+   "topic": "/local_costmap/voxel_layer_raw",
+   "schemaName": "nav2_msgs/msg/Costmap",
+   "encoding": "cdr"
+  },
+  {
+   "id": 82,
+   "topic": "/local_costmap/voxel_layer_raw_updates",
+   "schemaName": "nav2_msgs/msg/CostmapUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 81,
+   "topic": "/local_costmap/voxel_layer_updates",
+   "schemaName": "map_msgs/msg/OccupancyGridUpdate",
+   "encoding": "cdr"
+  },
+  {
+   "id": 64,
+   "topic": "/local_plan",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 80,
+   "topic": "/lookahead_collision_arc",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 79,
+   "topic": "/lookahead_point",
+   "schemaName": "geometry_msgs/msg/PointStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 19,
+   "topic": "/magnet/pick_target/attach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 25,
+   "topic": "/magnet/pick_target/detach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 18,
+   "topic": "/magnet/pick_target/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 15,
+   "topic": "/magnet/target_blue/attach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 14,
+   "topic": "/magnet/target_blue/detach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 13,
+   "topic": "/magnet/target_blue/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 17,
+   "topic": "/magnet/target_green/attach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 12,
+   "topic": "/magnet/target_green/detach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 11,
+   "topic": "/magnet/target_green/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 10,
+   "topic": "/magnet/target_red/attach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 38,
+   "topic": "/magnet/target_red/detach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 9,
+   "topic": "/magnet/target_red/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 7,
+   "topic": "/magnet/target_yellow/attach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 6,
+   "topic": "/magnet/target_yellow/detach",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 33,
+   "topic": "/magnet/target_yellow/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 59,
+   "topic": "/map",
+   "schemaName": "nav_msgs/msg/OccupancyGrid",
+   "encoding": "cdr"
+  },
+  {
+   "id": 72,
+   "topic": "/map_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 57,
+   "topic": "/mission/mode",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 56,
+   "topic": "/mission/search",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 63,
+   "topic": "/mission/state",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 55,
+   "topic": "/mission/target_colour",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 5,
+   "topic": "/model/coco/odometry",
+   "schemaName": "nav_msgs/msg/Odometry",
+   "encoding": "cdr"
+  },
+  {
+   "id": 16,
+   "topic": "/odom",
+   "schemaName": "nav_msgs/msg/Odometry",
+   "encoding": "cdr"
+  },
+  {
+   "id": 4,
+   "topic": "/parameter_events",
+   "schemaName": "rcl_interfaces/msg/ParameterEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 77,
+   "topic": "/particle_cloud",
+   "schemaName": "nav2_msgs/msg/ParticleCloud",
+   "encoding": "cdr"
+  },
+  {
+   "id": 60,
+   "topic": "/perception/status",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 58,
+   "topic": "/plan",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 90,
+   "topic": "/plan_smoothed",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 147,
+   "topic": "/planner_selector",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 115,
+   "topic": "/planner_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 131,
+   "topic": "/polygon_limit",
+   "schemaName": "geometry_msgs/msg/PolygonStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 130,
+   "topic": "/polygon_slowdown",
+   "schemaName": "geometry_msgs/msg/PolygonStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 146,
+   "topic": "/polygon_stop",
+   "schemaName": "geometry_msgs/msg/PolygonStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 133,
+   "topic": "/preempt_teleop",
+   "schemaName": "std_msgs/msg/Empty",
+   "encoding": "cdr"
+  },
+  {
+   "id": 120,
+   "topic": "/received_global_plan",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 29,
+   "topic": "/robot_description",
+   "schemaName": "std_msgs/msg/String",
+   "encoding": "cdr"
+  },
+  {
+   "id": 46,
+   "topic": "/rosout",
+   "schemaName": "rcl_interfaces/msg/Log",
+   "encoding": "cdr"
+  },
+  {
+   "id": 129,
+   "topic": "/route_graph",
+   "schemaName": "visualization_msgs/msg/MarkerArray",
+   "encoding": "cdr"
+  },
+  {
+   "id": 78,
+   "topic": "/route_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 8,
+   "topic": "/scan",
+   "schemaName": "sensor_msgs/msg/LaserScan",
+   "encoding": "cdr"
+  },
+  {
+   "id": 118,
+   "topic": "/smoother_server/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 76,
+   "topic": "/speed_limit",
+   "schemaName": "nav2_msgs/msg/SpeedLimit",
+   "encoding": "cdr"
+  },
+  {
+   "id": 128,
+   "topic": "/staging_pose",
+   "schemaName": "geometry_msgs/msg/PoseStamped",
+   "encoding": "cdr"
+  },
+  {
+   "id": 2,
+   "topic": "/tf",
+   "schemaName": "tf2_msgs/msg/TFMessage",
+   "encoding": "cdr"
+  },
+  {
+   "id": 3,
+   "topic": "/tf_static",
+   "schemaName": "tf2_msgs/msg/TFMessage",
+   "encoding": "cdr"
+  },
+  {
+   "id": 137,
+   "topic": "/unsmoothed_plan",
+   "schemaName": "nav_msgs/msg/Path",
+   "encoding": "cdr"
+  },
+  {
+   "id": 75,
+   "topic": "/velocity_smoother/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  },
+  {
+   "id": 74,
+   "topic": "/waypoint_follower/transition_event",
+   "schemaName": "lifecycle_msgs/msg/TransitionEvent",
+   "encoding": "cdr"
+  }
+ ],
+ "messages": {
+  "/tf": 1079,
+  "/amcl_pose": 1,
+  "/map": 1,
+  "/scan": 135,
+  "/odom": 676,
+  "/clock": 6764
+ },
+ "bytes": {
+  "/tf": 285252,
+  "/amcl_pose": 364,
+  "/map": 646904,
+  "/scan": 527040,
+  "/odom": 489424,
+  "/clock": 81168
+ },
+ "statuses": [
+  {
+   "at_ms": 1795845313382,
+   "level": 2,
+   "message": "Server does not support clientPublish capability"
+  },
+  {
+   "at_ms": 1795845322125,
+   "level": 1,
+   "message": "Client is not advertising channel: 901; ignoring unadvertisement"
+  },
+  {
+   "at_ms": 1795845322127,
+   "level": 1,
+   "message": "Client is not advertising channel: 902; ignoring unadvertisement"
+  }
+ ],
+ "graph_updates": 9,
+ "other_ops": [],
+ "binary_other": 7462,
+ "errors": [],
+ "window_s": 10,
+ "graph_publishers_before": {
+  "/diff_drive_controller/cmd_vel": [
+   "/cmd_vel_arbiter"
+  ],
+  "/cmd_vel_teleop": [
+   "/coco_web_platform"
+  ]
+ },
+ "while_advertised": {
+  "graph_publishers": {
+   "/diff_drive_controller/cmd_vel": [
+    "/cmd_vel_arbiter"
+   ],
+   "/cmd_vel_teleop": [
+    "/coco_web_platform"
+   ]
+  },
+  "in_container": {
+   "pass": true,
+   "wheel_topic_publishers": [
+    "/cmd_vel_arbiter"
+   ],
+   "teleop_publishers": [
+    "/coco_web_platform"
+   ]
+  },
+  "statuses": [
+   {
+    "at_ms": 1795845313382,
+    "level": 2,
+    "message": "Server does not support clientPublish capability"
+   }
+  ]
+ },
+ "closed": {
+  "code": 1006,
+  "reason": ""
+ },
+ "acceptance": {
+  "topics_advertised": {
+   "/scan": true,
+   "/odom": true,
+   "/tf": true,
+   "/map": true,
+   "/plan": true,
+   "/cmd_vel": true
+  },
+  "messages_arrive": {
+   "/scan": true,
+   "/odom": true,
+   "/tf": true
+  },
+  "no_parameters_or_services": true,
+  "wheel_topic_gains_no_publisher": true,
+  "read_only": true
+ },
+ "pass": true
+}

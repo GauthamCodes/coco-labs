@@ -737,7 +737,7 @@ def level_package_op(arg_json):
     # double parameter given an integer is refused (a level package's Nav2 would not start)
     t = json.loads(a['templates_json'])
     files = level_package.package(a['spec'], a['goals'], t['world_template'], t['nav2_params'], t['controllers'],
-                                  scenario=a.get('scenario', 'goals'))
+                                  scenario=a.get('scenario', 'goals'), actor_driver=t.get('actor_driver'))
     return json.dumps({k: base64.b64encode(v).decode('ascii') for k, v in files.items()})
 
 

@@ -15,6 +15,8 @@
 import ast
 import json
 from pathlib import Path
+import subprocess
+import sys
 
 from coco_lab import level_files as lf
 from coco_lab import level_package as lp
@@ -129,3 +131,45 @@ def test_bad_goals_are_refused(goals, why):
 def test_a_bad_scenario_name_is_refused():
     with pytest.raises(lp.PackageError, match='scenario name'):
         lp.package(DEPOT, [[26, 6.5]], WORLD, NAV2, CTRL, scenario='Two Goals')
+
+
+DRIVER = (REPO / 'tools/g2/actor_scenario.py').read_text(encoding='utf-8')
+
+
+def test_a_depot_package_carries_the_actor_driver_and_its_coco_lab(tmp_path):
+    """R6.A4: a level package carries G2.9's actor driver, unchanged, and its coco_lab."""
+    out = lp.package(DEPOT, [[26, 6.5]], WORLD, NAV2, CTRL, actor_driver=DRIVER)
+    assert out[f'{PKG}/actors/actor_scenario.py'] == DRIVER.encode('utf-8')
+    mods = sorted(k.rsplit('/', 1)[1] for k in out if k.startswith(f'{PKG}/actors/coco_lab/'))
+    assert {'__init__.py', 'games.py', 'worldspec_v3.py', 'numerics.py'} <= set(mods)
+    assert [
+        m[:-3] for m in mods if m.endswith('.py') and m != '__init__.py'
+    ] == lp.coco_lab_closure()
+    assert 'link_limits.json' in mods  # link_bounds reads it at import
+    launch = out[f'{PKG}/launch/level.launch.py'].decode()
+    assert 'HAS_ACTORS = True' in launch and "'actor_scenario.py'" in launch
+    assert b'move by G2.9' in out[f'{PKG}/README.md']
+    # the bundled coco_lab stands on its own: the driver's imports, with only the package's
+    # actors/ on the path
+    for rel, data in out.items():
+        if rel.startswith(f'{PKG}/actors/'):
+            p = tmp_path / rel
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_bytes(data)
+    code = (
+        'import sys; sys.path[:] = [p for p in sys.path if "coco_lab" not in p]; '
+        f'sys.path.insert(0, {str(tmp_path / PKG / "actors")!r}); '
+        'from coco_lab.games import box_distance; from coco_lab.worldspec_v3 import actor_pose; '
+        'import coco_lab; print(coco_lab.__file__)'
+    )
+    r = subprocess.run(
+        [sys.executable, '-I', '-c', code], capture_output=True, text=True, check=True
+    )
+    assert str(tmp_path / PKG / 'actors') in r.stdout
+
+
+def test_without_the_driver_the_actors_stand_still_and_say_so(files):
+    """Without the driver (actor_driver=None): no actors/, and the README says they stand still."""
+    assert not any('/actors/' in k for k in files)
+    assert 'HAS_ACTORS = False' in files[f'{PKG}/launch/level.launch.py'].decode()
+    assert b'made without their driver, so they stand still' in files[f'{PKG}/README.md']

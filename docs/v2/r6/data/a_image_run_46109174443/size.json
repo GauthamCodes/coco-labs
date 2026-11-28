@@ -1,0 +1,18 @@
+{
+ "build_seconds": 138,
+ "docker_image_inspect_size_bytes": 2677605236,
+ "du_root_bytes": 2677683836,
+ "git_sha": "9a864467040abc428759854c09ee133ecc04ad5d",
+ "levels": {
+  "arena": "stock (as installed by gazebo_models)",
+  "depot": "identical",
+  "depot_clutter": "identical",
+  "depot_colours": "identical"
+ },
+ "levels_all_verified": true,
+ "max_image_bytes": 4000000000,
+ "schema": "coco_ros2.size",
+ "unpacked_bytes": 2677683836,
+ "version": 1,
+ "within_budget": true
+}

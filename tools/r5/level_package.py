@@ -29,6 +29,7 @@ def main(argv=None) -> int:
     ap.add_argument('--scenario', default='goals')
     ap.add_argument('--repo', default=str(REPO), help="COCO Lab's checkout (the world and Nav2 templates)")
     ap.add_argument('--out', required=True)
+    ap.add_argument('--no-actors', action='store_true', help='leave the actors\' driver out (they stand still)')
     a = ap.parse_args(argv)
     repo = Path(a.repo)
     spec = yaml.safe_load(Path(a.spec).read_text(encoding='utf-8'))
@@ -37,7 +38,8 @@ def main(argv=None) -> int:
                     (repo / 'gazebo_models/worlds/coco_navigation.world').read_text(encoding='utf-8'),
                     yaml.safe_load((repo / 'gazebo_models/config/nav2_params.yaml').read_text(encoding='utf-8')),
                     yaml.safe_load((repo / 'gazebo_models/urdf/coco_controllers.yaml').read_text(encoding='utf-8')),
-                    scenario=a.scenario, dump=yaml.safe_dump)
+                    scenario=a.scenario, dump=yaml.safe_dump,
+                    actor_driver=None if a.no_actors else (repo / 'tools/g2/actor_scenario.py').read_text(encoding='utf-8'))
     for rel, data in files.items():
         p = Path(a.out) / rel
         p.parent.mkdir(parents=True, exist_ok=True)

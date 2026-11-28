@@ -194,9 +194,12 @@ run_stack() {
   # The code (a CSPRNG, coco_web/control.py) is printed below; STOP needs no code, from any client.
   # Idle 30 min (coco_web's default 60 s is for shared remote demos: in a visitor's OWN container a minute
   # without input ended the session and latched STOP, measured on the laptop 2026-11-27); STOP still ends it.
+  # R6.A3: the level's world_to_map, so robot.truth is in THIS level's map frame (the gateway's default is the
+  # arena's SPAWN_XY, which put the Depot's truth 2.0 m off in x)
   start gateway ros2 run coco_web platform_server --ros-args -p use_sim_time:=true \
     -p "http_port:=${GW_PORT}" -p remote:=true -p access:=code -p "origins:=${GW_ORIGINS}" \
-    -p session_cap_s:=86400.0 -p session_idle_s:=1800.0
+    -p session_cap_s:=86400.0 -p session_idle_s:=1800.0 \
+    -p "map_offset_x:=${LEVEL_W2M_X}" -p "map_offset_y:=${LEVEL_W2M_Y}"
   if [ -n "$LEVEL_MAP" ]; then
     start nav ros2 launch gazebo_models nav.launch.py arbiter:=true use_sim_time:=true \
       map:="$LEVEL_MAP" params_file:="$LEVEL_PARAMS"
@@ -206,6 +209,17 @@ run_stack() {
   wait_for "every Nav2 lifecycle node active" "$NAV_TIMEOUT" nav_active \
     || fail "Nav2 did not reach active" nav.log
   wait_for "AMCL publishing a pose" "$AMCL_TIMEOUT" amcl_up || fail "no AMCL pose" nav.log
+
+  # R6.A4: the level's actors move by G2.9's scenario rule (they stop for COCO), as in the R3 gate and the
+  # browser: the unchanged driver, tools/g2/actor_scenario.py, with coco_lab beside it. NOT tracked by the hold
+  # loop below: if the driver stops (its watchdog, or SIGINT to write its summary), the stack keeps running.
+  if [ -n "$LEVEL_ACTORS" ] && grep -q '"scenario_rule"' "$LEVEL_ACTORS" 2>/dev/null; then
+    setsid env PYTHONPATH="$COCO/lib${PYTHONPATH:+:$PYTHONPATH}" python3 "$COCO/bin/actor_scenario.py" \
+      "$LEVEL_ID" "$LEVEL_ACTORS" "$LOGS/actors.jsonl" --summary "$LOGS/actor_scenario.json" \
+      > "$LOGS/actors.log" 2>&1 &
+    echo "$!" > "$LOGS/actors.pid"
+    say "actors: driven by the G2.9 scenario rule (they stop for COCO); log $LOGS/actors.jsonl"
+  fi
 
   printf '{"level": "%s", "id": "%s", "bridge_port": %s, "ready_utc": "%s", "nav2": "active"}\n' \
     "$LEVEL_ALIAS" "$LEVEL_ID" "$PORT" "$(date -u +%FT%TZ)" > "$LOGS/ready.json.tmp"

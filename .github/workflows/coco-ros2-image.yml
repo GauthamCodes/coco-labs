@@ -13,7 +13,7 @@ name: coco-ros2 image
 
 on:
   push:
-    branches: [ main, 'v2/r5-*' ]
+    branches: [ main, 'v2/r5-*', 'v2/r6*' ]
     paths:
       - 'docker/coco-ros2/**'
       - '.github/workflows/coco-ros2-image.yml'
@@ -24,6 +24,7 @@ on:
       - 'coco_web/**'
       - 'coco_lab/coco_lab/**'
       - 'tools/m6/gen_level.py'
+      - 'tools/g2/actor_scenario.py'
       - 'worlds/**'
   workflow_dispatch:
     inputs:
@@ -83,6 +84,9 @@ jobs:
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/levels/index.json > out/levels_index.json
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/packages.txt > out/packages.txt
           docker run --rm --entrypoint cat coco-ros2:ci /opt/coco/image.json > out/image.json
+          # R6.A1: where the bytes are (packages by family, headers/docs/static libs), from inside the image
+          docker run --rm -v "$PWD/docker/coco-ros2/size_breakdown.sh:/tmp/size_breakdown.sh:ro" --entrypoint sh coco-ros2:ci /tmp/size_breakdown.sh > out/size_breakdown.json
+          python3 -c "import json; d = json.load(open('out/size_breakdown.json')); print(json.dumps({k: d[k] for k in ('du_root_bytes', 'dpkg_total_bytes', 'families_bytes', 'dirs_bytes', 'static_libs_bytes')}, indent=1))"
           python3 - <<'PY'
           import json, os
           inspect = int(open('out/inspect_size_bytes.txt').read().strip())
@@ -131,6 +135,14 @@ jobs:
 
       - name: The control gateway from outside the container (ws://127.0.0.1:8766/ws, coco.v1)
         run: node docker/coco-ros2/gw_probe.mjs ws://127.0.0.1:8766/ws out/gw_probe.json --container coco
+
+      - name: R6.A3 truth in the level's map frame, on a test route (robot.truth vs Gazebo's own pose)
+        run: |
+          w2m=$(python3 -c "import json; e = json.load(open('out/levels_index.json'))['levels']['depot']; print(','.join(str(v) for v in e['world_to_map']))")
+          node docker/coco-ros2/truth_route.mjs ws://127.0.0.1:8766/ws out/truth_route.json --container coco --w2m "$w2m"
+
+      - name: R6.A4 one Depot round with the actors (they move, and stop for COCO parked in a lane)
+        run: node docker/coco-ros2/actors_round.mjs ws://127.0.0.1:8766/ws out/actors_round.json --container coco
 
       - name: After the probe, the stack still passes (the arbiter still the only wheel publisher)
         run: |

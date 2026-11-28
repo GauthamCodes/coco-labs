@@ -24,6 +24,9 @@
 #   docker build -f docker/coco-ros2/Dockerfile --build-arg GIT_SHA=$(git rev-parse HEAD) -t coco-ros2 .
 
 ARG ROS_IMAGE=ros:jazzy-ros-base-noble
+# R6.A1: the runtime starts from ros-core: ros-base adds build-essential, git, colcon and rosdep (303 MB, CI run
+# 46107746202), which a runtime never uses; every package the stack needs is pulled by the install below.
+ARG ROS_CORE_IMAGE=ros:jazzy-ros-core-noble
 # The interpreter and PyYAML the leaderboard verifier already pins (tools/r2/verifier.Dockerfile);
 # the level files' checksums do not depend on it (the build fails if they differ).
 ARG PY_IMAGE=python:3.12.3-slim-bookworm
@@ -57,8 +60,8 @@ RUN . /opt/ros/jazzy/setup.sh \
  && colcon build --packages-select coco_config coco_sim custom_teleop gazebo_models coco_web \
       --cmake-args -DBUILD_TESTING=OFF --event-handlers console_cohesion+
 
-# ---- 3. the runtime ----
-FROM ${ROS_IMAGE}
+# ---- 3. the runtime filesystem ----
+FROM ${ROS_CORE_IMAGE} AS runtime
 ENV DEBIAN_FRONTEND=noninteractive
 # Each package is the minimum the four launch files need (gazebo_models full_world_robo.launch.py and
 # nav.launch.py, custom_teleop arbiter.launch.py) plus the bridge, CycloneDDS and software OpenGL.
@@ -92,10 +95,29 @@ RUN apt-get update \
       opencv-python-headless==4.10.0.84 tornado==6.5.7 \
  && python3 -c "import cv2, numpy, tornado; print('cv2', cv2.__version__, 'numpy', numpy.__version__, 'tornado', tornado.version)" \
  && apt-get purge -y python3-pip && apt-get autoremove -y \
- && rm -rf /var/lib/apt/lists/*
+ && apt-get install -y --no-install-recommends ca-certificates curl \
+ && curl -fsSL https://packages.osrfoundation.org/gazebo.gpg -o /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg \
+ && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable noble main" \
+      > /etc/apt/sources.list.d/gazebo-stable.list \
+ && apt-get update \
+ && apt-get install -y --no-install-recommends python3-gz-transport13 \
+ && python3 -c "from gz.transport13 import Node; from gz.msgs10.odometry_pb2 import Odometry; from gz.msgs10.pose_v_pb2 import Pose_V; print('gz-transport python ok')" \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm -rf /usr/include/* /opt/ros/jazzy/include/* /usr/share/doc/* /usr/share/man/* /usr/share/info/* \
+ && find / -xdev \( -path /proc -o -path /sys \) -prune -o -type f -name '*.a' -print0 | xargs -0 -r rm -f
+# R6.A1: what the install brings that a runtime never reads, measured in CI run 46107746202's
+# size_breakdown.json: static libraries 603 MB, headers 401 MB (/usr/include, ROS's include), docs 164 MB.
+# The -dev packages that carry them are dependencies of ROS vendor packages, so they stay installed (dpkg
+# still lists them); only these files go. Nothing is compiled in this image.
 
 COPY --from=overlay /opt/coco_ws/install /opt/coco_ws/install
 COPY --from=levels /opt/coco/levels /opt/coco/levels
+# R6.A4: the actors' driver (G2.9's scenario rule, unchanged: tools/g2/actor_scenario.py) and the coco_lab it
+# imports (games.box_distance, worldspec_v3.actor_pose; pure Python). Its gz-transport binding is OSRF's
+# python3-gz-transport13 (installed above): ROS's vendored Gazebo ships the message bindings but not
+# transport's. `gz` is a namespace package, so both import together (as on the R3 gate's laptop).
+COPY coco_lab/coco_lab /opt/coco/lib/coco_lab
+COPY tools/g2/actor_scenario.py /opt/coco/bin/actor_scenario.py
 COPY docker/coco-ros2/entrypoint.sh /opt/coco/bin/coco-ros2
 COPY docker/coco-ros2/level_env.py docker/coco-ros2/check.py docker/coco-ros2/odom_relay.py /opt/coco/bin/
 COPY docker/coco-ros2/foxglove_bridge.yaml /opt/coco/config/foxglove_bridge.yaml
@@ -105,6 +127,17 @@ RUN chmod 0755 /opt/coco/bin/* \
  && printf '{"image": "ghcr.io/gauthamcodes/coco-ros2", "git_sha": "%s", "dockerfile": "docker/coco-ros2/Dockerfile"}\n' \
       "${GIT_SHA}" > /opt/coco/image.json \
  && dpkg-query -W -f '${Package} ${Version}\n' > /opt/coco/packages.txt
+
+# ---- 4. one flattened layer (R6.A1) ----
+# Files removed in a later layer still ship in the earlier ones (the base image's build tools, the install's
+# headers and static libraries), so the image is the runtime filesystem copied into a single layer. The base
+# image's environment (ros:jazzy-ros-core) is set again here; the entrypoint sources ROS itself.
+FROM scratch
+COPY --from=runtime / /
+ENV ROS_DISTRO=jazzy \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # COCO's single-machine settings, as setup_env.sh: CycloneDDS and gz-transport on loopback. The ROS
 # graph stays inside the container; only the bridge's port is published.

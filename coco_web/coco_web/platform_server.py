@@ -241,6 +241,11 @@ class CocoWebNode(Node):
         # decoded and put in the map frame, sent as robot.truth. It never
         # reaches the mission through this node -- see _on_truth.
         self.declare_parameter('truth', True)
+        # R6.A3: where the map is, for a World Spec level (map = world +
+        # world_to_map; the Depot's is [0, 0]). NaN: COCO's own arena, whose
+        # map origin is SPAWN_XY (coco_config.robot), as before.
+        self.declare_parameter('map_offset_x', float('nan'))
+        self.declare_parameter('map_offset_y', float('nan'))
         # Optional components whose absence makes the session DEGRADED
         # (the health axis). Only the launch file knows whether Nav2 or
         # the executive were started at all, so it says; mission.launch.py
@@ -327,7 +332,15 @@ class CocoWebNode(Node):
 
         self.colours = self._load_colours()
         self.arm_limits, self.grip_limits = self._load_joint_limits()
-        self._spawn_xy = self._load_spawn()
+        self._spawn_xy = tele.map_origin(
+            self._load_spawn(),
+            self.get_parameter('map_offset_x').value,
+            self.get_parameter('map_offset_y').value)
+        # R6.A3, additive to welcome.config: which frame robot.truth is in (built here, where the
+        # truth display is set up; config_doc only reports it)
+        self._config_frames = {'truth_frame': tele.truth_frame(
+            self.get_parameter('map_offset_x').value,
+            self.get_parameter('map_offset_y').value)}
         # The browser's last Nav2 goal, and the action's status entries
         # as (accepted_stamp_s, code), for nav.goal.
         self._goal_entries = []
@@ -489,7 +502,8 @@ class CocoWebNode(Node):
         """Return welcome.config: where the configuration came from."""
         return {'source': 'fallback' if self.config_fallbacks
                 else 'coco_config',
-                'fallbacks': list(self.config_fallbacks)}
+                'fallbacks': list(self.config_fallbacks),
+                **self._config_frames}
 
     def _load_joint_limits(self):
         """

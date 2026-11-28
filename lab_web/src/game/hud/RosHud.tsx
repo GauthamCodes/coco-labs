@@ -11,11 +11,11 @@
 
 import { useLayoutEffect, useRef, useState } from 'react';
 import { formatLine, type LogLine } from '../../ros/rosout';
-import { clockText, stripText, type SimClock, type Strip } from '../../ros/telemetry';
+import { clockText, stripText, truthGapText, type SimClock, type Strip } from '../../ros/telemetry';
 
-export function TelemetryStrip({ s, live = false }: { s: Strip | null; live?: boolean }) {
+export function TelemetryStrip({ s, live = false, gap = null }: { s: Strip | null; live?: boolean; gap?: number | null }) {
   return <p className="g2-telemetry" data-testid="g2-telemetry" aria-label={live ? "Telemetry (LIVE): the command, odometry and sim time of COCO's ROS 2 stack in your container" : "Telemetry (model): the command, odometry and sim time"}>
-    {s ? stripText(s) : '/cmd_vel · /odom · sim — waiting for the model'}</p>;
+    {s ? stripText(s) + (live ? truthGapText(gap) : '') : '/cmd_vel · /odom · sim — waiting for the model'}</p>;
 }
 
 export function GazeboBar({ clock, now }: { clock: SimClock; now: number }) {

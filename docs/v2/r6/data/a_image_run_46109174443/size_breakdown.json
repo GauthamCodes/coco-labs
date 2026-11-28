@@ -1,0 +1,571 @@
+{
+ "schema": "coco_ros2.size_breakdown",
+ "version": 1,
+ "du_root_bytes": 2677683836,
+ "dpkg_total_bytes": 3762157568,
+ "packages": 1493,
+ "families_bytes": {
+  "other": 1421532160,
+  "llvm_mesa_gl": 491779072,
+  "boost": 353451008,
+  "ros_other": 294021120,
+  "opencv_pcl_vtk": 239598592,
+  "gcc_build_tools": 226063360,
+  "gazebo": 220222464,
+  "nav2": 127692800,
+  "python": 125385728,
+  "qt": 106157056,
+  "x11_xvfb": 97540096,
+  "ogre": 35704832,
+  "dart_bullet_physics": 23009280
+ },
+ "family_members_top": {
+  "gazebo": [
+   "ros-jazzy-gz-sim-vendor",
+   "ros-jazzy-gz-dartsim-vendor",
+   "ros-jazzy-gz-rendering-vendor",
+   "ros-jazzy-ros-gz-bridge",
+   "ros-jazzy-gz-ogre-next-vendor",
+   "ros-jazzy-gz-physics-vendor",
+   "ros-jazzy-gz-msgs-vendor",
+   "ros-jazzy-ros-gz-interfaces",
+   "ros-jazzy-gz-math-vendor",
+   "ros-jazzy-ros-gz-sim",
+   "libgz-msgs10",
+   "ros-jazzy-gz-gui-vendor"
+  ],
+  "qt": [
+   "qtbase5-dev",
+   "libqt5gui5t64",
+   "libqt5widgets5t64",
+   "libqt5quick5",
+   "libqt5core5t64",
+   "qml-module-qtquick-controls2",
+   "qtdeclarative5-dev",
+   "libqt5qml5",
+   "qtbase5-dev-tools",
+   "qtdeclarative5-dev-tools",
+   "qml-module-qtquick-controls",
+   "qt5-qmake-bin"
+  ],
+  "ogre": [
+   "ros-jazzy-rviz-ogre-vendor",
+   "libogre-1.9.0t64",
+   "libogre-1.9-dev"
+  ],
+  "nav2": [
+   "ros-jazzy-nav2-msgs",
+   "ros-jazzy-nav2-minimal-tb4-description",
+   "ros-jazzy-nav2-behavior-tree",
+   "ros-jazzy-nav2-costmap-2d",
+   "ros-jazzy-nav2-collision-monitor",
+   "ros-jazzy-opennav-docking",
+   "ros-jazzy-nav2-behaviors",
+   "ros-jazzy-dwb-msgs",
+   "ros-jazzy-nav2-rviz-plugins",
+   "ros-jazzy-nav2-smac-planner",
+   "ros-jazzy-nav2-route",
+   "ros-jazzy-nav2-bringup"
+  ],
+  "dart_bullet_physics": [
+   "libbullet3.24t64",
+   "libfcl0.7",
+   "libbullet-dev",
+   "libfcl-dev",
+   "libode-dev",
+   "libode8t64",
+   "libccd2",
+   "libccd-dev"
+  ],
+  "boost": [
+   "libboost1.83-dev",
+   "libboost-log1.83-dev",
+   "libboost-test1.83-dev",
+   "libboost1.83-tools-dev",
+   "libboost-wave1.83-dev",
+   "libboost-math1.83-dev",
+   "libboost-locale1.83-dev",
+   "libboost-url1.83-dev",
+   "libboost-serialization1.83-dev",
+   "libboost-log1.83.0",
+   "libboost-program-options1.83-dev",
+   "libboost-graph1.83-dev"
+  ],
+  "llvm_mesa_gl": [
+   "libllvm20",
+   "libllvm17t64",
+   "libllvm18",
+   "mesa-libgallium",
+   "libvulkan-dev",
+   "libglib2.0-dev",
+   "libglib2.0-0t64",
+   "libglew-dev",
+   "libdrm-dev",
+   "libgl-dev",
+   "libglu1-mesa-dev",
+   "libglew2.2"
+  ],
+  "python": [
+   "libpython3.12-dev",
+   "python3-numpy",
+   "libpython3.12-stdlib",
+   "libpython3.12t64",
+   "python3-opencv",
+   "python3.12-minimal",
+   "libpython3.12-minimal",
+   "python3-lxml",
+   "python3-pygments",
+   "python3-cryptography",
+   "python3-setuptools",
+   "python3-docutils"
+  ],
+  "ros_other": [
+   "ros-jazzy-foxglove-bridge",
+   "ros-jazzy-control-msgs",
+   "ros-jazzy-ompl",
+   "ros-jazzy-slam-toolbox",
+   "ros-jazzy-simulation-interfaces",
+   "ros-jazzy-fastrtps",
+   "ros-jazzy-rviz-default-plugins",
+   "ros-jazzy-sdformat-vendor",
+   "ros-jazzy-robot-localization",
+   "ros-jazzy-controller-manager-msgs",
+   "ros-jazzy-rcl-interfaces",
+   "ros-jazzy-foonathan-memory-vendor"
+  ],
+  "opencv_pcl_vtk": [
+   "libvtk9.1t64",
+   "libopencv-contrib-dev",
+   "libopencv-dnn-dev",
+   "libopencv-core-dev",
+   "libopencv-imgproc-dev",
+   "libopencv-contrib406t64",
+   "libopencv-calib3d-dev",
+   "libopencv-imgproc406t64",
+   "libopencv-dnn406t64",
+   "libopencv-core406t64",
+   "libopencv-features2d-dev",
+   "libopencv-videoio-dev"
+  ],
+  "x11_xvfb": [
+   "libx265-dev",
+   "libxerces-c-dev",
+   "libx265-199",
+   "xkb-data",
+   "libxerces-c3.2t64",
+   "libxml2-dev",
+   "libx11-dev",
+   "xvfb",
+   "libxml2",
+   "libxtensor-dev",
+   "libx264-164",
+   "x11proto-dev"
+  ],
+  "gcc_build_tools": [
+   "gcc-13-x86-64-linux-gnu",
+   "cmake",
+   "cpp-13-x86-64-linux-gnu",
+   "libstdc++-13-dev",
+   "libgcc-13-dev",
+   "libc6-dev",
+   "binutils-x86-64-linux-gnu",
+   "cmake-data",
+   "cppcheck",
+   "linux-libc-dev",
+   "binutils-common",
+   "gcc-13"
+  ],
+  "other": [
+   "libamd-comgr2",
+   "libicu-dev",
+   "libicu74",
+   "spirv-tools",
+   "gfortran-13-x86-64-linux-gnu",
+   "libperl5.38t64",
+   "libflite1",
+   "libomp-18-dev",
+   "libruby3.2",
+   "libgdal34t64",
+   "liblapack-dev",
+   "proj-data"
+  ]
+ },
+ "top_packages": [
+  [
+   "libboost1.83-dev",
+   160992256
+  ],
+  [
+   "libllvm20",
+   143610880
+  ],
+  [
+   "libllvm17t64",
+   123728896
+  ],
+  [
+   "libllvm18",
+   123278336
+  ],
+  [
+   "libvtk9.1t64",
+   110546944
+  ],
+  [
+   "gcc-13-x86-64-linux-gnu",
+   62804992
+  ],
+  [
+   "libamd-comgr2",
+   62153728
+  ],
+  [
+   "ros-jazzy-gz-sim-vendor",
+   54773760
+  ],
+  [
+   "libicu-dev",
+   48999424
+  ],
+  [
+   "ros-jazzy-gz-dartsim-vendor",
+   46480384
+  ],
+  [
+   "mesa-libgallium",
+   43607040
+  ],
+  [
+   "ros-jazzy-foxglove-bridge",
+   43117568
+  ],
+  [
+   "cmake",
+   37368832
+  ],
+  [
+   "libicu74",
+   36781056
+  ],
+  [
+   "spirv-tools",
+   35407872
+  ],
+  [
+   "ros-jazzy-nav2-msgs",
+   34939904
+  ],
+  [
+   "gfortran-13-x86-64-linux-gnu",
+   33231872
+  ],
+  [
+   "libopencv-contrib-dev",
+   31835136
+  ],
+  [
+   "cpp-13-x86-64-linux-gnu",
+   31546368
+  ],
+  [
+   "libperl5.38t64",
+   30045184
+  ],
+  [
+   "libpython3.12-dev",
+   29730816
+  ],
+  [
+   "libflite1",
+   28182528
+  ],
+  [
+   "libomp-18-dev",
+   27611136
+  ],
+  [
+   "libvulkan-dev",
+   26536960
+  ],
+  [
+   "libruby3.2",
+   26231808
+  ],
+  [
+   "ros-jazzy-nav2-minimal-tb4-description",
+   25438208
+  ],
+  [
+   "libgdal34t64",
+   25430016
+  ],
+  [
+   "liblapack-dev",
+   25206784
+  ],
+  [
+   "proj-data",
+   24079360
+  ],
+  [
+   "libamdhip64-5",
+   24028160
+  ],
+  [
+   "python3-numpy",
+   23875584
+  ],
+  [
+   "libavcodec-dev",
+   23732224
+  ],
+  [
+   "ros-jazzy-gz-rendering-vendor",
+   22526976
+  ],
+  [
+   "libstdc++-13-dev",
+   22181888
+  ],
+  [
+   "libx265-dev",
+   22116352
+  ],
+  [
+   "iso-codes",
+   20908032
+  ],
+  [
+   "libspatialite-dev",
+   20334592
+  ],
+  [
+   "libceres-dev",
+   20267008
+  ],
+  [
+   "ros-jazzy-ros-gz-bridge",
+   19937280
+  ],
+  [
+   "perl-modules-5.38",
+   19627008
+  ],
+  [
+   "ros-jazzy-gz-ogre-next-vendor",
+   18912256
+  ],
+  [
+   "ros-jazzy-rviz-ogre-vendor",
+   18087936
+  ],
+  [
+   "libxerces-c-dev",
+   17720320
+  ],
+  [
+   "libcodec2-1.2",
+   16857088
+  ],
+  [
+   "libavcodec60",
+   16626688
+  ],
+  [
+   "libx265-199",
+   16484352
+  ],
+  [
+   "libgcc-13-dev",
+   16467968
+  ],
+  [
+   "ros-jazzy-control-msgs",
+   16144384
+  ],
+  [
+   "ros-jazzy-ompl",
+   16013312
+  ],
+  [
+   "qtbase5-dev",
+   15722496
+  ],
+  [
+   "ros-jazzy-slam-toolbox",
+   15155200
+  ],
+  [
+   "libopencv-dnn-dev",
+   14635008
+  ],
+  [
+   "ros-jazzy-nav2-behavior-tree",
+   14510080
+  ],
+  [
+   "ros-jazzy-simulation-interfaces",
+   14127104
+  ],
+  [
+   "libc6",
+   13755392
+  ],
+  [
+   "libavfilter9",
+   13619200
+  ],
+  [
+   "libc6-dev",
+   13427712
+  ],
+  [
+   "libssl-dev",
+   13321216
+  ],
+  [
+   "libhdf5-openmpi-dev",
+   13308928
+  ],
+  [
+   "libqt5gui5t64",
+   13167616
+  ]
+ ],
+ "dirs_bytes": {
+  "/opt/ros/jazzy": 543086028,
+  "/opt/ros/jazzy/include": 0,
+  "/opt/ros/jazzy/lib": 273971114,
+  "/opt/ros/jazzy/share": 56592345,
+  "/usr/include": 0,
+  "/usr/share/doc": 0,
+  "/usr/share/man": 0,
+  "/usr/share/locale": 1215,
+  "/usr/lib/x86_64-linux-gnu": 1262424696,
+  "/usr/lib/python3": 88802998,
+  "/usr/local/lib/python3.12": 145427656,
+  "/usr/lib/gcc": 2976714,
+  "/usr/share/gz": 85467,
+  "/usr/lib/x86_64-linux-gnu/qt5": 20282449,
+  "/opt/coco": 9667909,
+  "/opt/coco_ws": 21521614,
+  "/var/lib/apt": 90358,
+  "/var/cache": 1727139
+ },
+ "static_libs_bytes": 0,
+ "why_installed": {
+  "libllvm17t64": null,
+  "libllvm18": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-mppi-controller",
+   "libomp-dev",
+   "libomp-18-dev",
+   "libomp5-18",
+   "libllvm18"
+  ],
+  "libllvm20": [
+   "libglx-mesa0",
+   "mesa-libgallium",
+   "libllvm20"
+  ],
+  "libamd-comgr2": [
+   "ros-jazzy-nav2-bringup",
+   "ros-jazzy-slam-toolbox",
+   "libboost-all-dev",
+   "libboost-graph-parallel-dev",
+   "libboost-graph-parallel1.83-dev",
+   "libboost-graph-parallel1.83.0",
+   "libopenmpi3t64",
+   "libucx0",
+   "libamdhip64-5",
+   "libamd-comgr2"
+  ],
+  "libamdhip64-5": [
+   "ros-jazzy-nav2-bringup",
+   "ros-jazzy-slam-toolbox",
+   "libboost-all-dev",
+   "libboost-graph-parallel-dev",
+   "libboost-graph-parallel1.83-dev",
+   "libboost-graph-parallel1.83.0",
+   "libopenmpi3t64",
+   "libucx0",
+   "libamdhip64-5"
+  ],
+  "libvtk9.1t64": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-waypoint-follower",
+   "ros-jazzy-cv-bridge",
+   "python3-opencv",
+   "libopencv-viz406t64",
+   "libvtk9.1t64"
+  ],
+  "libboost1.83-dev": [
+   "ros-jazzy-controller-manager",
+   "ros-jazzy-realtime-tools",
+   "libboost-dev",
+   "libboost1.83-dev"
+  ],
+  "libopencv-contrib-dev": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-waypoint-follower",
+   "ros-jazzy-cv-bridge",
+   "libopencv-dev",
+   "libopencv-contrib-dev"
+  ],
+  "gfortran-13-x86-64-linux-gnu": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-smac-planner",
+   "ros-jazzy-ompl",
+   "libflann-dev",
+   "libhdf5-mpi-dev",
+   "libhdf5-openmpi-dev",
+   "libopenmpi-dev",
+   "gfortran-13",
+   "gfortran-13-x86-64-linux-gnu"
+  ],
+  "gcc-13-x86-64-linux-gnu": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-smac-planner",
+   "ros-jazzy-ompl",
+   "libflann-dev",
+   "libhdf5-mpi-dev",
+   "libhdf5-openmpi-dev",
+   "libopenmpi-dev",
+   "gfortran-13",
+   "gcc-13",
+   "gcc-13-x86-64-linux-gnu"
+  ],
+  "cmake": [
+   "ros-jazzy-ros-core",
+   "ros-jazzy-ament-cmake",
+   "cmake"
+  ],
+  "libgdal34t64": [
+   "ros-jazzy-gz-ros2-control",
+   "ros-jazzy-gz-common-vendor",
+   "libgdal34t64"
+  ],
+  "libavcodec-dev": [
+   "ros-jazzy-gz-ros2-control",
+   "ros-jazzy-gz-common-vendor",
+   "libavcodec-dev"
+  ],
+  "libceres-dev": [
+   "ros-jazzy-navigation2",
+   "ros-jazzy-nav2-constrained-smoother",
+   "libceres-dev"
+  ],
+  "libicu-dev": [
+   "ros-jazzy-gz-ros2-control",
+   "ros-jazzy-gz-common-vendor",
+   "libgdal-dev",
+   "libxerces-c-dev",
+   "libicu-dev"
+  ],
+  "ros-jazzy-nav2-minimal-tb4-description": [
+   "ros-jazzy-nav2-bringup",
+   "ros-jazzy-nav2-minimal-tb4-sim",
+   "ros-jazzy-nav2-minimal-tb4-description"
+  ]
+ }
+}

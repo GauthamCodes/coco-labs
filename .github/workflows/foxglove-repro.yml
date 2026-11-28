@@ -1,0 +1,32 @@
+# R6.A2: the minimal upstream reproduction (docs/v2/r6/foxglove_repro/), run in a clean ros:jazzy-ros-base
+# container: does foxglove_bridge apply client_topic_whitelist? The log is the evidence quoted in
+# docs/v2/r6/UPSTREAM_foxglove_issue.md. Exit 1 = reproduced (the allowlist is not applied).
+name: foxglove_bridge allowlist reproduction
+
+on:
+  push:
+    branches: [ 'v2/r6*' ]
+    paths:
+      - 'docs/v2/r6/foxglove_repro/**'
+      - '.github/workflows/foxglove-repro.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repro:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the reproduction (exit 1 = reproduced; the log is kept either way)
+        run: |
+          set +e
+          docker run --rm -v "$PWD/docs/v2/r6/foxglove_repro:/repro:ro" ros:jazzy-ros-base bash /repro/repro.sh > repro.log 2>&1
+          echo "exit=$?" >> repro.log
+          cat repro.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foxglove-repro
+          path: repro.log

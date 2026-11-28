@@ -1,0 +1,1080 @@
+{
+ "schema": "coco_ros2.gw_probe",
+ "version": 1,
+ "url": "ws://127.0.0.1:8766/ws",
+ "utc": "2026-11-28T04:52:58.414Z",
+ "evidence_class": "LIVE (COCO's ROS 2 stack running now: a Gazebo simulation, never hardware)",
+ "welcome": {
+  "protocol": "coco.v1",
+  "commands": [
+   "claim",
+   "drive",
+   "hello",
+   "mission",
+   "nav_goal",
+   "ping",
+   "release",
+   "select_target",
+   "set_arm",
+   "set_gripper",
+   "set_mode",
+   "set_stream",
+   "stop",
+   "subscribe",
+   "unsubscribe"
+  ],
+  "limits": {
+   "linear": 0.5,
+   "angular": 1.2,
+   "colours": [
+    "red",
+    "green",
+    "blue",
+    "yellow"
+   ],
+   "modes": [
+    "teleop",
+    "auto",
+    "stop"
+   ],
+   "arm": {
+    "shoulder": [
+     -3.84,
+     1
+    ],
+    "elbow": [
+     -1.6,
+     1.6
+    ]
+   },
+   "gripper": [
+    -0.35,
+    1.1
+   ]
+  }
+ },
+ "acks": [
+  {
+   "id": 1,
+   "command": "hello"
+  },
+  {
+   "id": 3,
+   "command": "claim"
+  },
+  {
+   "id": 4,
+   "command": "set_mode"
+  },
+  {
+   "id": 5,
+   "command": "drive"
+  },
+  {
+   "id": 6,
+   "command": "drive"
+  },
+  {
+   "id": 7,
+   "command": "drive"
+  },
+  {
+   "id": 8,
+   "command": "drive"
+  },
+  {
+   "id": 9,
+   "command": "drive"
+  },
+  {
+   "id": 10,
+   "command": "drive"
+  },
+  {
+   "id": 11,
+   "command": "drive"
+  },
+  {
+   "id": 12,
+   "command": "drive"
+  },
+  {
+   "id": 13,
+   "command": "drive"
+  },
+  {
+   "id": 14,
+   "command": "drive"
+  },
+  {
+   "id": 15,
+   "command": "drive"
+  },
+  {
+   "id": 16,
+   "command": "drive"
+  },
+  {
+   "id": 17,
+   "command": "drive"
+  },
+  {
+   "id": 18,
+   "command": "drive"
+  },
+  {
+   "id": 19,
+   "command": "drive"
+  },
+  {
+   "id": 20,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": null,
+   "command": "drive"
+  },
+  {
+   "id": 21,
+   "command": "stop"
+  },
+  {
+   "id": 22,
+   "command": "set_mode"
+  },
+  {
+   "id": 23,
+   "command": "nav_goal"
+  },
+  {
+   "id": 24,
+   "command": "stop"
+  }
+ ],
+ "errors_from_server": [
+  {
+   "id": 2,
+   "code": "spectator",
+   "message": "you are watching this session; only the driver who entered the control code can command COCO"
+  }
+ ],
+ "telemetry_frames": 64,
+ "steps": {
+  "code": {
+   "drive_without_code": "spectator",
+   "claim": "ack",
+   "code_length": 8
+  },
+  "welcome": {
+   "protocol": "coco.v1",
+   "has_commands": true,
+   "telemetry": true,
+   "truth": [
+    23.00000004448265,
+    6.000000001006476
+   ]
+  },
+  "drive": {
+   "set_mode_teleop": "ack",
+   "arbiter_mode": "teleop",
+   "moved_m": 0.5274842894305892,
+   "max_reported_linear": 0.1524999999866216,
+   "in_container": {
+    "wheel_topic_publishers": [
+     "/cmd_vel_arbiter"
+    ],
+    "teleop_publishers": [
+     "/coco_web_platform"
+    ]
+   }
+  },
+  "stop": {
+   "ack": "ack",
+   "latched": true,
+   "arbiter_mode": "idle",
+   "moved_after_stop_m": 0,
+   "linear_after_stop": -2.5847380023406502e-17
+  },
+  "goal": {
+   "set_mode_auto": "ack",
+   "latched_after_auto": false,
+   "goal": [
+    24.55612848933139,
+    5.971582868985218
+   ],
+   "ack": "ack",
+   "nav_status": "executing",
+   "path_points": 21
+  },
+  "origins": {
+   "foreign": 403,
+   "pages": 101
+  }
+ },
+ "errors": [],
+ "timeline": [
+  [
+   35,
+   "tx",
+   "hello#1"
+  ],
+  [
+   38,
+   "rx",
+   "welcome"
+  ],
+  [
+   55,
+   "rx",
+   "map"
+  ],
+  [
+   55,
+   "rx",
+   "ack hello#1"
+  ],
+  [
+   67,
+   "rx",
+   "telemetry"
+  ],
+  [
+   136,
+   "tx",
+   "drive#2"
+  ],
+  [
+   138,
+   "rx",
+   "error spectator#2"
+  ],
+  [
+   301,
+   "tx",
+   "claim#3"
+  ],
+  [
+   302,
+   "rx",
+   "ack claim#3"
+  ],
+  [
+   352,
+   "tx",
+   "set_mode#4"
+  ],
+  [
+   353,
+   "rx",
+   "ack set_mode#4"
+  ],
+  [
+   1204,
+   "tx",
+   "drive#5"
+  ],
+  [
+   1207,
+   "rx",
+   "ack drive#5"
+  ],
+  [
+   1307,
+   "tx",
+   "drive#6"
+  ],
+  [
+   1312,
+   "rx",
+   "ack drive#6"
+  ],
+  [
+   1407,
+   "tx",
+   "drive#7"
+  ],
+  [
+   1409,
+   "rx",
+   "ack drive#7"
+  ],
+  [
+   1509,
+   "tx",
+   "drive#8"
+  ],
+  [
+   1517,
+   "rx",
+   "ack drive#8"
+  ],
+  [
+   1609,
+   "tx",
+   "drive#9"
+  ],
+  [
+   1612,
+   "rx",
+   "ack drive#9"
+  ],
+  [
+   1710,
+   "tx",
+   "drive#10"
+  ],
+  [
+   1711,
+   "rx",
+   "ack drive#10"
+  ],
+  [
+   1810,
+   "tx",
+   "drive#11"
+  ],
+  [
+   1812,
+   "rx",
+   "ack drive#11"
+  ],
+  [
+   1910,
+   "tx",
+   "drive#12"
+  ],
+  [
+   1913,
+   "rx",
+   "ack drive#12"
+  ],
+  [
+   2010,
+   "tx",
+   "drive#13"
+  ],
+  [
+   2014,
+   "rx",
+   "ack drive#13"
+  ],
+  [
+   2068,
+   "rx",
+   "telemetry"
+  ],
+  [
+   2112,
+   "tx",
+   "drive#14"
+  ],
+  [
+   2113,
+   "rx",
+   "ack drive#14"
+  ],
+  [
+   2212,
+   "tx",
+   "drive#15"
+  ],
+  [
+   2215,
+   "rx",
+   "ack drive#15"
+  ],
+  [
+   2312,
+   "tx",
+   "drive#16"
+  ],
+  [
+   2314,
+   "rx",
+   "ack drive#16"
+  ],
+  [
+   2412,
+   "tx",
+   "drive#17"
+  ],
+  [
+   2415,
+   "rx",
+   "ack drive#17"
+  ],
+  [
+   2512,
+   "tx",
+   "drive#18"
+  ],
+  [
+   2516,
+   "rx",
+   "ack drive#18"
+  ],
+  [
+   2612,
+   "tx",
+   "drive#19"
+  ],
+  [
+   2613,
+   "rx",
+   "ack drive#19"
+  ],
+  [
+   2712,
+   "tx",
+   "drive#20"
+  ],
+  [
+   2713,
+   "rx",
+   "ack drive#20"
+  ],
+  [
+   2914,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3016,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3114,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3214,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3315,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3415,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3516,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3617,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3717,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3815,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   3915,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4015,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4070,
+   "rx",
+   "telemetry"
+  ],
+  [
+   4116,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4217,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4315,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4416,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4517,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4623,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4715,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4816,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   4918,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5023,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5120,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5218,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5321,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5420,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5520,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5621,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5721,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5820,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   5921,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6026,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6073,
+   "rx",
+   "telemetry"
+  ],
+  [
+   6122,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6222,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6322,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6424,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6522,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6626,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6731,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6823,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   6923,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7025,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7129,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7222,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7326,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7423,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7524,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7623,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7724,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7823,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   7925,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8024,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8070,
+   "rx",
+   "telemetry"
+  ],
+  [
+   8132,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8225,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8326,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8427,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8525,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8629,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8726,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8825,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   8928,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   9029,
+   "rx",
+   "ack drive#null"
+  ],
+  [
+   9059,
+   "tx",
+   "stop#21"
+  ],
+  [
+   9065,
+   "rx",
+   "ack stop#21"
+  ],
+  [
+   10067,
+   "rx",
+   "telemetry"
+  ],
+  [
+   11610,
+   "tx",
+   "set_mode#22"
+  ],
+  [
+   11614,
+   "rx",
+   "ack set_mode#22"
+  ],
+  [
+   12069,
+   "rx",
+   "telemetry"
+  ],
+  [
+   12662,
+   "tx",
+   "nav_goal#23"
+  ],
+  [
+   12663,
+   "rx",
+   "ack nav_goal#23"
+  ],
+  [
+   12813,
+   "tx",
+   "stop#24"
+  ],
+  [
+   12814,
+   "rx",
+   "ack stop#24"
+  ],
+  [
+   12868,
+   "ev",
+   "close 1005 "
+  ]
+ ],
+ "closed": {
+  "at_ms": 1795841591282,
+  "code": 1005,
+  "reason": "",
+  "clean": true
+ },
+ "acceptance": {
+  "drive_without_code_refused": true,
+  "claim_with_code": true,
+  "welcome_coco_v1": true,
+  "drive_moves_coco": true,
+  "wheels_only_arbiter": true,
+  "teleop_input_is_the_gateway": true,
+  "stop_latches_and_holds": true,
+  "goal_reaches_nav2": true,
+  "foreign_origin_refused": true,
+  "pages_origin_accepted": true
+ },
+ "pass": true
+}

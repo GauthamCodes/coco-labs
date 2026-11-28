@@ -429,6 +429,37 @@ def truth_to_map(x, y, yaw, spawn_xy):
             'yaw': _as_float(yaw)}
 
 
+def map_origin(spawn_xy, offset_x=float('nan'), offset_y=float('nan')):
+    """
+    Return the map origin in the world, the ``spawn_xy`` that ``truth_to_map`` subtracts.
+
+    COCO's own arena puts the map origin at the robot's spawn point
+    (``SPAWN_XY``), and that stays the default. A World Spec level says
+    where its map is: map = world + ``world_to_map`` (the Depot levels:
+    [0, 0], the map frame IS the world frame). Given that offset, the
+    origin is its negation. R6.A3: the coco-ros2 image applied the arena's
+    SPAWN_XY to the Depot too, which put every truth pose 2.0 m off in x.
+    """
+    ox, oy = _as_float(offset_x), _as_float(offset_y)
+    if math.isfinite(ox) and math.isfinite(oy):
+        return (-ox, -oy)
+    return spawn_xy
+
+
+def truth_frame(offset_x=float('nan'), offset_y=float('nan')):
+    """
+    Return which frame robot.truth is in, for welcome.config (R6.A3).
+
+    ``'level_map'``: the gateway was told the level's world_to_map, so the
+    truth is in the level's own map frame (the coco-ros2 image, checked on a
+    test route against Gazebo's own model pose). ``'arena_spawn'``: COCO's
+    arena convention (SPAWN_XY), right only on the arena. A browser shows a
+    truth-vs-estimate distance only for ``'level_map'``.
+    """
+    ox, oy = _as_float(offset_x), _as_float(offset_y)
+    return 'level_map' if math.isfinite(ox) and math.isfinite(oy) else 'arena_spawn'
+
+
 #: action_msgs/GoalStatus codes, in words.
 GOAL_STATUS = {0: 'unknown', 1: 'accepted', 2: 'executing', 3: 'canceling',
                4: 'succeeded', 5: 'canceled', 6: 'aborted'}

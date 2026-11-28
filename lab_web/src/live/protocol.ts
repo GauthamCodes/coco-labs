@@ -44,7 +44,9 @@ export interface Welcome {
   /** Additive (Phase 2): this connection's id. */
   you?: string;
   /** Additive (Phase 2): did colours / depth clip / limits fall back? */
-  config?: { source: 'coco_config' | 'fallback'; fallbacks: string[] };
+  config?: { source: 'coco_config' | 'fallback'; fallbacks: string[];
+    /** Additive (R6.A3): robot.truth's frame; 'level_map' = the level's map, checked against Gazebo */
+    truth_frame?: 'level_map' | 'arena_spawn' };
 }
 
 export interface Mission {

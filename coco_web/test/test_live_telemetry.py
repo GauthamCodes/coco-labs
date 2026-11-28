@@ -67,3 +67,35 @@ def test_truth_shift_matches_the_world_geometry_shift():
 def test_goal_status_is_this_browsers_goal_only(entries, sent, expected):
     """Older goals (the mission's) never answer for a browser goal."""
     assert tele.goal_status(entries, sent) == expected
+
+
+def test_map_origin_defaults_to_the_arena_spawn():
+    """R6.A3: no offset given (NaN): COCO's own arena, map origin = SPAWN_XY."""
+    assert tele.map_origin(SPAWN_XY) == SPAWN_XY
+    assert tele.map_origin(SPAWN_XY, float('nan'), 0.0) == SPAWN_XY
+
+
+def test_a_depot_level_maps_world_to_map_unchanged():
+    """
+    R6.A3: the Depot's world_to_map is [0, 0], so its map frame IS the world.
+
+    The coco-ros2 image used SPAWN_XY there and showed COCO on the start
+    pad (world x 23.0) at x 25.0; with the level's offset, truth = world.
+    """
+    origin = tele.map_origin(SPAWN_XY, 0.0, 0.0)
+    out = tele.truth_to_map(23.0, 6.0, 0.1, origin)
+    assert out == {'x': pytest.approx(23.0), 'y': pytest.approx(6.0),
+                   'yaw': 0.1}
+
+
+def test_the_arena_world_to_map_equals_its_spawn_convention():
+    """Worlds/coco_arena_v1.yaml world_to_map [2, 0] == -SPAWN_XY."""
+    assert tele.map_origin(SPAWN_XY, 2.0, 0.0) == (
+        pytest.approx(SPAWN_XY[0]), pytest.approx(SPAWN_XY[1]))
+
+
+def test_truth_frame_names_the_level_map_only_when_given_its_offset():
+    """R6.A3: welcome.config.truth_frame; a browser shows truth-vs-estimate only for level_map."""
+    assert tele.truth_frame(0.0, 0.0) == 'level_map'
+    assert tele.truth_frame() == 'arena_spawn'
+    assert tele.truth_frame(float('nan'), 0.0) == 'arena_spawn'
