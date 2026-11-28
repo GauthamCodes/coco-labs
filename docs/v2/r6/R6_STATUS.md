@@ -150,3 +150,21 @@ Held-out (the reference draw, 6 scenarios each), rerun with `active`: loc-global
 2 false), mcl_augmented 0/6 (1, 1); loc-kidnap-active-20 — ekf 0/6 (7 reports, 1 false; first report right 6/6,
 median 1.7 s; re-localised 0), mcl 0/6 (16, 10 false; re-localised 0), mcl_augmented 0/6 (9, 3 false;
 re-localised 0). The held-out set agrees with the public one.
+
+## A6 · the MCL reference on the active suites (MODEL)
+
+`tools/r3/mcl_reference.py --suites loc-global-active-20 loc-kidnap-active-20` (R4's reference: augmented MCL,
+**2,000 particles, 24 beams**; the same public scenarios and reference held-out draw; laptop, 10 workers, run from a
+frozen copy of the code at `v2/r6-loc` `1c098d1`) — [data/mcl_reference/](data/mcl_reference/):
+
+| suite | part | success | "localised" reports (false) | first report right | re-localised after kidnap |
+| --- | --- | --- | --- | --- | --- |
+| loc-global-active-20 | public | 0/20 | 17 (17) | 0 | — |
+| loc-global-active-20 | held-out | 1/6 | 2 (0) | 1 (57.1 s) | — |
+| loc-kidnap-active-20 | public | 0/20 | 31 (16) | 14 (median 5.1 s) | 0 |
+| loc-kidnap-active-20 | held-out | 0/6 | 16 (10) | 5 (median 6.7 s) | 0 |
+
+Read: 33x the particles and the right to stop and turn do not make the suites solvable in the model. Globally
+every public report was wrong; after a kidnap nothing re-localised. The R4 diagnosis (a filter cannot win while the
+robot acts on a wrong belief) now has a sharper form: the filter's own confidence is wrong in the Depot's symmetric
+aisles, so stopping until it is confident does not help. Negative, kept.

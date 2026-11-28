@@ -1,0 +1,474 @@
+{
+ "alpha": 0.05,
+ "complete": true,
+ "digest": "60015e9de25d4b1752d80ee2d302024acc78017262b2cdcdf5a8ee286873a7f6",
+ "experiment": "1ddca9858fc91b1e",
+ "family": "localisation",
+ "groups": [
+  {
+   "algorithm": "mcl_reference",
+   "metrics": {
+    "compute_ms": {
+     "iqr": 30137.20563844242,
+     "max": 1411965.935818036,
+     "median": 1340499.5103304973,
+     "min": 1195426.483932999,
+     "n": 20,
+     "q1": 1318473.0176162848,
+     "q3": 1348610.2232547272,
+     "timing": true
+    },
+    "contacts": {
+     "iqr": 0,
+     "max": 2,
+     "median": 0,
+     "min": 0,
+     "n": 20,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "converged_s": {
+     "iqr": 0,
+     "max": 0,
+     "median": 0,
+     "min": 0,
+     "n": 20,
+     "q1": 0,
+     "q3": 0,
+     "timing": false
+    },
+    "expansions": {
+     "iqr": 24348.75,
+     "max": 137520,
+     "median": 23926.5,
+     "min": 1242,
+     "n": 20,
+     "q1": 11415.75,
+     "q3": 35764.5,
+     "timing": false
+    },
+    "explore_s": {
+     "iqr": 25.900000000000034,
+     "max": 294.90000000000003,
+     "median": 284.00000000000006,
+     "min": 5,
+     "n": 20,
+     "q1": 264.57500000000005,
+     "q3": 290.4750000000001,
+     "timing": false
+    },
+    "false_reports": {
+     "iqr": 1,
+     "max": 5,
+     "median": 0,
+     "min": 0,
+     "n": 20,
+     "q1": 0,
+     "q3": 1,
+     "timing": false
+    },
+    "final_err_xy_m": {
+     "iqr": 15.318006252015348,
+     "max": 35.0432314818737,
+     "median": 18.876264955087855,
+     "min": 0.3301963010949692,
+     "n": 20,
+     "q1": 11.75881296741466,
+     "q3": 27.076819219430007,
+     "timing": false
+    },
+    "final_err_yaw_rad": {
+     "iqr": 2.925405857144397,
+     "max": 3.123593725764322,
+     "median": 1.7352403190263725,
+     "min": 0.008847556754984165,
+     "n": 20,
+     "q1": 0.13321080874742108,
+     "q3": 3.058616665891818,
+     "timing": false
+    },
+    "final_goal_distance_m": {
+     "iqr": 14.71271564580957,
+     "max": 45.373077658233996,
+     "median": 21.175102180319325,
+     "min": 9.515662157846847,
+     "n": 20,
+     "q1": 16.847410011122918,
+     "q3": 31.560125656932488,
+     "timing": false
+    },
+    "first_report_s": {
+     "iqr": 4.1,
+     "max": 74.8,
+     "median": 5.15,
+     "min": 3.6,
+     "n": 16,
+     "q1": 4.25,
+     "q3": 8.35,
+     "timing": false
+    },
+    "gave_up": {
+     "iqr": 2,
+     "max": 4,
+     "median": 4,
+     "min": 0,
+     "n": 20,
+     "q1": 2,
+     "q3": 4,
+     "timing": false
+    },
+    "heading_change_rad": {
+     "iqr": 6.568089583129193,
+     "max": 153.1161109016885,
+     "median": 149.88559132193555,
+     "min": 3.6748118535178076,
+     "n": 20,
+     "q1": 144.88257706951745,
+     "q3": 151.45066665264665,
+     "timing": false
+    },
+    "max_err_xy_m": {
+     "iqr": 6.180880175515178,
+     "max": 51.01870840909148,
+     "median": 30.96423364745862,
+     "min": 23.329282804178696,
+     "n": 20,
+     "q1": 27.89403945926429,
+     "q3": 34.07491963477947,
+     "timing": false
+    },
+    "mean_clearance_m": {
+     "iqr": 1.2690059592588663,
+     "max": 5.637137893251887,
+     "median": 1.1921177365457547,
+     "min": 0.012133333333333345,
+     "n": 20,
+     "q1": 0.7755420967445692,
+     "q3": 2.0445480560034355,
+     "timing": false
+    },
+    "mean_err_xy_m": {
+     "iqr": 7.094435555324704,
+     "max": 33.64460712388663,
+     "median": 18.412694966641027,
+     "min": 10.388370978710988,
+     "n": 20,
+     "q1": 16.943465247529787,
+     "q3": 24.03790080285449,
+     "timing": false
+    },
+    "min_clearance_m": {
+     "iqr": 0.5960082416960389,
+     "max": 2.98,
+     "median": 0.23615528128088303,
+     "min": -0.01999999999999999,
+     "n": 20,
+     "q1": -0.01999999999999999,
+     "q3": 0.5760082416960389,
+     "timing": false
+    },
+    "path_length_m": {
+     "iqr": 16.106059068103477,
+     "max": 49.260133876866725,
+     "median": 29.001842487955386,
+     "min": 10.376619483350638,
+     "n": 20,
+     "q1": 19.371185282659695,
+     "q3": 35.47724435076317,
+     "timing": false
+    },
+    "plans": {
+     "iqr": 1,
+     "max": 8,
+     "median": 5,
+     "min": 1,
+     "n": 20,
+     "q1": 4,
+     "q3": 5,
+     "timing": false
+    },
+    "recovery_s": {
+     "iqr": 91,
+     "max": 279,
+     "median": 220,
+     "min": 97,
+     "n": 3,
+     "q1": 158.5,
+     "q3": 249.5,
+     "timing": false
+    },
+    "reports": {
+     "iqr": 1,
+     "max": 6,
+     "median": 1,
+     "min": 0,
+     "n": 20,
+     "q1": 1,
+     "q3": 2,
+     "timing": false
+    },
+    "ticks": {
+     "iqr": 0,
+     "max": 3000,
+     "median": 3000,
+     "min": 3000,
+     "n": 20,
+     "q1": 3000,
+     "q3": 3000,
+     "timing": false
+    },
+    "time_s": {
+     "iqr": 0,
+     "max": 300,
+     "median": 300,
+     "min": 300,
+     "n": 20,
+     "q1": 300,
+     "q3": 300,
+     "timing": false
+    },
+    "time_to_localise_s": {
+     "iqr": 3.1999999999999993,
+     "max": 11.600000000000001,
+     "median": 5.050000000000001,
+     "min": 3.6,
+     "n": 14,
+     "q1": 4.15,
+     "q3": 7.35,
+     "timing": false
+    },
+    "time_to_relocalise_s": {
+     "iqr": null,
+     "max": null,
+     "median": null,
+     "min": null,
+     "n": 0,
+     "q1": null,
+     "q3": null,
+     "timing": false
+    }
+   },
+   "n": 20,
+   "status": {
+    "timeout": 20
+   },
+   "success": {
+    "high": 0.16112515805281938,
+    "low": 0,
+    "rate": 0
+   },
+   "successes": 0,
+   "sweep": {},
+   "sweep_index": 0
+  }
+ ],
+ "metrics": [
+  {
+   "better": "lower",
+   "id": "time_s",
+   "label": "Time to goal or end",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "ticks",
+   "label": "Ticks",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "path_length_m",
+   "label": "Distance driven",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "min_clearance_m",
+   "label": "Minimum clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "higher",
+   "id": "mean_clearance_m",
+   "label": "Mean clearance",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "heading_change_rad",
+   "label": "Total heading change",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "contacts",
+   "label": "Contacts",
+   "test": true,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "expansions",
+   "label": "Global planner expansions",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "plans",
+   "label": "Plans made",
+   "test": false,
+   "timing": false,
+   "unit": "count"
+  },
+  {
+   "better": "lower",
+   "id": "final_goal_distance_m",
+   "label": "Final distance to goal",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_xy_m",
+   "label": "Final position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "final_err_yaw_rad",
+   "label": "Final heading error",
+   "test": true,
+   "timing": false,
+   "unit": "rad"
+  },
+  {
+   "better": "lower",
+   "id": "mean_err_xy_m",
+   "label": "Mean position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "max_err_xy_m",
+   "label": "Maximum position error",
+   "test": true,
+   "timing": false,
+   "unit": "m"
+  },
+  {
+   "better": "lower",
+   "id": "converged_s",
+   "label": "Convergence time",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "recovery_s",
+   "label": "Recovery time after kidnap",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "compute_ms",
+   "label": "Compute time",
+   "test": true,
+   "timing": true,
+   "unit": "ms"
+  },
+  {
+   "better": "lower",
+   "id": "time_to_localise_s",
+   "label": "Time to a correct \"localised\" report",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "time_to_relocalise_s",
+   "label": "Time to re-localise after the kidnap",
+   "test": true,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "false_reports",
+   "label": "False \"localised\" reports",
+   "test": true,
+   "timing": false,
+   "unit": ""
+  },
+  {
+   "better": "lower",
+   "id": "reports",
+   "label": "\"Localised\" reports",
+   "test": false,
+   "timing": false,
+   "unit": ""
+  },
+  {
+   "better": "lower",
+   "id": "first_report_s",
+   "label": "First report (right or wrong)",
+   "test": false,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "explore_s",
+   "label": "Time spent localising in place",
+   "test": false,
+   "timing": false,
+   "unit": "s"
+  },
+  {
+   "better": "lower",
+   "id": "gave_up",
+   "label": "Localising phases that ran out of time",
+   "test": false,
+   "timing": false,
+   "unit": ""
+  }
+ ],
+ "n_planned": 20,
+ "n_runs": 20,
+ "notes": [
+  "Counts are model outputs and need no device; compute_ms is wall time on the device named in the manifest.",
+  "Success rates: Wilson 95% intervals. Metrics: median and IQR (type-7 quantiles) over the runs where the metric is defined.",
+  "Paired tests on shared scenarios: Wilcoxon signed-rank (exact up to 50 non-zero pairs) with rank-biserial r and Hodges-Lehmann shift; McNemar exact for success; Holm-adjusted across algorithm pairs."
+ ],
+ "paired": [],
+ "scenario_info": {
+  "kind": "suite",
+  "suite": "loc-kidnap-active-20",
+  "suite_version": 1
+ },
+ "schema": "coco.experiment.summary.v1"
+}
